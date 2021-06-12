@@ -43,6 +43,15 @@
 <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('admin/js/adminlte.min.js') }}"></script>
+@else
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HS0XEPQE5K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HS0XEPQE5K');
+</script>
 @endif
 @livewireScripts()
 @stack('scripts')
