@@ -29,5 +29,14 @@
         </div>
     </div>
 </div>
-@section('styles')
-@endsection
+@push('styles')
+<style>
+    @font-face {
+        font-family: 'Futura Poster';
+        src: URL("{{ asset('statics/ftpstrps.ttf') }}");
+    }
+    .logoText {
+        font-family: 'Futura Poster';
+    }
+</style>
+@endpush
