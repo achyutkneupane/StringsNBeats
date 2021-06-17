@@ -6,8 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>@if(!request()->routeIs('homepage')) @yield('title') - @endif{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('statics/snb-favicon.png') }}"/>
 	@stack('meta_tags')
 
     <!-- Fonts -->

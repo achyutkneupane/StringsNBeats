@@ -6,7 +6,7 @@
                     @foreach($featured as $article)
                     <a class="carousel-item{{ $loop->first ? ' active' : '' }}" href="{{ route('viewArticle',$article->slug) }}">
                         <img class="d-block w-100" src="{{ asset('storage/'.$article->featured_image) }}" style="opacity: 0.3" alt="Third slide" height="400">
-                        <div class="carousel-caption d-none d-md-block">
+                        <div class="carousel-caption">
                             <div class="text-dark text-uppercase h2">{{ $article->title }}</div>
                         </div>
                     </a>
@@ -29,7 +29,7 @@
                     @if($latests->count() > 0)
                     @foreach($latests as $latest)
                     <a href="{{ route('viewArticle',$latest->slug) }}" class="flex-row my-1 d-flex col-md-12 ml-0 row">
-                        <div class="col-4 row px-0" style="width:100%;"><img src="{{ asset('storage/'.$latest->featured_image) }}" style="height:70px;" class="col-12 px-0"></div>
+                        <div class="col-4 row px-0" style="width:100%;"><img src="{{ asset('storage/'.$latest->featured_image) }}" style="height:100px;" class="col-12 px-0"></div>
                         <div class="pl-4 col-8 d-flex flex-column justify-content-center">
                             <h6>{{ $latest->title }}</h6>
                         </div>
