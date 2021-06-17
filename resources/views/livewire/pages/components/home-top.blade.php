@@ -28,10 +28,10 @@
                     </h3>
                     @if($latests->count() > 0)
                     @foreach($latests as $latest)
-                    <a href="{{ route('viewArticle',$latest->slug) }}" class="flex-row my-1 d-flex col-12 row">
-                        <div class="col-4"><img src="{{ asset('storage/'.$latest->featured_image) }}" width="100%"></div>
-                        <div class="pl-4 col-8">
-                            <h5>{{ $latest->title }}</h5>
+                    <a href="{{ route('viewArticle',$latest->slug) }}" class="flex-row my-1 d-flex col-md-12 ml-0 row">
+                        <div class="col-4 row px-0" style="width:100%;"><img src="{{ asset('storage/'.$latest->featured_image) }}" style="height:70px;" class="col-12 px-0"></div>
+                        <div class="pl-4 col-8 d-flex flex-column justify-content-center">
+                            <h6>{{ $latest->title }}</h6>
                         </div>
                     </a>
                     @endforeach
