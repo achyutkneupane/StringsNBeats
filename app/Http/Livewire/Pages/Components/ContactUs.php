@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Pages\Components;
 
 use App\Mail\ContactUsForUser;
 use App\Mail\ContactUsMail;
+use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -26,6 +27,11 @@ class ContactUs extends Component
             ->send(new ContactUsMail($info));
         Mail::to($this->email)
             ->send(new ContactUsForUser($info));
+        if(Subscriber::where('email',$this->email)->count() == 0) {
+            Subscriber::create([
+                'email' => $this->email
+            ]);
+        }
         $this->reset(['email','name','message']);
         $this->formSubmitted = 'Mail has been sent.';
     }
