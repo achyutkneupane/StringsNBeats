@@ -29,7 +29,7 @@ class ContactUsForUser extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.contactUsMailForUser')
+        return $this->markdown('mail.ContactUsMailForUser')
                     ->subject('Strings N\' Beats')
                     ->with('info', $this->info);
     }
