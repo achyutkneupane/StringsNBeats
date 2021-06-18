@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Pages\Components;
 
+use App\Mail\ContactUsForUser;
 use App\Mail\ContactUsMail;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
@@ -23,6 +24,8 @@ class ContactUs extends Component
         $info->put('message',$this->message);
         Mail::to('info@stringsnbeats.net')
             ->send(new ContactUsMail($info));
+        Mail::to($this->email)
+            ->send(new ContactUsForUser($info));
         $this->reset(['email','name','message']);
         $this->formSubmitted = 'Mail has been sent.';
     }

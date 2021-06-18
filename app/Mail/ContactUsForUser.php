@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ContactUsMail extends Mailable
+class ContactUsForUser extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,9 +29,8 @@ class ContactUsMail extends Mailable
      */
     public function build()
     {
-        return $this->from($this->info['email'],$this->info['name'])
-                    ->markdown('mail.contactUsMail')
-                    ->subject('Contact Us Mail')
+        return $this->markdown('mail.contactUsMailForUser')
+                    ->subject('Strings N\' Beats')
                     ->with('info', $this->info);
     }
 }
