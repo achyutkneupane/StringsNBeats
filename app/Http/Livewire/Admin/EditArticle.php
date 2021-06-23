@@ -45,9 +45,9 @@ class EditArticle extends Component
         if($propertyName == 'featuredImage') {
             $this->featuredImageView = false;
         }
-        // elseif($propertyName == 'articleContent') {
-        //     dd("Test");
-        // }
+        elseif($propertyName == 'articleContent') {
+            $this->saveAsDraft();
+        }
     }
     public function addArtist()
     {
@@ -83,12 +83,38 @@ class EditArticle extends Component
         $article->title =  $this->articleTitle;
         $article->content =  $this->articleContent;
         $article->featured =  $this->featured;
+        if($article->status == 'draft')
+        {
+            $article->created_at = now();
+        }
         $article->status =  'active';
         $article->category_id =  $this->articleCategory;
         $article->save();
         $article->tags()->sync($this->articleTags);
         $article->artists()->sync($this->artists);
         redirect()->route('adminEditArticles',$article->id);
+    }
+    public function saveAsDraft()
+    {
+        $this->validate([
+            'articleTitle' => 'required',
+        ]);
+        $article = $this->article;
+        if(!$this->featuredImageView && $this->featuredImage) {
+            $extension = $this->featuredImage->extension();
+            $slug = Str::slug($this->articleTitle);
+            $path = 'uploads/'.$slug.'-'.now()->timestamp.'.'.$extension;
+            $this->featuredImage->storeAs('public',$path);
+            $article->featured_image =  $path;
+        }
+        $article->title =  $this->articleTitle;
+        $article->content =  $this->articleContent;
+        $article->featured =  $this->featured;
+        $article->status =  'draft';
+        $article->category_id =  $this->articleCategory;
+        $article->save();
+        $article->tags()->sync($this->articleTags);
+        $article->artists()->sync($this->artists);
     }
     public function render()
     {

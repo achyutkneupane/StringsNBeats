@@ -49,8 +49,10 @@
                                                                 <span class="slider round"></span><br>
                                                             </label>
                                                         </div>
-                                                        {{-- <button class="btn btn-outline-primary">Save as draft</button> --}}
-                                                        <button class="btn btn-outline-danger ml-2" wire:click="storeArticle">Publish</button>
+                                                        <div class="justify-content-end">
+                                                            <button class="btn btn-outline-primary" wire:click="saveAsDraft">Draft</button>
+                                                            <button class="btn btn-outline-danger ml-2" wire:click="storeArticle">Publish</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">

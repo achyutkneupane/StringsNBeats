@@ -27,10 +27,10 @@ class AddArticle extends Component
     ];
     public function mount()
     {
-        $this->articleCategory = "";
         $this->articleTags = [];
         $this->artists = [];
         $this->title = "Add Article";
+        $this->articleCategory = 1;
     }
     public function addArtist()
     {
@@ -68,8 +68,32 @@ class AddArticle extends Component
             'category_id' => $this->articleCategory,
             'writer_id' => auth()->id()
         ]);
-        $article->tags()->attach($this->articleTags);
-        $article->artists()->attach($this->artists);
+        $article->tags()->sync($this->articleTags);
+        $article->artists()->sync($this->artists);
+        redirect()->route('adminEditArticles',$article->id);
+    }
+    public function saveAsDraft()
+    {
+        $this->validate([
+            'articleTitle' => 'required',
+        ]);
+        $path = null;
+        if($this->featuredImage) {
+            $extension = $this->featuredImage->extension();
+            $slug = Str::slug($this->articleTitle);
+            $path = 'uploads/'.$slug.'-'.now()->timestamp.'.'.$extension;
+            $this->featuredImage->storeAs('public',$path);
+        }
+        $article = Article::create([
+            'title' => $this->articleTitle,
+            'content' => $this->articleContent,
+            'featured_image' => $path,
+            'status' => 'draft',
+            'category_id' => $this->articleCategory,
+            'writer_id' => auth()->id()
+        ]);
+        $article->tags()->sync($this->articleTags);
+        $article->artists()->sync($this->artists);
         redirect()->route('adminEditArticles',$article->id);
     }
     public function render()

@@ -13,7 +13,7 @@
                                             <div class="container">
                                                 <div class="form-row">
                                                     <div class="form-group col-lg-12">
-                                                        <label for="articleTitle">Title</label> (<a href="{{ route('viewArticle',$article->slug) }}" target="_blank">View Article</a>)
+                                                        <label for="articleTitle">Title</label> @if($article->status == 'active')(<a href="{{ route('viewArticle',$article->slug) }}" target="_blank">View Article</a>)@endif
                                                         <input type="text" class="form-control" wire:model.lazy="articleTitle" placeholder="Enter Title">
                                                         @error('articleTitle')
                                                         <div class="text-danger">{{ $message }}</div>
@@ -21,13 +21,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
-                                                    <div class="form-group col-lg-12" wire:ignore>
+                                                    <div class="form-group col-lg-12">
                                                         <label>Content</label>
                                                         @error('articleContent')
                                                         <div class="text-danger">{{ $message }}</div>
                                                         @enderror
-                                                        <textarea wire:model='articleContent' id="articleContent">
-                                                        </textarea>
+                                                        <div wire:ignore>
+                                                            <textarea wire:model='articleContent' id="articleContent"></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -49,8 +50,24 @@
                                                                 <span class="slider round"></span><br>
                                                             </label>
                                                         </div>
-                                                        {{-- <button class="btn btn-outline-primary">Save as draft</button> --}}
-                                                        <button class="btn btn-outline-danger ml-2" wire:click="editArticle">Publish</button>
+                                                        <div class="justify-content-end">
+                                                            <button class="btn btn-outline-primary" wire:click='saveAsDraft' wire:loading.attr='disabled'>
+                                                                <div wire:loading wire:target='saveAsDraft'>
+                                                                    Saving
+                                                                </div>
+                                                                <div wire:loading.remove wire:target='saveAsDraft'>
+                                                                    Draft
+                                                                </div>
+                                                            </button>
+                                                            <button class="btn btn-outline-danger ml-2" wire:click="editArticle" wire:loading.attr='disabled'>
+                                                                <div wire:loading wire:target='editArticle'>
+                                                                    Saving
+                                                                </div>
+                                                                <div wire:loading.remove wire:target='editArticle'>
+                                                                    Publish
+                                                                </div>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
