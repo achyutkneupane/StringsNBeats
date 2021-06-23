@@ -63,7 +63,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',LandingPage::class)->name('homepage');
 
 
-Route::prefix('/panel')->group(function() {
+Route::prefix('/panel')->middleware('auth')->group(function() {
     Route::get('/',Dashboard::class)->name('adminDashboard');
     Route::get('/articles',Articles::class)->name('adminArticles');
     Route::get('/articles/add',AddArticle::class)->name('adminAddArticles');

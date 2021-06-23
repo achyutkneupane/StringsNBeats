@@ -20,13 +20,14 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-row" wire:ignore>
-                                                    <div class="form-group col-lg-12 row-editor">
+                                                <div class="form-row">
+                                                    <div class="form-group col-lg-12" wire:ignore>
                                                         <label>Content</label>
                                                         @error('articleContent')
                                                         <div class="text-danger">{{ $message }}</div>
                                                         @enderror
-                                                        <textarea id="articleContent" wire:model.defer="articleContent">{{ $articleContent }}</textarea>
+                                                        <textarea wire:model='articleContent' id="articleContent">
+                                                        </textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,10 +119,10 @@
                                                                 <div class="col-12">
                                                                     @if($featuredImageView)
                                                                     <img src="{{ asset('storage/'.$featuredImage) }}" width="100%">
-                                                                    @elseif($featuredImage)
-                                                                    <img src="{{ $featuredImage->temporaryUrl() }}" width="100%">
-                                                                    @else
+                                                                    @elseif(!$featuredImage)
                                                                     <img src="https://sewabsnlchq.com/wp-content/uploads/2020/10/gallery-dummy-img-1.jpg" width="100%">
+                                                                    @else
+                                                                    <img src="{{ $featuredImage->temporaryUrl() }}" width="100%">
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -145,7 +146,6 @@
     </div>
 </div>
 @push('styles')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <style>
     .switch {
     position: relative;
@@ -211,25 +211,29 @@
 </style>
 @endpush
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/p47paciinlfiov1oumn6ftva8g3x4qwt5z2z3258ayqs6lf4/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
-    $('#articleContent').summernote({
-        placeholder: 'Enter Article Content',
-        tabsize: 2,
-        height: 600,
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table'],
-            ['insert', ['link', 'video']],
-            ['mybutton', ['hello']]
+    tinymce.init({
+        selector: 'textarea#articleContent',
+        height: 800,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
         ],
-        callbacks: {
-            onChange: function(e) {
-                    @this.set('articleContent', e);
-            },
-        }
+        toolbar: 'undo redo | formatselect | ' +
+        'bold italic | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist | blockquote media ',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        setup: function (editor) {
+            editor.on('init change', function () {
+                editor.save();
+            });
+            editor.on('change', function (e) {
+                @this.set('articleContent', editor.getContent());
+            });
+        },
     });
 </script>
 @endpush

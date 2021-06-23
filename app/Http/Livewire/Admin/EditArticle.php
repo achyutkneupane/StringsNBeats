@@ -16,14 +16,13 @@ class EditArticle extends Component
     public $articleTitle,$articleCategory,$artists,$featuredImage,$articleContent,$featured,$featuredImageView;
     public $addTagValue,$addArtistValue;
     public $tags,$categories,$artistList;
-    public $articleTags,$title,$article;
+    public $articleTags,$title,$article,$articleContentFinal;
     public $rules = [
         'articleTitle' => 'required',
         'articleCategory' => 'required',
         'articleTags' => 'required',
         'artists' => 'required',
         'featuredImage' => 'required',
-        'articleContent' => 'required',
     ];
     public function mount($articleId)
     {
@@ -35,16 +34,20 @@ class EditArticle extends Component
         $this->featured = $article->featured;
         $this->articleTags = $article->tags->pluck('id');
         $this->artists = $article->artists->pluck('id');
-        $this->featuredImageView = true;
+        $this->featuredImageView = ($article->featured_image !== null);
         $this->featuredImage = $article->featured_image;
         $this->title = "Edit Article";
         $this->article = $article;
+        // $this->articleContentFinal = $this->articleContent;
     }
-    public function updated($property)
+    public function updated($propertyName)
     {
-        if($property = 'featuredImage') {
+        if($propertyName == 'featuredImage') {
             $this->featuredImageView = false;
         }
+        // elseif($propertyName == 'articleContent') {
+        //     dd("Test");
+        // }
     }
     public function addArtist()
     {
@@ -69,21 +72,22 @@ class EditArticle extends Component
     public function editArticle()
     {
         $this->validate();
-        $extension = $this->featuredImage->extension();
-        $slug = Str::slug($this->articleTitle);
-        $path = 'uploads/'.$slug.'-'.now()->timestamp.'.'.$extension;
-        $this->featuredImage->storeAs('public',$path);
         $article = $this->article;
+        if(!$this->featuredImageView) {
+            $extension = $this->featuredImage->extension();
+            $slug = Str::slug($this->articleTitle);
+            $path = 'uploads/'.$slug.'-'.now()->timestamp.'.'.$extension;
+            $this->featuredImage->storeAs('public',$path);
+            $article->featured_image =  $path;
+        }
         $article->title =  $this->articleTitle;
         $article->content =  $this->articleContent;
         $article->featured =  $this->featured;
-        $article->featured_image =  $path;
         $article->status =  'active';
         $article->category_id =  $this->articleCategory;
-        $article->writer_id =  auth()->id();
         $article->save();
-        $article->tags()->attach($this->articleTags);
-        $article->artists()->attach($this->artists);
+        $article->tags()->sync($this->articleTags);
+        $article->artists()->sync($this->artists);
         redirect()->route('adminEditArticles',$article->id);
     }
     public function render()
