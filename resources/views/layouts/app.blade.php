@@ -21,6 +21,7 @@
     @endif
     @livewireStyles
     @stack('styles')
+    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=60c351e4485ac10011d3049d&product=sop' async='async'></script>
 </head>
 @if(Request()->route()->getPrefix() != '/panel')
 <body>

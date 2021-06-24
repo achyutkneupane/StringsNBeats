@@ -9,7 +9,7 @@
                         <div class="text-white card bg-dark">
                             <img class="card-img" src="{{ asset('storage/'.$article->featured_image) }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}">
                             <div class="text-center align-middle card-img-overlay d-flex flex-column justify-content-center">
-                                <h1 class="card-title text-capitalize">{{ $article->title }}</h1>
+                                <h1 class="card-title text-capitalize articleTitle">{{ $article->title }}</h1>
                             </div>
                         </div>
                         <h5 class="mt-2 text-capitalize">
@@ -18,9 +18,11 @@
                         <h5 class="text-muted">
                             Posted <b>{{ $article->created_at->diffForHumans() }}</b>
                         </h5>
+                        <div class="sharethis-inline-share-buttons my-2"></div>
                         <div class="mt-4 text-justify articleText">
                             {!! $article->content !!}
                         </div>
+                        <div class="sharethis-inline-share-buttons my-4"></div>
                         <div class="py-3 my-2 col-12">
                             <h2>Comments</h2>
                             @livewire('pages.components.comments', ['articleId' => $article->id])

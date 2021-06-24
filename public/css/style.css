@@ -20,4 +20,8 @@ div.articleText p iframe {
     div.articleText p iframe {
         height: 250px !important;
     }
+    .articleTitle
+    {
+        font-size: medium;
+    }
 }
