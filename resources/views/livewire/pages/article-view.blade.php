@@ -23,7 +23,7 @@
                         <div class="sharethis-inline-share-buttons my-4" style='z-index: 9;'></div>
                         @if($article->writer_flag)
                         <h4 class="card-title text-capitalize articleTitle">
-                            Written by: <a href='https://facebook.com/{{ $article->writer->facebook_link }}' class='text-danger'>{{ $article->writer->name }}</a>
+                            Written by: <a href='https://facebook.com/{{ $article->writer->facebook_link }}' target='_blank' class='text-danger'>{{ $article->writer->name }}</a>
                         </h4>
                         @endif
                         <div class="mt-2 text-justify articleText">
