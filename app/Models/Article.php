@@ -12,6 +12,9 @@ class Article extends Model
     use HasFactory,SoftDeletes,Sluggable;
     protected $dates = ['deleted_at'];
     protected $guarded = [];
+    protected $extends = [
+        'writer_flag'
+    ];
     public function sluggable(): array
     {
         return [
@@ -39,5 +42,12 @@ class Article extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    public function getWriterFlagAttribute()
+    {
+        if($this->writer->id == '1' || $this->writer->id == '2' )
+        return false;
+        else
+        return true;
     }
 }

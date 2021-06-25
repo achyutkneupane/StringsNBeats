@@ -9,7 +9,9 @@
                         <div class="text-white card bg-dark">
                             <img class="card-img" src="{{ asset('storage/'.$article->featured_image) }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}">
                             <div class="text-center align-middle card-img-overlay d-flex flex-column justify-content-center">
-                                <h1 class="card-title text-capitalize articleTitle">{{ $article->title }}</h1>
+                                <h1 class="card-title text-capitalize articleTitle">
+                                    {{ $article->title }}
+                                </h1>
                             </div>
                         </div>
                         <h5 class="mt-2 text-capitalize">
@@ -18,8 +20,13 @@
                         <h5 class="text-muted">
                             Posted <b>{{ $article->created_at->diffForHumans() }}</b>
                         </h5>
-                        <div class="sharethis-inline-share-buttons my-2"></div>
-                        <div class="mt-4 text-justify articleText">
+                        <div class="sharethis-inline-share-buttons my-4" style='z-index: 9;'></div>
+                        @if($article->writer_flag)
+                        <h4 class="card-title text-capitalize articleTitle">
+                            Written by: <a href='https://facebook.com/{{ $article->writer->facebook_link }}' class='text-danger'>{{ $article->writer->name }}</a>
+                        </h4>
+                        @endif
+                        <div class="mt-2 text-justify articleText">
                             {!! $article->content !!}
                         </div>
                         <div class="sharethis-inline-share-buttons my-4"></div>

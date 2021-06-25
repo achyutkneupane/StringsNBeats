@@ -13,11 +13,28 @@ div.articleText p iframe {
     width:100% !important;
     height: 400px !important;
 }
+div.articleText div div div img {
+    width: 100% !important;
+    height: auto !important;
+}
+div.articleText p img {
+    width: 100% !important;
+    height: auto !important;
+}
+.mce-content-body div div div img {
+    width: 100% !important;
+    height: auto !important;
+}
+#tinymce.mce-content-body p img {
+    width: 100% !important;
+    height: auto !important;
+}
 @media only screen and (max-width: 770px) {
     .logoText {
         font-size: xx-large;
     }
     div.articleText p iframe {
+        width: 100% !important;
         height: 250px !important;
     }
     .articleTitle

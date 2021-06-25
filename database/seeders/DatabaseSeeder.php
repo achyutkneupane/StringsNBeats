@@ -32,6 +32,15 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'verify_token' => sha1(sha1(time())),
         ]);
+        User::create([
+            'name' => 'Steve Dewan',
+            'email' => 'jhilkeyandthecompany@gmail.com',
+            'password' => Hash::make('SteveJATC@SNB@123'),
+            'facebook_link' => 'JhilkeyAndTheCompany',
+            'role' => 'editor',
+            'email_verified_at' => now(),
+            'verify_token' => sha1(sha1(time())),
+        ]);
         Category::create([
             'title' => 'News',
             'slug' => 'news'

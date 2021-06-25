@@ -14,7 +14,7 @@
         <a href="mailto:info@stringsnbeats.net" target="_blank"><i class="text-white fas fa-envelope"></i></a>
     </div>
 </div>
-<div class="my-2 bg-white col-12 d-flex flex-column justify-content-between">
+<div class="my-2 bg-white col-12 d-flex flex-column justify-content-between sticky-top" style='z-index: 10;'>
     <h2 class="text-center col-12 text-danger text-uppercase display-4 logoText">
         {{ config('app.name') }}
     </h2>
