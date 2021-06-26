@@ -14,7 +14,7 @@ class Articles extends Component
     }
     public function render()
     {
-        $articles = Article::with('category')->get();
+        $articles = Article::orderBy('created_at','DESC')->with('category','writer')->get();
         return view('livewire.admin.articles',compact('articles'));
     }
 }

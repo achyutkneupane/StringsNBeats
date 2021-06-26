@@ -42,8 +42,8 @@
                                         <p class="card-text">
                                             <div class="container">
                                                 <div class="form-row">
-                                                    <div class="form-group col-lg-12 d-flex flex-row justify-content-between">
-                                                        <div class="text-center d-flex flex-row">
+                                                    <div class="flex-row form-group col-lg-12 d-flex justify-content-between">
+                                                        <div class="flex-row text-center d-flex">
                                                             <div class="p-1">Featured:</div>
                                                             <label class="switch">
                                                                 <input type="checkbox" wire:model='featured'>
@@ -59,7 +59,7 @@
                                                                     Draft
                                                                 </div>
                                                             </button>
-                                                            <button class="btn btn-outline-danger ml-2" wire:click="editArticle" wire:loading.attr='disabled'>
+                                                            <button class="ml-2 btn btn-outline-danger" wire:click="editArticle" wire:loading.attr='disabled'>
                                                                 <div wire:loading wire:target='editArticle'>
                                                                     Saving
                                                                 </div>
@@ -84,19 +84,12 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-row">
+                                                <div class="form-row" wire:ignore>
                                                     <div class="form-group col-lg-12">
                                                         <div class="d-flex justify-content-between">
                                                             <label for="articleTags">Tags</label>
                                                         </div>
-                                                        <div class="d-flex flex-row my-2">
-                                                            <input type="text" wire:model.lazy='addTagValue' class="form-control" placeholder="Enter Tag Title">
-                                                            <button class="btn btn-danger py-1 ml-2" wire:click="addTag">Add</button>
-                                                        </div>
-                                                        @error('addTagValue')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                        <select class="form-control" id="articleTags" wire:model.lazy="articleTags" multiple="multiple">
+                                                        <select class="form-control select2" id="articleTags" wire:model.lazy="articleTags" multiple="multiple">
                                                             @foreach($tags as $tag)
                                                                 <option value="{{ $tag->id }}">{{ $tag->title }}</option>
                                                             @endforeach
@@ -106,19 +99,12 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="form-row">
+                                                <div class="form-row" wire:ignore>
                                                     <div class="form-group col-lg-12">
                                                         <div class="d-flex justify-content-between">
                                                             <label for="artists">Artists</label>
                                                         </div>
-                                                        <div class="d-flex flex-row my-2">
-                                                            <input type="text" wire:model.lazy='addArtistValue' class="form-control" placeholder="Enter Artist Name">
-                                                            <button class="btn btn-danger py-1 ml-2" wire:click="addArtist">Add</button>
-                                                        </div>
-                                                        @error('addArtistValue')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                        <select class="form-control" id="artists" wire:model.lazy="artists" multiple="multiple">
+                                                        <select class="form-control select2" id="artists" wire:model.lazy="artists" multiple="multiple">
                                                             @foreach($artistList as $artist)
                                                                 <option value="{{ $artist->id }}">{{ $artist->name }}</option>
                                                             @endforeach
@@ -163,6 +149,7 @@
     </div>
 </div>
 @push('styles')
+<link href="{{ asset('admin/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 <style>
     .switch {
     position: relative;
@@ -225,11 +212,39 @@
     .slider.round:before {
     border-radius: 50%;
     }
+    .select2-selection__choice {
+    -webkit-box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05) !important;
+    -moz-box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05) !important;
+    color: black !important;
+    border: 1px solid #aaaaaa !important;
+    }
 </style>
 @endpush
 @push('scripts')
+<script src="{{ asset('admin/plugins/select2/js/select2.min.js') }}" defer></script>
 <script src="https://cdn.tiny.cloud/1/p47paciinlfiov1oumn6ftva8g3x4qwt5z2z3258ayqs6lf4/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
+    $(document).ready(function() {
+        $('#articleTags').select2({
+            placeholder: "Select a tag",
+            allowClear: true,
+            tags: true,
+        });
+        $('#artists').select2({
+            placeholder: "Select an Artist",
+            allowClear: true,
+            tags: true,
+        });
+        $('#articleTags').on('change', function (e) {
+            var data = $('#articleTags').select2("val");
+            @this.set('articleTags', data);
+        });
+        $('#artists').on('change', function (e) {
+            var data = $('#artists').select2("val");
+            @this.set('artists', data);
+        });
+    });
     tinymce.init({
         selector: 'textarea#articleContent',
         height: 800,

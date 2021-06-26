@@ -26,7 +26,7 @@ class EditArticle extends Component
     ];
     public function mount($articleId)
     {
-        $article = Article::with('category','tags','artists')->find($articleId);
+        $article = Article::with('category','tags','artists','writer')->find($articleId);
         // dd($article);
         $this->articleTitle = $article->title;
         $this->articleContent = $article->content;
@@ -46,31 +46,14 @@ class EditArticle extends Component
             $this->featuredImageView = false;
         }
         elseif($propertyName == 'articleContent') {
-            $this->saveAsDraft();
+            if($this->article->writer->id == auth()->id())
+                $this->saveAsDraft();
         }
-    }
-    public function addArtist()
-    {
-        $this->validate([
-            'addArtistValue' => 'required'
-        ]);
-        Artist::create([
-            'name' => $this->addArtistValue
-        ]);
-        $this->reset('addArtistValue');
-    }
-    public function addTag()
-    {
-        $this->validate([
-            'addTagValue' => 'required'
-        ]);
-        Tag::create([
-            'title' => $this->addTagValue
-        ]);
-        $this->reset('addTagValue');
     }
     public function editArticle()
     {
+        $articleTags = array();
+        $artists = array();
         $this->validate();
         $article = $this->article;
         if(!$this->featuredImageView) {
@@ -90,12 +73,42 @@ class EditArticle extends Component
         $article->status =  'active';
         $article->category_id =  $this->articleCategory;
         $article->save();
-        $article->tags()->sync($this->articleTags);
-        $article->artists()->sync($this->artists);
+        foreach($this->articleTags as $tag)
+        {
+            if(!Tag::where('id',$tag)->count())
+            {
+                $t = Tag::create([
+                    'title' => $tag
+                ]);
+                array_push($articleTags,$t->id);
+            }
+            else
+            {
+                array_push($articleTags,$tag);
+            }
+        }
+        foreach($this->artists as $artist)
+        {
+            if(!Artist::where('id',$artist)->count())
+            {
+                $a = Artist::create([
+                    'name' => $artist
+                ]);
+                array_push($artists,$a->id);
+            }
+            else
+            {
+                array_push($artists,$artist);
+            }
+        }
+        $article->tags()->sync($articleTags);
+        $article->artists()->sync($artists);
         redirect()->route('adminEditArticles',$article->id);
     }
     public function saveAsDraft()
     {
+        $articleTags = array();
+        $artists = array();
         $this->validate([
             'articleTitle' => 'required',
         ]);
@@ -113,8 +126,36 @@ class EditArticle extends Component
         $article->status =  'draft';
         $article->category_id =  $this->articleCategory;
         $article->save();
-        $article->tags()->sync($this->articleTags);
-        $article->artists()->sync($this->artists);
+        foreach($this->articleTags as $tag)
+        {
+            if(!Tag::where('id',$tag)->count())
+            {
+                $t = Tag::create([
+                    'title' => $tag
+                ]);
+                array_push($articleTags,$t->id);
+            }
+            else
+            {
+                array_push($articleTags,$tag);
+            }
+        }
+        foreach($this->artists as $artist)
+        {
+            if(!Artist::where('id',$artist)->count())
+            {
+                $a = Artist::create([
+                    'name' => $artist
+                ]);
+                array_push($artists,$a->id);
+            }
+            else
+            {
+                array_push($artists,$artist);
+            }
+        }
+        $article->tags()->sync($articleTags);
+        $article->artists()->sync($artists);
     }
     public function render()
     {

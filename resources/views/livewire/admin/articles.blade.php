@@ -29,7 +29,7 @@
                                                 @if($articles->count() > 0)
                                                 @foreach ($articles as $article)
                                                 <tr>
-                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                    <th scope="row">{{ $article->id }}</th>
                                                     <td>
                                                         {{ $article->title }}
                                                     </td>

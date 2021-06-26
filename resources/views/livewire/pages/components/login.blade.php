@@ -1,11 +1,11 @@
-<div class="col-12 mt-5 mb-2">
+<div class="mt-5 mb-2 col-12">
     <div class="container">
         <div class="d-flex justify-content-between row">
-            <div class="col-md-12 d-flex flex-column justify-content-center items-center">
+            <div class="items-center col-md-12 d-flex flex-column justify-content-center">
                 <h3 class="text-center text-uppercase">
                     Sign In
                 </h3>
-                <div class="row my-4 justify-content-center">
+                <div class="my-4 row justify-content-center">
                     <div class="d-flex flex-column col-lg-7">
                         <div class="form-group col-12">
                             <label>Email</label>
@@ -24,10 +24,10 @@
                         <div class="form-group col-12 d-flex justify-content-center">
                             <button class="btn btn-danger" wire:click="signIn" wire:loading.attr="disabled">
                                 <div wire:loading wire:target='signIn'>
-                                    Sending.............
+                                    Logging In.............
                                 </div>
                                 <div wire:loading.remove wire:target='signIn'>
-                                    Send
+                                    Login
                                 </div>
                             </button>
                         </div>
