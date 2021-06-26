@@ -28,8 +28,10 @@ class ArticleView extends Component
         {
             $this->keywords = $this->keywords.$artist->name.',';
         }
-        $this->article->views++;
-        $this->article->save();
+        if(!!!auth()->id()) {
+            $this->article->views++;
+            $this->article->save();
+        }
         return view('livewire.pages.article-view');
     }
 }
