@@ -7,7 +7,7 @@
                     <a class="carousel-item{{ $loop->first ? ' active' : '' }}" href="{{ route('viewArticle',$article->slug) }}">
                         <img class="d-block w-100" src="{{ asset('storage/'.$article->featured_image) }}" style="opacity: 0.3" alt="{{ $article->title }} - {{ config('app.name') }}" height="400">
                         <div class="carousel-caption">
-                            <div class="text-dark text-uppercase h2">{{ $article->title }}</div>
+                            <div class="text-dark text-uppercase h2" style='z-index: 30;'>{{ $article->title }}</div>
                         </div>
                     </a>
                     @endforeach

@@ -29,7 +29,7 @@
                         <div class="mt-2 text-justify articleText">
                             {!! $article->content !!}
                         </div>
-                        <div class="sharethis-inline-share-buttons my-4"></div>
+                        <div class="sharethis-inline-share-buttons my-4" style='z-index: 9;'></div>
                         <div class="py-3 my-2 col-12">
                             <h2>Comments</h2>
                             @livewire('pages.components.comments', ['articleId' => $article->id])
