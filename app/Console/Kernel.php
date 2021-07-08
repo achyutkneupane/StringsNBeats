@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Mail\YoutubeDateErrorMail;
+use App\Mail\YoutubeErrorMail;
 use App\Models\YoutubeLink;
 use App\Notifications\YoutubeNotification;
 use Carbon\Carbon;
@@ -11,6 +13,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -62,7 +65,7 @@ class Kernel extends ConsoleKernel
                 199999000 => '199M 999K',
                 200000000 => '200M',
             ];
-            $api = 'AIzaSyASI7DID43nrOlejpE66ljAgZzNjFIFZYE';
+            $api = 'AIzaSyCzPpA1160huBOEubGV-oF-2Eatk-vzwrE';
             $videos = YoutubeLink::pluck('link')->chunk(50);
             foreach($videos as $videoArray) {
                 $videoLink = "https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,id&key=".$api."&id=".$videoArray->join(',');
@@ -88,27 +91,36 @@ class Kernel extends ConsoleKernel
                     Cache::forget('videoStat-'.$videoId);
                     Cache::rememberForever('videoStat-'.$videoId,function() use($stat) { return json_encode($stat); });
                     if($oldview != NULL) {
-                        try{
-                            if($oldview != $view) {
-                                foreach($points as $index => $point) {
-                                    if($oldview < $index && $view >= $index) {
+                        if($oldview != $view) {
+                            foreach($points as $index => $point) {
+                                if($oldview < $index && $view >= $index) {
+                                    try {
                                         Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." has crossed ".$point." views."));
+                                        }
+                                    catch(Exception $e) {
+                                        Mail::to('youtubeerror@stringsnbeats.net')
+                                            ->send(new YoutubeErrorMail($videoId,$videoInfo->snippet->title,$point));
                                     }
                                 }
                             }
-                            if($releaseDate->isBirthday() && !Cache::has('releaseNotifier-'.$videoId)) {
-                                Cache::rememberForever('releaseNotifier-'.$videoId,function() { return TRUE; });
-                                if(!$releaseDate->isToday())
-                                {
-                                    $diff = $releaseDate->diffInYears() +1;
+                        }
+                        if($releaseDate->isBirthday() && !Cache::has('releaseNotifier-'.$videoId)) {
+                            Cache::rememberForever('releaseNotifier-'.$videoId,function() { return TRUE; });
+                            if(!$releaseDate->isToday())
+                            {
+                                $diff = $releaseDate->diffInYears() +1;
+                                try {
                                     Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." was released on this day ".$diff." year(s) ago."));
                                 }
-                            }
-                            else if(!$releaseDate->isBirthday() && Cache::has('releaseNotifier-'.$videoId)) {
-                                Cache::forget('releaseNotifier-'.$videoId);
+                                catch(Exception $e) {
+                                    Mail::to('youtubeerror@stringsnbeats.net')
+                                        ->send(new YoutubeDateErrorMail($videoId,$videoInfo->snippet->title,$diff));
+                                }
+                                
                             }
                         }
-                        catch(Exception $e) {
+                        else if(!$releaseDate->isBirthday() && Cache::has('releaseNotifier-'.$videoId)) {
+                            Cache::forget('releaseNotifier-'.$videoId);
                         }
                     }
                 }
