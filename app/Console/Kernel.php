@@ -10,7 +10,7 @@ use GuzzleHttp\Client;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 
 class Kernel extends ConsoleKernel
 {
@@ -76,7 +76,7 @@ class Kernel extends ConsoleKernel
                     $videoId = $videoInfo->id;
                     $view = $videoInfo->statistics->viewCount;
                     $releaseDate = Carbon::parse($videoInfo->snippet->publishedAt);
-                    $oldview = Redis::exists('videoStat:'.$videoId) ? json_decode(Redis::get('videoStat:'.$videoId))->views : NULL;
+                    $oldview = Cache::has('videoStat-'.$videoId) ? json_decode(Cache::get('videoStat-'.$videoId))->views : NULL;
                     if($oldview != NULL) {
                         $stat->put('views',$view);
                         $stat->put('oldView',$oldview);
@@ -85,8 +85,8 @@ class Kernel extends ConsoleKernel
                         $stat->put('views',$view);
                     $stat->put('id',$videoId);
                     $stat->put('date',$releaseDate);
-                    Redis::del('videoStat:'.$videoId);
-                    Redis::set('videoStat:'.$videoId,json_encode($stat));
+                    Cache::forget('videoStat-'.$videoId);
+                    Cache::rememberForever('videoStat-'.$videoId,function() use($stat) { return json_encode($stat); });
                     if($oldview != NULL) {
                         try{
                             if($oldview != $view) {
@@ -96,13 +96,16 @@ class Kernel extends ConsoleKernel
                                     }
                                 }
                             }
-                            if($releaseDate->isBirthday() && !Redis::exists('releaseNotifier:'.$videoId)) {
-                                Redis::set('releaseNotifier:'.$videoId,TRUE);
+                            if($releaseDate->isBirthday() && !Cache::has('releaseNotifier-'.$videoId)) {
+                                Cache::rememberForever('releaseNotifier-'.$videoId,function() { return TRUE; });
                                 if(!$releaseDate->isToday())
-                                    Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." was released on this day ".$releaseDate->diffInYears()." year(s) ago."));
+                                {
+                                    $diff = $releaseDate->diffInYears() +1;
+                                    Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." was released on this day ".$diff." year(s) ago."));
+                                }
                             }
-                            else if(!$releaseDate->isBirthday() && Redis::exists('releaseNotifier:'.$videoId)) {
-                                Redis::del('releaseNotifier:'.$videoId);
+                            else if(!$releaseDate->isBirthday() && Cache::has('releaseNotifier-'.$videoId)) {
+                                Cache::forget('releaseNotifier-'.$videoId);
                             }
                         }
                         catch(Exception $e) {
@@ -110,7 +113,7 @@ class Kernel extends ConsoleKernel
                     }
                 }
             }
-        })->everyFifteenMinutes();
+        })->cron('0,20,40 * * * *')->runInBackground();
     }
 
     /**
