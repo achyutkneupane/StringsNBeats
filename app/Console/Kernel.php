@@ -125,7 +125,7 @@ class Kernel extends ConsoleKernel
                     }
                 }
             }
-        })->cron('0,20,40 * * * *')->runInBackground();
+        });
     }
 
     /**

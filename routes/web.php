@@ -31,7 +31,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/',LandingPage::class)->name('homepage');
 
 
