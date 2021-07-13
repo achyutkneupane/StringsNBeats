@@ -36,9 +36,9 @@ Route::get('robots.txt', function(Robots $robots) {
     }
     return response($robots->generate(), 200, ['Content-Type' => 'text/plain']);
 });
-Route::get('/youtube', AddYoutube::class)->middleware('auth');
 Route::prefix('/panel')->middleware('auth')->group(function() {
     Route::get('/',Dashboard::class)->name('adminDashboard');
+    Route::get('/youtube', AddYoutube::class)->middleware('auth');
     Route::get('/articles',Articles::class)->name('adminArticles');
     Route::get('/articles/add',AddArticle::class)->name('adminAddArticles');
     Route::get('/articles/edit/{articleId}',EditArticle::class)->name('adminEditArticles');

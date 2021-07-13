@@ -43,6 +43,7 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=G-HS0XEPQE5K"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    <script data-ad-client="ca-pub-2094944997068259" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="g8kQzHJudE0myLYnBHSKkZbNQzmQrGtndQGZ6GkLZDI" />
