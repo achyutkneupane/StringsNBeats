@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Mail\YoutubeDateErrorMail;
 use App\Mail\YoutubeErrorMail;
+use App\Models\Article;
 use App\Models\YoutubeLink;
 use App\Notifications\YoutubeNotification;
 use Carbon\Carbon;
@@ -14,6 +15,9 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\SitemapGenerator;
+use Spatie\Sitemap\Tags\Url;
 
 class Kernel extends ConsoleKernel
 {
@@ -34,6 +38,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('route:cache');
+        
+        // Sitemap
+        $schedule->command('sitemap:generate');
+
+        // Youtube
+
         $schedule->call(function () {
             $points = [
                 99000 => '99K',

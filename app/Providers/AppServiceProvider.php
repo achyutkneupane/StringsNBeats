@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use MadWeb\Robots\RobotsFacade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // RobotsFacade::setShouldIndexCallback(function () {
+        //     return app()->environment('production');
+        // });
     }
 }

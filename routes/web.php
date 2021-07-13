@@ -11,6 +11,7 @@ use App\Http\Livewire\Pages\ContactUs;
 use App\Http\Livewire\Pages\LandingPage;
 use App\Http\Livewire\Pages\Login;
 use Illuminate\Support\Facades\Route;
+use MadWeb\Robots\Robots;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',LandingPage::class)->name('homepage');
 
+Route::get('robots.txt', function(Robots $robots) {
+    $robots->addUserAgent('*');
+    if ($robots->shouldIndex()) {
+        $robots->addDisallow('/panel');
+        $robots->addSitemap('sitemap.xml');
+    } else {
+        $robots->addDisallow('/');
+    }
+    return response($robots->generate(), 200, ['Content-Type' => 'text/plain']);
+});
 Route::get('/youtube', AddYoutube::class)->middleware('auth');
 Route::prefix('/panel')->middleware('auth')->group(function() {
     Route::get('/',Dashboard::class)->name('adminDashboard');

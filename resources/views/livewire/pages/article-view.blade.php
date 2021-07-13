@@ -7,7 +7,7 @@
                 <div class="d-flex justify-content-between row">
                     <div class="col-md-9 d-flex flex-column">
                         <div class="text-white card bg-dark">
-                            <img class="card-img" src="{{ asset('storage/'.$article->featured_image) }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}">
+                            <img class="card-img" src="{{ asset('storage/'.$article->featured_image) }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}">
                             <div class="text-center align-middle card-img-overlay d-flex flex-column justify-content-center">
                                 <h1 class="card-title text-capitalize articleTitle">
                                     {{ $article->title }}
@@ -20,7 +20,7 @@
                         <h5 class="text-muted">
                             Posted <b>{{ $article->created_at->diffForHumans() }}</b>
                         </h5>
-                        <div class="sharethis-inline-share-buttons my-4" style='z-index: 9;'></div>
+                        <div class="my-4 sharethis-inline-share-buttons" style='z-index: 9;'></div>
                         @if($article->writer_flag)
                         <h4 class="card-title text-capitalize articleTitle">
                             Written by: <a href='https://facebook.com/{{ $article->writer->facebook_link }}' target='_blank' class='text-danger'>{{ $article->writer->name }}</a>
@@ -29,7 +29,7 @@
                         <div class="mt-2 text-justify articleText">
                             {!! $article->content !!}
                         </div>
-                        <div class="sharethis-inline-share-buttons my-4" style='z-index: 9;'></div>
+                        <div class="my-4 sharethis-inline-share-buttons" style='z-index: 9;'></div>
                         <div class="py-3 my-2 col-12">
                             <h2>Comments</h2>
                             @livewire('pages.components.comments', ['articleId' => $article->id])
