@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\Admin\AddArticle;
+use App\Http\Livewire\Admin\AddYoutube;
 use App\Http\Livewire\Admin\Articles;
 use App\Http\Livewire\Admin\EditArticle;
 use App\Http\Livewire\Admin\Dashboard;
@@ -9,15 +10,6 @@ use App\Http\Livewire\Pages\ArticleView;
 use App\Http\Livewire\Pages\ContactUs;
 use App\Http\Livewire\Pages\LandingPage;
 use App\Http\Livewire\Pages\Login;
-use App\Mail\YoutubeDateErrorMail;
-use App\Mail\YoutubeErrorMail;
-use App\Models\YoutubeLink;
-use App\Notifications\YoutubeNotification;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',LandingPage::class)->name('homepage');
 
-
+Route::get('/youtube', AddYoutube::class)->middleware('auth');
 Route::prefix('/panel')->middleware('auth')->group(function() {
     Route::get('/',Dashboard::class)->name('adminDashboard');
     Route::get('/articles',Articles::class)->name('adminArticles');
