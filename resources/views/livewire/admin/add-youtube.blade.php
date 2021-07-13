@@ -18,23 +18,20 @@
         <div class="my-2 text-center">
             <input class="p-3 btn btn-danger" type="submit" value='Store Channel' wire:click='saveChannel'>
         </div>
-        <form method="post" wire:submit.prevent="saveVideo" class="mx-auto vw-50 d-flex flex-column">
-            @csrf
-            @if(session()->has('VideoSaved'))
-            <div class="my-2 text-center alert alert-success" role='alert'>
-                {!! session('VideoSaved') !!}
-            </div>
-            @endif
-            <div class="px-4 my-2 text-center">
-                <input type="text" id="video" wire:model.lazy="videoLink" placeholder='Insert Youtube Video tag' class="p-3 border">
-                @error('videoLink')
-                    <div class="my-2 text-center alert alert-danger" role='alert'>{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="my-2 text-center">
-                <input class="p-3 btn btn-danger" type="submit" value='Store Video'>
-            </div>
-        </form>
+        @if(session()->has('VideoSaved'))
+        <div class="my-2 text-center alert alert-success" role='alert'>
+            {!! session('VideoSaved') !!}
+        </div>
+        @endif
+        <div class="px-4 my-2 text-center">
+            <input type="text" id="video" wire:model.lazy="videoLink" placeholder='Insert Youtube Video tag' class="p-3 border">
+            @error('videoLink')
+                <div class="my-2 text-center alert alert-danger" role='alert'>{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="my-2 text-center">
+            <input class="p-3 btn btn-danger" type="submit" value='Store Video' wire:click='saveVideo'>
+        </div>
         <div class="text-xl text-center">
             We have stored <div class="text-danger d-inline">{{ $channels }}</div> channels and total <div class="d-inline text-danger">{{ $links }}</div> youtube links.
         </div>
