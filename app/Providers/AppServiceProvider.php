@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // RobotsFacade::setShouldIndexCallback(function () {
-        //     return app()->environment('production');
-        // });
+        RobotsFacade::setShouldIndexCallback(function () {
+            return app()->environment('production');
+        });
     }
 }
