@@ -12,7 +12,7 @@ class ArticleView extends Component
     public function mount($slug)
     {
         $this->slug = $slug;
-        $this->keywords = '';
+        $this->keywords = 'StringsNBeats,stringsnbeats.net,strings n beats Nepal,Nepal,Nepali Music,Nepali Artists,Nepali song';
     }
     public function render()
     {
@@ -20,7 +20,7 @@ class ArticleView extends Component
         if($this->article) {
             $this->latests = Article::orderBy('created_at','DESC')->where('status','active')->take(5)->get();
             $this->description = Str::limit(strip_tags($this->article->content),200);
-            $this->keywords = $this->article->title.','.$this->article->category->title.',';
+            $this->keywords = $this->keywords.','.$this->article->title.','.$this->article->slug.','.$this->article->category->title.',';
             foreach($this->article->tags as $tag)
             {
                 $this->keywords = $this->keywords.$tag->title.',';
