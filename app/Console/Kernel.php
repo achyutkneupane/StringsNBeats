@@ -34,9 +34,9 @@ class Kernel extends ConsoleKernel
         // Sitemap
         $schedule->command('sitemap:generate');
 
-        // Youtube
+        // Queue
 
-        $schedule->command('youtube:start');
+        $schedule->command('queue:work');
 
     }
 
