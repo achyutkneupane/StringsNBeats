@@ -50,7 +50,7 @@ class YoutubeCheck extends Command
      */
     public function handle()
     {
-        Mail::to('cronjobreport@stringsnbeats.net')->send(new CronStarted());
+        // Mail::to('cronjobreport@stringsnbeats.net')->send(new CronStarted());
         $points = [
             99000 => '99K',
             100000 => '100K',
@@ -144,7 +144,7 @@ class YoutubeCheck extends Command
                         Cache::forget('releaseNotifier-'.$videoId);
                     }
                 }
-                $this->newLine();
+                // $this->newLine();
             }
         }
         $channels = YoutubeChannel::pluck('link')->chunk(50);
