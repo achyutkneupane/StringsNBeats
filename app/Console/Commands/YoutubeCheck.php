@@ -94,7 +94,7 @@ class YoutubeCheck extends Command
             {
                 $stat = collect();
                 $videoId = $videoInfo->id;
-                $this->line('Checking for '.$videoId);
+                // $this->line('Checking for '.$videoId);
                 $view = $videoInfo->statistics->viewCount;
                 $releaseDate = Carbon::parse($videoInfo->snippet->publishedAt);
                 $oldview = Cache::has('videoStat-'.$videoId) ? json_decode(Cache::get('videoStat-'.$videoId))->views : NULL;
@@ -159,7 +159,7 @@ class YoutubeCheck extends Command
             {
                 $stat = collect();
                 $channelId = $channelInfo->id;
-                $this->line('Checking for '.$channelId);
+                // $this->line('Checking for '.$channelId);
                 if(isset($channelInfo->statistics->subscriberCount)) {
                     $subscribers = $channelInfo->statistics->subscriberCount;
                     $oldSubs = Cache::has('channelStat-'.$channelId) ? json_decode(Cache::get('channelStat-'.$channelId))->subscribers : NULL;
