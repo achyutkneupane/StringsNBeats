@@ -112,6 +112,7 @@ class YoutubeCheck extends Command
                                     Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." has crossed ".$point." views."));
                                     }
                                 catch(Exception $e) {
+                                    $this->error('Error with '.$videoId);
                                     Mail::to('youtubeerror@stringsnbeats.net')
                                         ->send(new YoutubeErrorMail($videoId,$videoInfo->snippet->title,$point));
                                 }
@@ -127,6 +128,7 @@ class YoutubeCheck extends Command
                                 Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." was released on this day ".$diff." year(s) ago."));
                             }
                             catch(Exception $e) {
+                                $this->error('Error with '.$videoId);
                                 Mail::to('youtubeerror@stringsnbeats.net')
                                     ->send(new YoutubeDateErrorMail($videoId,$videoInfo->snippet->title,$diff));
                             }
