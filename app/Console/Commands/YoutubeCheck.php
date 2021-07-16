@@ -2,9 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\CronStarted;
+use App\Mail\YoutubeChannelError;
 use Illuminate\Console\Command;
 use App\Mail\YoutubeDateErrorMail;
 use App\Mail\YoutubeErrorMail;
+use App\Models\YoutubeChannel;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
@@ -47,6 +50,7 @@ class YoutubeCheck extends Command
      */
     public function handle()
     {
+        Mail::to('cronjobreport@stringsnbeats.net')->send(new CronStarted());
         $points = [
             99000 => '99K',
             100000 => '100K',
@@ -78,7 +82,7 @@ class YoutubeCheck extends Command
             200000000 => '200M',
         ];
         $api = 'AIzaSyCzPpA1160huBOEubGV-oF-2Eatk-vzwrE';
-        $this->info('Using Api: '.$api);
+        $this->line('Using Api: '.$api);
         $videos = YoutubeLink::pluck('link')->chunk(50);
         foreach($videos as $videoArray) {
             $videoLink = "https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,id&key=".$api."&id=".$videoArray->join(',');
@@ -90,7 +94,7 @@ class YoutubeCheck extends Command
             {
                 $stat = collect();
                 $videoId = $videoInfo->id;
-                $this->info('Checking for '.$videoId);
+                $this->line('Checking for '.$videoId);
                 $view = $videoInfo->statistics->viewCount;
                 $releaseDate = Carbon::parse($videoInfo->snippet->publishedAt);
                 $oldview = Cache::has('videoStat-'.$videoId) ? json_decode(Cache::get('videoStat-'.$videoId))->views : NULL;
@@ -100,6 +104,7 @@ class YoutubeCheck extends Command
                 }
                 else
                     $stat->put('views',$view);
+                $stat->put('thumbnail',$videoInfo->snippet->thumbnails->high->url);
                 $stat->put('id',$videoId);
                 $stat->put('date',$releaseDate);
                 Cache::forget('videoStat-'.$videoId);
@@ -140,6 +145,51 @@ class YoutubeCheck extends Command
                     }
                 }
                 $this->newLine();
+            }
+        }
+        $channels = YoutubeChannel::pluck('link')->chunk(50);
+        foreach($channels as $channelArray)
+        {
+            $channelLink = "https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet,status&maxResults=50&key=".$api."&id=".$channelArray->join(',');
+            $channelClient = new Client();
+            $requestChannel = $channelClient->get($channelLink);
+            $resultChannel = json_decode($requestChannel->getBody());
+            $channelCollection = $resultChannel->items;
+            foreach($channelCollection as $channelInfo)
+            {
+                $stat = collect();
+                $channelId = $channelInfo->id;
+                $this->line('Checking for '.$channelId);
+                if(isset($channelInfo->statistics->subscriberCount)) {
+                    $subscribers = $channelInfo->statistics->subscriberCount;
+                    $oldSubs = Cache::has('channelStat-'.$channelId) ? json_decode(Cache::get('channelStat-'.$channelId))->subscribers : NULL;
+                    if($oldSubs != NULL) {
+                        $stat->put('subscribers',$subscribers);
+                        $stat->put('oldSubs',$oldSubs);
+                    }
+                    else
+                        $stat->put('subscribers',$subscribers);
+                    $stat->put('thumbnail',$channelInfo->snippet->thumbnails->high->url);
+                    $stat->put('id',$channelId);
+                    Cache::forget('channelStat-'.$channelId);
+                    Cache::rememberForever('channelStat-'.$channelId,function() use($stat) { return json_encode($stat); });
+                    if($oldSubs != NULL) {
+                        if($oldSubs != $subscribers) {
+                            foreach($points as $index => $point) {
+                                if($oldSubs < $index && $subscribers >= $index) {
+                                    try {
+                                        Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/channel/".$channelId." has crossed ".$point." subscribers."));
+                                        }
+                                    catch(Exception $e) {
+                                        $this->error('Error with channel '.$channelId);
+                                        Mail::to('youtubeerror@stringsnbeats.net')
+                                            ->send(new YoutubeChannelError($channelId,$channelInfo->snippet->title,$point));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         $this->newLine();
