@@ -78,6 +78,7 @@ class YoutubeCheck extends Command
             200000000 => '200M',
         ];
         $api = 'AIzaSyCzPpA1160huBOEubGV-oF-2Eatk-vzwrE';
+        $this->info('Using Api: '.$api);
         $videos = YoutubeLink::pluck('link')->chunk(50);
         foreach($videos as $videoArray) {
             $videoLink = "https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet,id&key=".$api."&id=".$videoArray->join(',');
@@ -89,6 +90,7 @@ class YoutubeCheck extends Command
             {
                 $stat = collect();
                 $videoId = $videoInfo->id;
+                $this->info('Checking for '.$videoId);
                 $view = $videoInfo->statistics->viewCount;
                 $releaseDate = Carbon::parse($videoInfo->snippet->publishedAt);
                 $oldview = Cache::has('videoStat-'.$videoId) ? json_decode(Cache::get('videoStat-'.$videoId))->views : NULL;
@@ -107,7 +109,7 @@ class YoutubeCheck extends Command
                         foreach($points as $index => $point) {
                             if($oldview < $index && $view >= $index) {
                                 try {
-                                    // Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." has crossed ".$point." views."));
+                                    Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." has crossed ".$point." views."));
                                     }
                                 catch(Exception $e) {
                                     Mail::to('youtubeerror@stringsnbeats.net')
@@ -116,13 +118,13 @@ class YoutubeCheck extends Command
                             }
                         }
                     }
-                    if($releaseDate->isBirthday() && !Cache::has('releaseNotifier-'.$videoId)) {
-                        Cache::rememberForever('releaseNotifier-'.$videoId,function() { return TRUE; });
+                    if($releaseDate->isBirthday() && !Cache::has('releasedNotifier-'.$videoId)) {
+                        Cache::rememberForever('releasedNotifier-'.$videoId,function() { return TRUE; });
                         if(!$releaseDate->isToday())
                         {
                             $diff = $releaseDate->diffInYears() +1;
                             try {
-                                // Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." was released on this day ".$diff." year(s) ago."));
+                                Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." was released on this day ".$diff." year(s) ago."));
                             }
                             catch(Exception $e) {
                                 Mail::to('youtubeerror@stringsnbeats.net')
@@ -135,7 +137,10 @@ class YoutubeCheck extends Command
                         Cache::forget('releaseNotifier-'.$videoId);
                     }
                 }
+                $this->newLine();
             }
         }
+        $this->newLine();
+        $this->info('Completed!');
     }
 }
