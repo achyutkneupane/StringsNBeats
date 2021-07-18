@@ -1,7 +1,7 @@
 <div class="flex-row col-12 d-flex justify-content-between">
     <div class="container-fluid">
         <div class="row">
-            <div id="featuredArticles" class="mt-2 carousel slide col-md-8" data-ride="carousel">
+            <div id="featuredArticles" class="mt-2 carousel slide col-lg-8" data-ride="carousel">
                 <div class="carousel-inner">
                     @foreach($featured as $article)
                     <a class="carousel-item{{ $loop->first ? ' active' : '' }}" href="{{ route('viewArticle',$article->slug) }}">
@@ -21,14 +21,14 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4">
                 <div class="d-flex flex-column">
                     <h3 class="py-1 my-2 text-white col-12 font-weight-bold text-uppercase bg-danger">
                         Latest Articles
                     </h3>
                     @if($latests->count() > 0)
                     @foreach($latests as $latest)
-                    <a href="{{ route('viewArticle',$latest->slug) }}" class="flex-row my-1 ml-0 d-flex col-md-12 row">
+                    <a href="{{ route('viewArticle',$latest->slug) }}" class="flex-row my-1 ml-0 d-flex col-lg-12 row">
                         <div class="px-0 col-4 row" style="width:100%;"><img src="{{ $latest->cover->getUrl('small') }}" alt="{{ $latest->title }} - {{ config('app.name') }}" title="{{ $latest->title }} - {{ config('app.name') }}" style="height:100px;" class="px-0 col-12"></div>
                         <div class="pl-4 col-8 d-flex flex-column justify-content-center">
                             <h6>{{ $latest->title }}</h6>
@@ -36,7 +36,7 @@
                     </a>
                     @endforeach
                     @else
-                    <div class="py-2 text-center border col-md-12 h5">
+                    <div class="py-2 text-center border col-lg-12 h5">
                         No Articles published
                     </div>
                     @endif
