@@ -11,7 +11,7 @@
 <meta name="title" content="Contact Us - {{ config('app.name', 'Laravel') }}">
 <meta name="description" content="Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more.">
 <meta name="keywords" content="Strings N' Beats,StringsNBeats,stringsnbeats,stringsnbeats.net,stringsnbeats.com,stringsnbeatsnepal,music,Nepal,Nepali,Nepalese Music,Lyrics,Cover">
-<meta property='article:published_time' content='{{ Carbon::create('2021', '6', '6') }}' />
+<meta property='article:published_time' content='{{ Carbon\Carbon::create('2021', '6', '6') }}' />
 <meta property='article:section' content='website' />
 
 <meta property="og:type" content="website">
