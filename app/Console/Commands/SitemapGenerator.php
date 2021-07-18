@@ -5,8 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Article;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Spatie\Sitemap\Sitemap;
-use Spatie\Sitemap\Tags\Url;
+use Watson\Sitemap\Facades\Sitemap;
 
 class SitemapGenerator extends Command
 {
@@ -41,25 +40,28 @@ class SitemapGenerator extends Command
      */
     public function handle()
     {
-        $sitemap = Sitemap::create('https://stringsnbeats.net');
-        $sitemap->add(Url::create('/')
-                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
-                ->setLastModificationDate(Carbon::create('2021', '6', '6'))
-                ->setPriority(1));
-        $sitemap->add(Url::create('/contact-us')
-        ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
-                ->setLastModificationDate(Carbon::create('2021', '6', '6'))
-                ->setPriority(0.9));
+        // $sitemap = Sitemap::create('https://stringsnbeats.net');
+        // $sitemap->add(Url::create('/')
+        //         ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+        //         ->setLastModificationDate(Carbon::create('2021', '6', '6'))
+        //         ->setPriority(1));
+        // $sitemap->add(Url::create('/contact-us')
+        // ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+        //         ->setLastModificationDate(Carbon::create('2021', '6', '6'))
+        //         ->setPriority(0.9));
 
-        Article::all()->each(function (Article $article) use ($sitemap) {
-            if($article->status == 'active') {
-                $sitemap->add(Url::create("/{$article->slug}")
-                        ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
-                        ->setLastModificationDate($article->updated_at)
-                        ->setPriority(0.8));
-            }
-        });
+        // Article::all()->each(function (Article $article) use ($sitemap) {
+        //     if($article->status == 'active') {
+        //         $sitemap->add(Url::create("/{$article->slug}")
+        //                 ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+        //                 ->setLastModificationDate($article->updated_at)
+        //                 ->setPriority(0.8));
+        //     }
+        // });
 
-        $sitemap->writeToFile(public_path('sitemap.xml'));
+        // $sitemap->writeToFile(public_path('sitemap.xml'));
+        Sitemap::addSitemap('/sitemaps/general');
+        Sitemap::addSitemap(route('homepage'));
+        dd(Sitemap::index());
     }
 }

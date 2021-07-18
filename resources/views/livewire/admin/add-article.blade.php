@@ -57,6 +57,15 @@
                                                 </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-lg-12">
+                                                        <label for="articleDescription">Description</label>
+                                                        <textarea type="text" class="form-control" wire:model.lazy="articleDescription" placeholder="Enter Description"></textarea>
+                                                        @error('articleDescription')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-lg-12">
                                                         <label for="articleCategory">Category</label>
                                                         <select class="form-control" wire:model.lazy="articleCategory">
                                                             <option value="" disabled selected>Select a category</option>

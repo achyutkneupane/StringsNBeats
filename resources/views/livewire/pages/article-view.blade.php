@@ -7,7 +7,7 @@
                 <div class="d-flex justify-content-between row">
                     <div class="col-md-9 d-flex flex-column">
                         <div class="text-white card bg-dark">
-                            <img class="card-img" src="{{ asset('storage/'.$article->featured_image) }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}">
+                            <img class="card-img" src="{{ $article->cover->getUrl('big') }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}">
                             <div class="text-center align-middle card-img-overlay d-flex flex-column justify-content-center">
                                 <h1 class="card-title text-capitalize articleTitle">
                                     {{ $article->title }}
@@ -56,14 +56,20 @@
 <meta name="title" content="@yield('title') - {{ config('app.name', 'Laravel') }}">
 <meta name="description" content="{{ $description }}">
 <meta name="keywords" content="{{ $keywords }}">
-<meta property="og:type" content="website">
+<meta property='article:published_time' content='{{ $article->created_at }}' />
+<meta property='article:section' content='article' />
+
+<meta property="og:type" content="article">
 <meta property="og:url" content="{{ url()->current() }}">
-<meta property="og:title" content="@yield('title') - {{ config('app.name', 'Laravel') }}">
+<meta property="og:title" content="{{ $article->title }} - {{ config('app.name', 'Laravel') }}">
 <meta property="og:description" content="{{ $description }}">
-<meta property="og:image" content="{{ asset('storage/'.$article->featured_image) }}">
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="{{ url()->current() }}">
-<meta property="twitter:title" content="@yield('title') - {{ config('app.name', 'Laravel') }}">
-<meta property="twitter:description" content="{{ $description }}">
-<meta property="twitter:image" content="{{ asset('storage/'.$article->featured_image) }}">
+<meta property="og:image" content="{{ $article->cover->getUrl() }}">
+<meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="{{ url()->current() }}">
+<meta name="twitter:title" content="{{ $article->title }} - {{ config('app.name', 'Laravel') }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:image" content="{{ $article->cover->getUrl() }}">
+<meta name="twitter:site" content="@strings_beats">
 @endpush

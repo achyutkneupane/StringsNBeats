@@ -12,6 +12,7 @@ use App\Http\Livewire\Pages\LandingPage;
 use App\Http\Livewire\Pages\Login;
 use App\Mail\YoutubeChannelError;
 use App\Mail\YoutubeErrorMail;
+use App\Models\Article;
 use App\Models\YoutubeChannel;
 use App\Notifications\YoutubeNotification;
 use Carbon\Carbon;
@@ -19,8 +20,10 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use MadWeb\Robots\Robots;
+use Watson\Sitemap\Facades\Sitemap;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +38,28 @@ use MadWeb\Robots\Robots;
 
 Route::get('/',LandingPage::class)->name('homepage');
 
+Route::get('/spatiegenerate',function()
+{
+    // foreach(Article::get() as $article) {
+    //     $article->addMediaFromUrl('https://dummyimage.com/3999x3999/ffffff/00CED1?text='.$article->id)
+    //             ->toMediaCollection('cover');
+    // }
+    dd(Article::find(11)->cover->getUrl('big'));
+});
+
+Route::get('/sitemap.xml',function() {
+    $tag = Sitemap::addTag(route('homepage'),Carbon::create('2021', '6', '6'),'weekly',1);
+    $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,config('app.name'));
+    $tag = Sitemap::addTag(route('contactUs'),Carbon::create('2021', '6', '6'),'weekly',0.9);
+    $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,"Contact Us - ".config('app.name'));
+    Article::all()->each(function (Article $article) {
+        if($article->status == 'active') {
+            $tag = Sitemap::addTag(route('viewArticle',$article->slug),$article->updated_at,'weekly',0.8);
+            $tag->addImage($article->cover->getUrl(), $article->description ? $article->description : NULL,NULL,$article->title.' - '.config('app.name'));
+        }
+    });
+    return Sitemap::render();
+});
 Route::get('robots.txt', function(Robots $robots) {
     $robots->addUserAgent('*');
     if ($robots->shouldIndex()) {

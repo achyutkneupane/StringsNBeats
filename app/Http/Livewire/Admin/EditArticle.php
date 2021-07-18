@@ -13,16 +13,18 @@ use Illuminate\Support\Str;
 class EditArticle extends Component
 {
     use WithFileUploads;
-    public $articleTitle,$articleCategory,$artists,$featuredImage,$articleContent,$featured,$featuredImageView;
+    public $articleTitle,$articleCategory,$artists,$featuredImage,$articleContent,$featured,$featuredImageView,$articleDescription,$articleSlug;
     public $addTagValue,$addArtistValue;
     public $tags,$categories,$artistList;
     public $articleTags,$title,$article,$articleContentFinal;
     public $rules = [
-        'articleTitle' => 'required',
+        'articleTitle' => 'required|min:35|max:65',
         'articleCategory' => 'required',
         'articleTags' => 'required',
         'artists' => 'required',
         'featuredImage' => 'required',
+        'articleDescription' => 'required|min:70|max:320',
+        'articleSlug' => 'required',
     ];
     public function mount($articleId)
     {
@@ -34,8 +36,10 @@ class EditArticle extends Component
         $this->featured = $article->featured;
         $this->articleTags = $article->tags->pluck('id');
         $this->artists = $article->artists->pluck('id');
-        $this->featuredImageView = ($article->featured_image !== null);
-        $this->featuredImage = $article->featured_image;
+        $this->articleDescription = $article->description;
+        $this->articleSlug = $article->slug;
+        $this->featuredImageView = ($article->cover !== null);
+        $this->featuredImage = $article->cover->getUrl();
         $this->title = "Edit Article";
         $this->article = $article;
         // $this->articleContentFinal = $this->articleContent;
@@ -56,13 +60,6 @@ class EditArticle extends Component
         $artists = array();
         $this->validate();
         $article = $this->article;
-        if(!$this->featuredImageView) {
-            $extension = $this->featuredImage->extension();
-            $slug = Str::slug($this->articleTitle);
-            $path = 'uploads/'.$slug.'-'.now()->timestamp.'.'.$extension;
-            $this->featuredImage->storeAs('public',$path);
-            $article->featured_image =  $path;
-        }
         $article->title =  $this->articleTitle;
         $article->content =  $this->articleContent;
         $article->featured =  $this->featured;
@@ -72,7 +69,19 @@ class EditArticle extends Component
         }
         $article->status =  'active';
         $article->category_id =  $this->articleCategory;
+        $article->description = $this->articleDescription;
+        $article->slug = $this->articleSlug;
         $article->save();
+        $path = null;
+        if($this->featuredImage) {
+            $extension = $this->featuredImage->extension();
+            $slug = Str::slug($this->articleTitle);
+            $path = $slug.'-'.now()->timestamp.'.'.$extension;
+            $article->addMedia($this->featuredImage->getRealPath())
+                    ->usingFileName($path)
+                    ->usingName($path)
+                    ->toMediaCollection('cover');
+        }
         foreach($this->articleTags as $tag)
         {
             if(!Tag::where('id',$tag)->count())
@@ -110,21 +119,26 @@ class EditArticle extends Component
         $articleTags = array();
         $artists = array();
         $this->validate([
-            'articleTitle' => 'required',
+            'articleTitle' => 'required|min:35|max:65',
+            'articleSlug' => 'required'
         ]);
         $article = $this->article;
         if(!$this->featuredImageView && $this->featuredImage) {
             $extension = $this->featuredImage->extension();
             $slug = Str::slug($this->articleTitle);
-            $path = 'uploads/'.$slug.'-'.now()->timestamp.'.'.$extension;
-            $this->featuredImage->storeAs('public',$path);
-            $article->featured_image =  $path;
+            $path = $slug.'-'.now()->timestamp.'.'.$extension;
+            $article->addMedia($this->featuredImage->getRealPath())
+                    ->usingFileName($path)
+                    ->usingName($path)
+                    ->toMediaCollection('cover');
         }
         $article->title =  $this->articleTitle;
         $article->content =  $this->articleContent;
         $article->featured =  $this->featured;
         $article->status =  'draft';
         $article->category_id =  $this->articleCategory;
+        $article->description = $this->articleDescription;
+        $article->slug = $this->articleSlug;
         $article->save();
         foreach($this->articleTags as $tag)
         {

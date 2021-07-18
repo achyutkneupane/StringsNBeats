@@ -72,6 +72,24 @@
                                                 </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-lg-12">
+                                                        <label for="articleSlug">Slug</label>
+                                                        <input type="text" class="form-control" wire:model.lazy="articleSlug" placeholder="Enter Slug">
+                                                        @error('articleSlug')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-lg-12">
+                                                        <label for="articleDescription">Description</label>
+                                                        <textarea type="text" class="form-control" wire:model.lazy="articleDescription" placeholder="Enter Description"></textarea>
+                                                        @error('articleDescription')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-lg-12">
                                                         <label for="articleCategory">Category</label>
                                                         <select class="form-control" wire:model.lazy="articleCategory">
                                                             <option value="" disabled>Select a category</option>
@@ -121,7 +139,7 @@
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     @if($featuredImageView)
-                                                                    <img src="{{ asset('storage/'.$featuredImage) }}" width="100%">
+                                                                    <img src="{{ $featuredImage }}" width="100%">
                                                                     @elseif(!$featuredImage)
                                                                     <img src="https://sewabsnlchq.com/wp-content/uploads/2020/10/gallery-dummy-img-1.jpg" width="100%">
                                                                     @else

@@ -5,7 +5,7 @@
                 <div class="carousel-inner">
                     @foreach($featured as $article)
                     <a class="carousel-item{{ $loop->first ? ' active' : '' }}" href="{{ route('viewArticle',$article->slug) }}">
-                        <img class="d-block w-100" src="{{ asset('storage/'.$article->featured_image) }}" style="opacity: 0.3" alt="{{ $article->title }} - {{ config('app.name') }}" alt="{{ $article->title }} - {{ config('app.name') }}" height="400">
+                        <img class="d-block w-100" src="{{ $article->cover->getUrl('big') }}" style="opacity: 0.3" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}" height="400">
                         <div class="carousel-caption">
                             <div class="text-dark text-uppercase h2" style='z-index: 30;'>{{ $article->title }}</div>
                         </div>
@@ -29,7 +29,7 @@
                     @if($latests->count() > 0)
                     @foreach($latests as $latest)
                     <a href="{{ route('viewArticle',$latest->slug) }}" class="flex-row my-1 ml-0 d-flex col-md-12 row">
-                        <div class="px-0 col-4 row" style="width:100%;"><img src="{{ asset('storage/'.$latest->featured_image) }}" alt="{{ $latest->title }} - {{ config('app.name') }}" title="{{ $latest->title }} - {{ config('app.name') }}" style="height:100px;" class="px-0 col-12"></div>
+                        <div class="px-0 col-4 row" style="width:100%;"><img src="{{ $latest->cover->getUrl('small') }}" alt="{{ $latest->title }} - {{ config('app.name') }}" title="{{ $latest->title }} - {{ config('app.name') }}" style="height:100px;" class="px-0 col-12"></div>
                         <div class="pl-4 col-8 d-flex flex-column justify-content-center">
                             <h6>{{ $latest->title }}</h6>
                         </div>

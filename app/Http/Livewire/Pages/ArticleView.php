@@ -18,9 +18,8 @@ class ArticleView extends Component
     {
         $this->article = Article::with('category','writer','tags','artists')->where('slug',$this->slug)->first();
         if($this->article) {
-            $this->latests = Article::orderBy('created_at','DESC')->where('status','active')->take(5)->get();
-            $this->description = Str::limit(strip_tags($this->article->content),200);
-            $this->keywords = $this->keywords.','.$this->article->title.','.$this->article->slug.','.$this->article->category->title.',';
+            $this->latests = Article::orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(8)->get();
+            $this->description = $this->article->description ? $this->article->description : Str::limit(strip_tags($this->article->content),200);
             foreach($this->article->tags as $tag)
             {
                 $this->keywords = $this->keywords.$tag->title.',';
@@ -29,6 +28,7 @@ class ArticleView extends Component
             {
                 $this->keywords = $this->keywords.$artist->name.',';
             }
+            $this->keywords = $this->keywords.','.$this->article->title.','.$this->article->slug.','.$this->article->category->title.',';
             if(!!!auth()->id()) {
                 $this->article->views++;
                 $this->article->save();

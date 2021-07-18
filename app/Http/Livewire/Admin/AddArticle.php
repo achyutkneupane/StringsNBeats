@@ -13,17 +13,18 @@ use Illuminate\Support\Str;
 class AddArticle extends Component
 {
     use WithFileUploads;
-    public $articleTitle,$articleCategory,$artists,$featuredImage,$articleContent,$featured;
+    public $articleTitle,$articleCategory,$artists,$featuredImage,$articleContent,$featured,$articleDescription;
     public $addTagValue,$addArtistValue;
     public $tags,$categories,$artistList;
     public $articleTags,$title;
     public $rules = [
-        'articleTitle' => 'required',
+        'articleTitle' => 'required|min:20|max:45',
         'articleCategory' => 'required',
         'articleTags' => 'required',
         'artists' => 'required',
         'featuredImage' => 'required',
         'articleContent' => 'required',
+        'articleDescription' => 'required|min:70|max:320',
     ];
     public function mount()
     {
@@ -45,11 +46,21 @@ class AddArticle extends Component
             'title' => $this->articleTitle,
             'content' => $this->articleContent,
             'featured' => $this->featured,
-            'featured_image' => $path,
             'status' => 'active',
+            'description' => $this->articleDescription,
             'category_id' => $this->articleCategory,
             'writer_id' => auth()->id()
         ]);
+        $path = null;
+        if($this->featuredImage) {
+            $extension = $this->featuredImage->extension();
+            $slug = Str::slug($this->articleTitle);
+            $path = $slug.'-'.now()->timestamp.'.'.$extension;
+            $article->addMedia($this->featuredImage->getRealPath())
+                    ->usingFileName($path)
+                    ->usingName($path)
+                    ->toMediaCollection('cover');
+        }
         foreach($this->articleTags as $tag)
         {
             if(!Tag::where('id',$tag)->count())
@@ -87,23 +98,26 @@ class AddArticle extends Component
         $articleTags = array();
         $artists = array();
         $this->validate([
-            'articleTitle' => 'required',
+            'articleTitle' => 'required|min:35|max:65',
+        ]);
+        $article = Article::create([
+            'title' => $this->articleTitle,
+            'content' => $this->articleContent,
+            'status' => 'draft',
+            'description' => $this->articleDescription,
+            'category_id' => $this->articleCategory,
+            'writer_id' => auth()->id()
         ]);
         $path = null;
         if($this->featuredImage) {
             $extension = $this->featuredImage->extension();
             $slug = Str::slug($this->articleTitle);
-            $path = 'uploads/'.$slug.'-'.now()->timestamp.'.'.$extension;
-            $this->featuredImage->storeAs('public',$path);
+            $path = $slug.'-'.now()->timestamp.'.'.$extension;
+            $article->addMedia($this->featuredImage->getRealPath())
+                    ->usingFileName($path)
+                    ->usingName($path)
+                    ->toMediaCollection('cover');
         }
-        $article = Article::create([
-            'title' => $this->articleTitle,
-            'content' => $this->articleContent,
-            'featured_image' => $path,
-            'status' => 'draft',
-            'category_id' => $this->articleCategory,
-            'writer_id' => auth()->id()
-        ]);
         foreach($this->articleTags as $tag)
         {
             if(!Tag::where('id',$tag)->count())
