@@ -7,7 +7,7 @@
     </div>
 </div>
 @push('meta_tags')
-<title>{{ config('app.name', 'Laravel') }} || Primary Destination for Nepali Music Related Matters</title>
+<title>{{ config('app.name', 'Laravel') }} || Primary Destination for Nepali Music Contents</title>
 <meta name="title" content="{{ config('app.name', 'Laravel') }}">
 <meta name="description" content="Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more.">
 <meta name="keywords" content="Strings N' Beats,StringsNBeats,stringsnbeats,stringsnbeats.net,stringsnbeats.com,stringsnbeatsnepal,music,Nepal,Nepali,Nepalese Music,Lyrics,Cover">

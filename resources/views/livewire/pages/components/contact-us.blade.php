@@ -1,21 +1,21 @@
-<div class="col-12 mt-5 mb-2">
+<div class="mt-5 mb-2 col-12">
     <div class="container">
         <div class="d-flex justify-content-between row">
-            <div class="col-md-12 d-flex flex-column justify-content-center items-center">
-                <h3 class="text-center text-uppercase">
+            <div class="items-center col-md-12 d-flex flex-column justify-content-center">
+                <h1 class="text-center text-uppercase">
                     Contact Us
-                </h3>
+                </h1>
                 <div class="text-center">
                     You can reach us using the form below:
                 </div>
                 @if(!empty($formSubmitted))
                 <div class="row d-flex justify-content-center">
-                    <div class="alert alert-danger text-center col-6" role="alert">
+                    <div class="text-center alert alert-danger col-6" role="alert">
                         {{ $this->formSubmitted }}
                     </div>
                 </div>
                 @endif
-                <div class="row my-4 justify-content-center">
+                <div class="my-4 row justify-content-center">
                     <div class="d-flex flex-column col-lg-7">
                         <div class="form-group col-12">
                             <label>Name</label>
