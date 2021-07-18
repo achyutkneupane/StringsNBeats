@@ -4,7 +4,7 @@
         @livewire('pages.components.navbar')
         <div class="col-12">
             <div class="container">
-                <div class="d-flex justify-content-between row">
+                <div class="flex-row d-flex justify-content-between row">
                     <div class="col-md-9 d-flex flex-column">
                         <div class="text-white card bg-dark">
                             <img class="card-img" src="{{ $article->cover->getUrl('big') }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}">
