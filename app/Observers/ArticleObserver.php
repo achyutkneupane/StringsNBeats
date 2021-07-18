@@ -15,15 +15,15 @@ class ArticleObserver
      */
     public function created(Article $article)
     {
-        Cache::forget('latests_four');
-        Cache::forget('latests_featured');
-        Cache::forget('latests_four_news');
-        Cache::forget('latests_four_articles');
-        Cache::forget('latests_four_releases');
+        Cache::forget('latest_four');
+        Cache::forget('latest_featured');
+        Cache::forget('latest_four_news');
+        Cache::forget('latest_four_articles');
+        Cache::forget('latest_four_releases');
         Cache::rememberForever('latests_four', function () {
             return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->take(4)->get();
         });
-        Cache::rememberForever('latests_featured', function () {
+        Cache::rememberForever('latest_featured', function () {
             return Article::with('media')->orderBy('created_at','DESC')->where('featured',true)->where('status','active')->take(3)->get();
         });
         Cache::rememberForever('latest_four_news', function () {
@@ -40,6 +40,8 @@ class ArticleObserver
             Cache::rememberForever('article-'.$article->slug, function () use ($article) {
                 return $article;
             });
+        });
+        Article::orderBy('created_at','DESC')->each(function($article) {
             Cache::forget('latest_six_without_'.$article->id);
             Cache::rememberForever('latest_six_without_'.$article->id, function () use($article) {
                 return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$article->id)->take(6)->get();
