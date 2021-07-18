@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="container">
                 <div class="d-flex flex-column flex-lg-row justify-content-between">
-                    <div class="col-md-9">
+                    <div class="col-12 col-lg-9">
                         <div class='d-flex flex-column'>
                             <div class="text-white card bg-dark">
                                 <img class="card-img" src="{{ $article->cover ? $article->cover->getUrl('big') : '' }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}">
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 py-2 my-2">
+                    <div class="col-12 col-lg-3">
                         <div class="d-flex flex-column">
                             <h5 class="py-1 my-2 text-white col-12 font-weight-bold text-uppercase bg-danger">
                                 Latest News
