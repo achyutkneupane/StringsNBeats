@@ -80,11 +80,14 @@ class ArticleObserver
             Cache::rememberForever('article-'.$article->slug, function () use ($article) {
                 return $article;
             });
+        });
+        Article::orderBy('created_at','DESC')->each(function($article) {
             Cache::forget('latest_six_without_'.$article->id);
             Cache::rememberForever('latest_six_without_'.$article->id, function () use($article) {
                 return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$article->id)->take(6)->get();
             });
         });
+        
     }
 
     /**
