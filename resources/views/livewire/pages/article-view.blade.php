@@ -7,7 +7,7 @@
                 <div class="flex-row d-flex justify-content-between row">
                     <div class="col-md-9 d-flex flex-column">
                         <div class="text-white card bg-dark">
-                            <img class="card-img" src="{{ $article->cover->getUrl('big') }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}">
+                            <img class="card-img" src="{{ $article->cover ? $article->cover->getUrl('big') : '' }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}">
                             <div class="text-center align-middle card-img-overlay d-flex flex-column justify-content-center">
                                 <h1 class="card-title text-capitalize articleTitle">
                                     {{ $article->title }}
@@ -63,13 +63,13 @@
 <meta property="og:url" content="{{ url()->current() }}">
 <meta property="og:title" content="{{ $article->title }} - {{ config('app.name', 'Laravel') }}">
 <meta property="og:description" content="{{ $description }}">
-<meta property="og:image" content="{{ $article->cover->getUrl() }}">
+<meta property="og:image" content="{{ $article->cover ? $article->cover->getUrl() : '' }}">
 <meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}">
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="{{ url()->current() }}">
 <meta name="twitter:title" content="{{ $article->title }} - {{ config('app.name', 'Laravel') }}">
 <meta name="twitter:description" content="{{ $description }}">
-<meta name="twitter:image" content="{{ $article->cover->getUrl() }}">
+<meta name="twitter:image" content="{{ $article->cover ? $article->cover->getUrl() : '' }}">
 <meta name="twitter:site" content="@strings_beats">
 @endpush

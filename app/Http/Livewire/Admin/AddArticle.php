@@ -109,7 +109,7 @@ class AddArticle extends Component
             'writer_id' => auth()->id()
         ]);
         $path = null;
-        if($this->featuredImage) {
+        if($this->featuredImage != NULL) {
             $extension = $this->featuredImage->extension();
             $slug = Str::slug($this->articleTitle);
             $path = $slug.'-'.now()->timestamp.'.'.$extension;

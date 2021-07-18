@@ -14,7 +14,6 @@ class PostComponent extends Component
     }
     public function render()
     {
-        // $this->article = Article::find($this->articleId);
         return view('livewire.pages.components.home.post-component');
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Artist;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
@@ -39,7 +40,7 @@ class EditArticle extends Component
         $this->articleDescription = $article->description;
         $this->articleSlug = $article->slug;
         $this->featuredImageView = ($article->cover !== null);
-        $this->featuredImage = $article->cover->getUrl();
+        $this->featuredImage = $article->cover ? $article->cover->getUrl() : NULL;
         $this->title = "Edit Article";
         $this->article = $article;
         // $this->articleContentFinal = $this->articleContent;

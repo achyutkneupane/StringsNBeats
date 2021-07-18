@@ -21,7 +21,7 @@ class ArticleView extends Component
             return Article::with('category','writer','tags','artists','media')->where('slug',$this->slug)->first();
         });
         if($this->article) {
-            $this->latests = Cache::rememberForever('latest_six', function () {
+            $this->latests = Cache::rememberForever('latest_six_without_'.$this->article->id, function () {
                 return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(6)->get();
             });
             $this->description = $this->article->description ? $this->article->description : Str::limit(strip_tags($this->article->content),200);
