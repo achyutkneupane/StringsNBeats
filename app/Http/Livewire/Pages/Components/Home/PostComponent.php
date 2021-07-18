@@ -7,14 +7,14 @@ use Livewire\Component;
 
 class PostComponent extends Component
 {
-    public $articleId,$article;
-    public function mount($articleId)
+    public $article;
+    public function mount($article)
     {
-        $this->articleId = $articleId;
+        $this->article = $article;
     }
     public function render()
     {
-        $this->article = Article::find($this->articleId);
+        // $this->article = Article::find($this->articleId);
         return view('livewire.pages.components.home.post-component');
     }
 }

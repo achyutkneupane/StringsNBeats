@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages;
 
 use App\Models\Article;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -16,9 +17,13 @@ class ArticleView extends Component
     }
     public function render()
     {
-        $this->article = Article::with('category','writer','tags','artists')->where('slug',$this->slug)->first();
+        $this->article = Cache::rememberForever('article-'.$this->slug, function () {
+            return Article::with('category','writer','tags','artists','media')->where('slug',$this->slug)->first();
+        });
         if($this->article) {
-            $this->latests = Article::orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(6)->get();
+            $this->latests = Cache::rememberForever('latest_six', function () {
+                return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(6)->get();
+            });
             $this->description = $this->article->description ? $this->article->description : Str::limit(strip_tags($this->article->content),200);
             foreach($this->article->tags as $tag)
             {

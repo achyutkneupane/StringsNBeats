@@ -41,7 +41,7 @@
                                 Latest News
                             </h5>
                             @foreach($latests as $latest)
-                            @livewire('pages.components.home.post-component', ['articleId' => $latest->id])
+                            @livewire('pages.components.home.post-component', ['article' => $latest])
                             @endforeach
                         </div>
                     </div>

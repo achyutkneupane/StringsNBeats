@@ -41,7 +41,7 @@ Route::get('/',LandingPage::class)->name('homepage');
 Route::get('/spatiegenerate',function()
 {
     foreach(Article::get() as $article) {
-        $article->addMediaFromUrl(asset('storage/'.$article->featured_image))
+        $article->addMediaFromUrl('https://dummyimage.com/3999x3999/ffffff/00CED1?text='.$article->slug)
                 ->toMediaCollection('cover');
     }
     dd(Article::find(11)->cover->getUrl('big'));

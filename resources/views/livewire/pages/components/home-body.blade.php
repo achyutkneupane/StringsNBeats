@@ -10,11 +10,11 @@
                         @if($newss->count() > 0)
                         @foreach($newss as $news)
                         <div class="col-md-3">
-                            @livewire('pages.components.home.post-component', ['articleId' => $news->id])
+                            @livewire('pages.components.home.post-component', ['article' => $news])
                         </div>
                         @endforeach
                         @else
-                        <div class="col-md-6 text-center border py-2 h5">
+                        <div class="py-2 text-center border col-md-6 h5">
                             No News published
                         </div>
                         @endif
@@ -32,11 +32,11 @@
                         @if($releases->count() > 0)
                         @foreach($releases as $release)
                         <div class="col-md-6">
-                            @livewire('pages.components.home.post-component', ['articleId' => $release->id])
+                            @livewire('pages.components.home.post-component', ['article' => $release])
                         </div>
                         @endforeach
                         @else
-                        <div class="col-md-9 text-center border py-2 h5">
+                        <div class="py-2 text-center border col-md-9 h5">
                             No Articles published
                         </div>
                         @endif
@@ -52,11 +52,11 @@
                         @if($articles->count() > 0)
                         @foreach($articles as $article)
                         <div class="col-md-6">
-                            @livewire('pages.components.home.post-component', ['articleId' => $article->id])
+                            @livewire('pages.components.home.post-component', ['article' => $article])
                         </div>
                         @endforeach
                         @else
-                        <div class="col-md-9 text-center border py-2 h5">
+                        <div class="py-2 text-center border col-md-9 h5">
                             No Articles published
                         </div>
                         @endif
