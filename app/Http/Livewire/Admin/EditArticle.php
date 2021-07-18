@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Helpers\CacheHelper;
 use App\Models\Article;
 use App\Models\Artist;
 use App\Models\Category;
@@ -29,7 +30,7 @@ class EditArticle extends Component
     ];
     public function mount($articleId)
     {
-        $article = Article::with('category','tags','artists','writer')->find($articleId);
+        $article = Article::with('category','tags','artists','writer','media')->find($articleId);
         // dd($article);
         $this->articleTitle = $article->title;
         $this->articleContent = $article->content;
@@ -40,7 +41,7 @@ class EditArticle extends Component
         $this->articleDescription = $article->description;
         $this->articleSlug = $article->slug;
         $this->featuredImageView = ($article->cover !== null);
-        $this->featuredImage = $article->cover ? $article->cover->getUrl() : NULL;
+        $this->featuredImage = $this->featuredImageView ? $article->cover->getUrl() : NULL;
         $this->title = "Edit Article";
         $this->article = $article;
         // $this->articleContentFinal = $this->articleContent;
@@ -74,7 +75,7 @@ class EditArticle extends Component
         $article->slug = $this->articleSlug;
         $article->save();
         $path = null;
-        if($this->featuredImage) {
+        if(!$this->featuredImageView) {
             $extension = $this->featuredImage->extension();
             $slug = Str::slug($this->articleTitle);
             $path = $slug.'-'.now()->timestamp.'.'.$extension;
@@ -113,6 +114,7 @@ class EditArticle extends Component
         }
         $article->tags()->sync($articleTags);
         $article->artists()->sync($artists);
+        CacheHelper::updateCache();
         redirect()->route('adminEditArticles',$article->id);
     }
     public function saveAsDraft()
@@ -171,10 +173,11 @@ class EditArticle extends Component
         }
         $article->tags()->sync($articleTags);
         $article->artists()->sync($artists);
+        $this->featuredImageView = true;
+        $this->featuredImage = Article::with('media')->find($article->id)->cover->getUrl();
     }
     public function render()
     {
-        
         $this->tags = Tag::orderBy('title','ASC')->get();
         $this->categories = Category::orderBy('title','ASC')->get();
         $this->artistList = Artist::orderBy('name','ASC')->get();

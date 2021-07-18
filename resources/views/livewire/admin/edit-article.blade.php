@@ -52,10 +52,10 @@
                                                         </div>
                                                         <div class="justify-content-end">
                                                             <button class="btn btn-outline-primary" wire:click='saveAsDraft' wire:loading.attr='disabled'>
-                                                                <div wire:loading wire:target='saveAsDraft'>
+                                                                <div wire:loading wire:target='saveAsDraft' data-turbolinks="false">
                                                                     Saving
                                                                 </div>
-                                                                <div wire:loading.remove wire:target='saveAsDraft'>
+                                                                <div wire:loading.remove wire:target='saveAsDraft' data-turbolinks="false">
                                                                     Draft
                                                                 </div>
                                                             </button>
@@ -63,7 +63,7 @@
                                                                 <div wire:loading wire:target='editArticle'>
                                                                     Saving
                                                                 </div>
-                                                                <div wire:loading.remove wire:target='editArticle'>
+                                                                <div wire:loading.remove wire:target='editArticle' data-turbolinks="false">
                                                                     Publish
                                                                 </div>
                                                             </button>

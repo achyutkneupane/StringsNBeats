@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Helpers\CacheHelper;
 use App\Models\Article;
 use App\Models\Artist;
 use App\Models\Category;
@@ -91,6 +92,7 @@ class AddArticle extends Component
         }
         $article->tags()->sync($articleTags);
         $article->artists()->sync($artists);
+        CacheHelper::updateCache();
         redirect()->route('adminEditArticles',$article->id);
     }
     public function saveAsDraft()

@@ -66,6 +66,7 @@
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <script data-ad-client="ca-pub-2094944997068259" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <meta name="facebook-domain-verification" content="y1p8q4hk3fojgo2p1gncr2bwx43lyb" />
 </head>
 @if(Request()->route()->getPrefix() != '/panel')
 <body>
@@ -73,7 +74,7 @@
 @else
 {!! Robots::metaTag() !!}
 <body class="hold-transition sidebar-mini">
-    <div class="wrapper">
+    <div class="wrapper" data-turbolinks="false">
         @livewire('admin.components.navbar')
         @livewire('admin.components.sidebar')
         {{ $slot }}

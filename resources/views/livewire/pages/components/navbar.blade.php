@@ -4,7 +4,7 @@
         {{-- <a class="text-white nav-link" href="{{ route('aboutUs') }}">About Us</a> --}}
         <a class="text-white nav-link" href="{{ route('contactUs') }}">Contact Us</a>
         @auth
-        <a class="text-white nav-link" href="{{ route('adminDashboard') }}">Panel</a>
+        <a class="text-white nav-link" href="{{ route('adminDashboard') }}" data-turbolinks="false">Panel</a>
         @endauth
     </div>
     <div class="pt-1 text-white h3">
