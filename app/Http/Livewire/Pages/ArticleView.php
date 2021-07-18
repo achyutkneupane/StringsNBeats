@@ -18,7 +18,7 @@ class ArticleView extends Component
     {
         $this->article = Article::with('category','writer','tags','artists')->where('slug',$this->slug)->first();
         if($this->article) {
-            $this->latests = Article::orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(8)->get();
+            $this->latests = Article::orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(6)->get();
             $this->description = $this->article->description ? $this->article->description : Str::limit(strip_tags($this->article->content),200);
             foreach($this->article->tags as $tag)
             {
