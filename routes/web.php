@@ -57,12 +57,12 @@ Route::get('/sitemap.xml',function() {
         $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for Nepali Music related matter and stories surrounding it all. Check this page to get informations about the ".$category->title." in Nepali Music." ,NULL,config('app.name'));
     });
     return Sitemap::render();
-});
+})->name('sitemap');
 Route::get('robots.txt', function(Robots $robots) {
     $robots->addUserAgent('*');
     if ($robots->shouldIndex()) {
         $robots->addDisallow('/panel');
-        $robots->addSitemap('sitemap.xml');
+        $robots->addSitemap(route('sitemap'));
     } else {
         $robots->addDisallow('/');
     }
