@@ -17,7 +17,7 @@ class LandingPage extends Component
     ];
     public function mount()
     {
-        $this->perPage = 5;
+        $this->perPage = 10;
         $this->activePerPage = $this->perPage;
     }
     public function loadMore()

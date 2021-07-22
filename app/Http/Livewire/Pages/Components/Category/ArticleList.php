@@ -16,7 +16,7 @@ class ArticleList extends Component
     {
         $this->category = $category;
         $this->categoryId = $category->id;
-        $this->perPage = 1;
+        $this->perPage = 10;
         $this->activePerPage = $this->perPage;
     }
     public function loadMore()
