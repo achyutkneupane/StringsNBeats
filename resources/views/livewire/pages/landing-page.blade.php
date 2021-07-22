@@ -14,6 +14,7 @@
                 </div>
             </div>
         </div>
+        @if($articles->count() > 0)
         @foreach($articles as $article)
             <a class='w-100 border p-2 d-flex flex-column flex-lg-row my-3' href='{{ route('viewArticle',$article->slug) }}'>
                 <div class='img-thumbnail w-100'>
@@ -32,6 +33,11 @@
                 </div>
             </a>
         @endforeach
+        @else
+        <div class='w-100 text-center px-4 py-2 border my-4'>
+            Nothing found under query '{{ $q }}'
+        </div>
+        @endif
         @endif
         @livewire('pages.components.footer')
     </div>
