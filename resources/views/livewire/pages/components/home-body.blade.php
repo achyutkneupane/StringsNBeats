@@ -13,6 +13,9 @@
                             @livewire('pages.components.home.post-component', ['article' => $news])
                         </div>
                         @endforeach
+                        <div class='col-12 text-center py-2'>
+                            <a class='btn btn-danger' href='{{ route('viewCategory','news') }}'>View All</a>
+                        </div>
                         @else
                         <div class="py-2 text-center border col-lg-6 h5">
                             No News published
@@ -35,6 +38,9 @@
                             @livewire('pages.components.home.post-component', ['article' => $release])
                         </div>
                         @endforeach
+                        <div class='col-12 text-center py-2'>
+                            <a class='btn btn-danger' href='{{ route('viewCategory','new-releases') }}'>View All</a>
+                        </div>
                         @else
                         <div class="py-2 text-center border col-lg-9 h5">
                             No Articles published
@@ -55,6 +61,9 @@
                             @livewire('pages.components.home.post-component', ['article' => $article])
                         </div>
                         @endforeach
+                        <div class='col-12 text-center py-2'>
+                            <a class='btn btn-danger' href='{{ route('viewCategory','articles') }}'>View All</a>
+                        </div>
                         @else
                         <div class="py-2 text-center border col-lg-9 h5">
                             No Articles published

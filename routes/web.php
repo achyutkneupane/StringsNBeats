@@ -7,10 +7,12 @@ use App\Http\Livewire\Admin\EditArticle;
 use App\Http\Livewire\Admin\Dashboard;
 use App\Http\Livewire\Pages\AboutUs;
 use App\Http\Livewire\Pages\ArticleView;
+use App\Http\Livewire\Pages\CategoryArticles;
 use App\Http\Livewire\Pages\ContactUs;
 use App\Http\Livewire\Pages\LandingPage;
 use App\Http\Livewire\Pages\Login;
 use App\Models\Article;
+use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
@@ -33,22 +35,26 @@ Route::get('/',LandingPage::class)->name('homepage');
 Route::get('/spatiegenerate',function()
 {
     foreach(Article::get() as $article) {
-        $article->addMediaFromUrl('https://dummyimage.com/3999x3999/ffffff/00CED1?text='.$article->slug)
+        $article->addMediaFromUrl('https://dummyimage.com/3999x3999/000000/00CED1?text='.$article->slug)
                 ->toMediaCollection('cover');
     }
     dd(Article::find(11)->cover->getUrl('big'));
 });
 
 Route::get('/sitemap.xml',function() {
-    $tag = Sitemap::addTag(route('homepage'),Carbon::create('2021', '6', '6'),'weekly',1);
+    $tag = Sitemap::addTag(route('homepage'),Carbon::create('2021', '6', '6'),'daily',1);
     $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,config('app.name'));
-    $tag = Sitemap::addTag(route('contactUs'),Carbon::create('2021', '6', '6'),'weekly',0.9);
+    $tag = Sitemap::addTag(route('contactUs'),Carbon::create('2021', '6', '6'),'yearly',0.9);
     $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,"Contact Us - ".config('app.name'));
     Article::all()->each(function (Article $article) {
         if($article->status == 'active') {
-            $tag = Sitemap::addTag(route('viewArticle',$article->slug),$article->updated_at,'weekly',0.8);
+            $tag = Sitemap::addTag(route('viewArticle',$article->slug),$article->updated_at,'daily',0.8);
             $tag->addImage($article->cover->getUrl(), $article->description ? $article->description : NULL,NULL,$article->title.' - '.config('app.name'));
         }
+    });
+    Category::all()->each(function(Category $category) {
+        $tag = Sitemap::addTag(route('viewCategory',$category->slug),$category->updated_at,'daily',0.8);
+        $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for Nepali Music related matter and stories surrounding it all. Check this page to get informations about the ".$category->title." in Nepali Music." ,NULL,config('app.name'));
     });
     return Sitemap::render();
 });
@@ -73,6 +79,7 @@ Route::prefix('/panel')->middleware('auth')->group(function() {
 Route::get('/login',Login::class)->name('login');
 Route::get('/about-us',AboutUs::class)->name('aboutUs');
 Route::get('/contact-us',ContactUs::class)->name('contactUs');
+Route::get('/category/{slug}',CategoryArticles::class)->name('viewCategory');
 Route::get('/{slug}',ArticleView::class)->name('viewArticle');
 
 // Auth::routes();
