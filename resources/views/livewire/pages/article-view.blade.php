@@ -16,7 +16,7 @@
                                 </div>
                             </div>
                             <h5 class="mt-2 text-capitalize">
-                                Category: <strong>{{ $article->category->title }}</strong>
+                                Category: <a href='{{ route('viewCategory',$article->category->slug) }}'><strong>{{ $article->category->title }}</strong></a>
                             </h5>
                             <h5 class="text-muted">
                                 Posted <b>{{ $article->created_at->diffForHumans() }}</b>
