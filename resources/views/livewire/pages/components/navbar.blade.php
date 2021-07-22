@@ -28,7 +28,7 @@
                 <a class="py-3 text-white nav-link">Releases</a>
                 <a class="py-3 text-white nav-link">Artists</a> --}}
                 @if(request()->path() == 'livewire/message/pages.components.navbar' || request()->path() == '/')
-                <div class='pr-2 pt-2 pb-2' style='width: 30%'>
+                <div class='px-2 pt-2 pb-2 categoryBar'>
                     <input type="text" class='form-control rounded' wire:model='queryTerm' placeholder='Search For Articles'>
                 </div>
                 @endif
@@ -44,6 +44,14 @@
     }
     .logoText {
         font-family: 'Futura Poster';
+    }
+    .categoryBar {
+        width: 100%;
+    }
+    @media (min-width: 992px) {
+        .categoryBar {
+            max-width: 35%;
+        }
     }
 </style>
 @endpush

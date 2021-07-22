@@ -1,9 +1,6 @@
 <div class="container">
     <div class="row">
-        {{-- @if(request()->path() == 'livewire/message/pages.components.navbar' || request()->path() == '/') --}}
         @livewire('pages.components.navbar', ['q' => $q])
-        {{-- @else
-        @livewire('pages.components.navbar', ['q' => $q]) --}}
         @if($q == '')
         @livewire('pages.components.home-top')
         @livewire('pages.components.home-body')

@@ -3,11 +3,11 @@
         <div class="row my-2">
             <div class="col-lg-12">
                 <div class="d-flex flex-column">
-                    <div class='d-flex flex-row justify-content-between align-items-center w-100 text-center bg-danger px-4'>
+                    <div class='d-flex flex-column flex-lg-row justify-content-between align-items-center w-100 text-center bg-danger px-4'>
                         <h1 class='text-white pt-2' style='font-size: 1.5rem;'>
                             {{ $category->title }}
                         </h1>
-                        <div class='py-2' style='width: 30%'>
+                        <div class='py-2 categoryBar'>
                             <input type="text" class='form-control' wire:model='q' placeholder='Search Article in {{ $category->title }}'>
                         </div>
                     </div>
@@ -63,3 +63,15 @@
         </div>
     </div>
 </div>
+@push('styles')
+<style>
+    .categoryBar {
+        width: 100%;
+    }
+    @media (min-width: 992px) {
+        .categoryBar {
+            max-width: 35%;
+        }
+    }
+</style>
+@endpush
