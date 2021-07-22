@@ -18,7 +18,7 @@
         @foreach($articles as $article)
             <a class='w-100 border p-2 d-flex flex-column flex-lg-row my-3' href='{{ route('viewArticle',$article->slug) }}'>
                 <div class='img-thumbnail w-100'>
-                    <img class='w-lg-25 w-100' src='{{ $article->cover->getUrl('medium') }}'>
+                    <img class='w-lg-25 w-100' src='{{ $article->cover->getUrl('medium') }}' alt='{{ $article->title }} - {{ config('app.name') }}' title='{{ $article->title }} - {{ config('app.name') }}' loading='lazy' width='300' height='300'>
                 </div>
                 <div class='d-flex flex-column px-0 px-lg-4 justify-content-center'>
                     <h3 class='text-justify'>

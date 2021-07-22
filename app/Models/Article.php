@@ -6,6 +6,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -61,13 +62,19 @@ class Article extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('small')
-             ->width(150)
-             ->height(150);
+             ->format(Manipulations::FORMAT_WEBP)
+             ->width(100)
+             ->height(100)
+             ->nonQueued();
         $this->addMediaConversion('medium')
+             ->format(Manipulations::FORMAT_WEBP)
              ->width(300)
-             ->height(300);
+             ->height(300)
+             ->nonQueued();
         $this->addMediaConversion('big')
+             ->format(Manipulations::FORMAT_WEBP)
              ->width(800)
-             ->height(500);
+             ->height(500)
+             ->nonQueued();
     }
 }
