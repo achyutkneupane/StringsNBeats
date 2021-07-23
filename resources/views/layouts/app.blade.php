@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html amp lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +9,12 @@
     <link rel="icon" type="image/png" href="{{ asset('statics/snb-favicon.png') }}"/>
 	
 @stack('meta_tags')
+@if(!request()->routeIs('viewArticle') && request()->route()->getPrefix() != '/panel')
+{!! Spatie\SchemaOrg\Schema::webSite()->url(route('homepage'))->name('Strings N\' Beats')->image(asset('statics/ogimage.jpg'))
+                            ->publisher(Spatie\SchemaOrg\Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Spatie\SchemaOrg\Schema::imageObject()->url(asset('statics/logo-small.png'))))
+                            ->author(Spatie\SchemaOrg\Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Spatie\SchemaOrg\Schema::imageObject()->url(asset('statics/logo-small.png'))))
+                            ->sameAs(array('https://www.facebook.com/StringsNBeatsNepal/','https://www.instagram.com/stringsnbeats/','https://www.twitter.com/strings_beats'))->toScript() !!}
+@endif
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

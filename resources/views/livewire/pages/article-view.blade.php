@@ -74,4 +74,5 @@
     <meta name="twitter:description" content="{{ $description }}">
     <meta name="twitter:image" content="{{ $article->cover ? $article->cover->getUrl() : '' }}">
     <meta name="twitter:site" content="@strings_beats">
+    {!! $schemaScripts !!}
 @endpush

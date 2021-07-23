@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Spatie\SchemaOrg\Schema;
 
 class ArticleView extends Component
 {
@@ -38,9 +39,23 @@ class ArticleView extends Component
                 $this->article->views++;
                 $this->article->save();
             }
+            $schemas = Schema::article()
+                            ->mainEntityOfPage(Schema::webSite()->url(route('homepage')))
+                            ->url(route('viewArticle',$this->article->slug))
+                            ->headline($this->article->title)
+                            ->description($this->article->description)
+                            ->image($this->article->cover->getUrl())
+                            ->datePublished($this->article->created_at)
+                            ->dateModified($this->article->updated_at)
+                            ->commentCount($this->article->comments->count())
+                            ->publisher(Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
+                            ->author($this->article->writer_flag ? Schema::person()->name($this->article->writer->name) : Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
+                            ->sameAs(array('https://www.facebook.com/StringsNBeatsNepal/','https://www.instagram.com/stringsnbeats/','https://www.twitter.com/strings_beats'));
+
+            $schemaScripts = $schemas->toScript();
         }
         else
         redirect()->route('homepage');
-        return view('livewire.pages.article-view');
+        return view('livewire.pages.article-view',compact('schemaScripts'));
     }
 }

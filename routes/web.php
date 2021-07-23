@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use MadWeb\Robots\Robots;
+use Spatie\SchemaOrg\Schema;
 use Watson\Sitemap\Facades\Sitemap;
 
 /*
@@ -31,6 +32,23 @@ use Watson\Sitemap\Facades\Sitemap;
 */
 
 Route::get('/',LandingPage::class)->name('homepage');
+
+Route::get('/schema',function() {
+    $article = Article::find(8);
+    $localBusiness = Schema::article()
+                            ->mainEntityOfPage(Schema::webSite()->url(route('homepage')))
+                            ->url(route('viewArticle',$article->slug))
+                            ->headline($article->title)
+                            ->image($article->cover->getUrl())
+                            ->datePublished($article->created_at)
+                            ->dateModified($article->updated_at)
+                            ->commentCount($article->comments->count())
+                            ->publisher(Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
+                            ->author($article->writer_flag ? Schema::person()->name($article->writer->name) : Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
+                            ->sameAs(array('https://www.facebook.com/StringsNBeatsNepal/','https://www.instagram.com/stringsnbeats/','https://www.twitter.com/strings_beats'));
+
+    return $localBusiness->toArray();
+});
 
 Route::get('/spatiegenerate',function()
 {
