@@ -28,7 +28,6 @@
     @endif
 @livewireStyles
 @stack('styles')
-    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=60c351e4485ac10011d3049d&product=sop' async='async'></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS0XEPQE5K"></script>
     <script>
