@@ -1,0 +1,52 @@
+div.articleText p strong {
+    font-weight:700;
+}
+div.articleText p {
+    font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-weight: 300;
+    font-size: 1rem;
+}
+.articleText a {
+    color: #d9534f;
+    font-weight: 900 !important;
+}
+.articleText blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #d9534f;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+}
+div.articleText p iframe {
+    width:100% !important;
+    height: 400px !important;
+}
+div.articleText div div div img {
+    width: 100% !important;
+    height: auto !important;
+}
+div.articleText p img {
+    width: 100% !important;
+    height: auto !important;
+}
+.mce-content-body div div div img {
+    width: 100% !important;
+    height: auto !important;
+}
+#tinymce.mce-content-body p img {
+    width: 100% !important;
+    height: auto !important;
+}
+@media only screen and (max-width: 770px) {
+    .logoText {
+        font-size: xx-large;
+    }
+    div.articleText p iframe {
+        width: 100% !important;
+        height: 250px !important;
+    }
+    .articleTitle
+    {
+        font-size: medium;
+    }
+}
