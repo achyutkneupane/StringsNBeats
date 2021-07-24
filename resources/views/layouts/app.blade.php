@@ -6,6 +6,9 @@
     <meta name="google-site-verification" content="g8kQzHJudE0myLYnBHSKkZbNQzmQrGtndQGZ6GkLZDI" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(Request()->route()->getPrefix() != '/panel')
+    {!! Robots::metaTag() !!}
+    @endif
     <link rel="icon" type="image/png" href="{{ asset('statics/snb-favicon.png') }}"/>
 	
 @stack('meta_tags')
@@ -28,6 +31,7 @@
     @endif
 @livewireStyles
 @stack('styles')
+    @if(Request()->route()->getPrefix() != '/panel')
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS0XEPQE5K"></script>
     <script>
@@ -38,12 +42,12 @@
         gtag('config', 'G-HS0XEPQE5K');
     </script>
     <script data-ad-client="ca-pub-2094944997068259" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    @endif
 </head>
 @if(Request()->route()->getPrefix() != '/panel')
 <body>
     {{ $slot }}
 @else
-{!! Robots::metaTag() !!}
 <body class="hold-transition sidebar-mini">
     <div class="wrapper" data-turbolinks="false">
         @livewire('admin.components.navbar')
