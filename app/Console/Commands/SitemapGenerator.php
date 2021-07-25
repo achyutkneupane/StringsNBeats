@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Models\Article;
+use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Watson\Sitemap\Facades\Sitemap;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 
 class SitemapGenerator extends Command
 {
@@ -40,28 +42,76 @@ class SitemapGenerator extends Command
      */
     public function handle()
     {
-        // $sitemap = Sitemap::create('https://stringsnbeats.net');
-        // $sitemap->add(Url::create('/')
-        //         ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
-        //         ->setLastModificationDate(Carbon::create('2021', '6', '6'))
-        //         ->setPriority(1));
-        // $sitemap->add(Url::create('/contact-us')
-        // ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
-        //         ->setLastModificationDate(Carbon::create('2021', '6', '6'))
-        //         ->setPriority(0.9));
+        // Static Sitemap
+    $sitemap_statics = App::make("sitemap");
+    $sitemap_statics->setCache('laravel.sitemap.statics', 10);
+    $sitemap_statics->add(route('homepage'),Carbon::create('2021', '6', '6'), 1, 'daily');
+    $sitemap_statics->add(route('contactUs'),Carbon::create('2021', '6', '6'), 0.3, 'yearly');
+    $sitemap_statics->store('xml','sitemap-statics');
 
-        // Article::all()->each(function (Article $article) use ($sitemap) {
-        //     if($article->status == 'active') {
-        //         $sitemap->add(Url::create("/{$article->slug}")
-        //                 ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
-        //                 ->setLastModificationDate($article->updated_at)
-        //                 ->setPriority(0.8));
-        //     }
-        // });
+    // Articles Sitemap
+    $sitemap_articles = App::make("sitemap");
+    $sitemap_articles->setCache('laravel.sitemap.articles', 10);
+    Article::get()->each(function (Article $article) use($sitemap_articles) {
+        $image = [
+            [
+                'url' => $article->cover->getUrl(),
+                'title' => $article->title.' - '.config('app.name'),
+                'caption' => $article->description ? $article->description : NULL
+            ],
+        ];
+        $googleNews = [
+            'sitename' => config('app.name'),
+            'language' => 'en',
+            'publication_date' => '2016-01-03',
+            'access'           => 'Subscription',
+        ];
+        if($article->status == 'active') {
+            $sitemap_articles->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,'Kando',NULL,NULL,$googleNews,NULL);
+        }
+    });
+    $sitemap_articles->store('xml','sitemap-articles');
 
-        // $sitemap->writeToFile(public_path('sitemap.xml'));
-        Sitemap::addSitemap('/sitemaps/general');
-        Sitemap::addSitemap(route('homepage'));
-        dd(Sitemap::index());
+    // News Sitemap
+    $sitemap_news = App::make("sitemap");
+    $sitemap_news->setCache('laravel.sitemap.articles', 10);
+    Article::get()->each(function (Article $article) use($sitemap_news) {
+        $image = [
+            [
+                'url' => $article->cover->getUrl(),
+                'title' => $article->title.' - '.config('app.name'),
+                'caption' => $article->description ? $article->description : NULL
+            ],
+        ];
+        $googleNews = [
+            'sitename' => 'Strings N\' Beats',
+            'language' => 'en',
+            'publication_date' => $article->created_at,
+        ];
+        if($article->status == 'active') {
+            $sitemap_news->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,$article->title.' - '.config('app.name'),NULL,NULL,$googleNews,NULL);
+        }
+    });
+    $sitemap_news->store('google-news','sitemap-news');
+
+    // Categories Sitemap
+    $sitemap_categories = App::make("sitemap");
+    $sitemap_categories->setCache('laravel.sitemap.categories', 10);
+    Category::get()->each(function (Category $category) use($sitemap_categories) {
+        if($category->deleted_at == NULL) {
+            $sitemap_categories->add(route('viewCategory',$category->slug), $category->updated_at, 0.5, 'daily');
+        }
+    });
+    $sitemap_categories->store('xml','sitemap-categories');
+
+    // Main Sitemap
+
+    $sitemap = App::make("sitemap");
+    $sitemap->setCache('laravel.sitemap', 10);
+    $sitemap->addSitemap(URL::to('sitemap-statics.xml'),Carbon::now());
+    $sitemap->addSitemap(URL::to('sitemap-articles.xml'),Carbon::now());
+    $sitemap->addSitemap(URL::to('sitemap-news.xml'),Carbon::now());
+    $sitemap->addSitemap(URL::to('sitemap-categories.xml'),Carbon::now());
+    $sitemap->store('sitemapindex','sitemap');
     }
 }

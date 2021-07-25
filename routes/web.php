@@ -14,8 +14,11 @@ use App\Http\Livewire\Pages\Login;
 use App\Models\Article;
 use App\Models\Category;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use MadWeb\Robots\Robots;
 use Spatie\SchemaOrg\Schema;
 use Watson\Sitemap\Facades\Sitemap;
@@ -33,49 +36,25 @@ use Watson\Sitemap\Facades\Sitemap;
 
 Route::get('/',LandingPage::class)->name('homepage');
 
-Route::get('/schema',function() {
-    $article = Article::find(8);
-    $localBusiness = Schema::article()
-                            ->mainEntityOfPage(Schema::webSite()->url(route('homepage')))
-                            ->url(route('viewArticle',$article->slug))
-                            ->headline($article->title)
-                            ->image($article->cover->getUrl())
-                            ->datePublished($article->created_at)
-                            ->dateModified($article->updated_at)
-                            ->commentCount($article->comments->count())
-                            ->publisher(Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
-                            ->author($article->writer_flag ? Schema::person()->name($article->writer->name) : Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
-                            ->sameAs(array('https://www.facebook.com/StringsNBeatsNepal/','https://www.instagram.com/stringsnbeats/','https://www.twitter.com/strings_beats'));
+// Route::get('/sitemap.xml',function() {
+//     $tag = Sitemap::addTag(route('homepage'),Carbon::create('2021', '6', '6'),'daily',1);
+//     $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,config('app.name'));
+//     $tag = Sitemap::addTag(route('contactUs'),Carbon::create('2021', '6', '6'),'yearly',0.9);
+//     $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,"Contact Us - ".config('app.name'));
+//     Article::all()->each(function (Article $article) {
+//         if($article->status == 'active') {
+//             $tag = Sitemap::addTag(route('viewArticle',$article->slug),$article->updated_at,'daily',0.8);
+//             $tag->addImage($article->cover->getUrl(), $article->description ? $article->description : NULL,NULL,$article->title.' - '.config('app.name'));
+//         }
+//     });
+//     Category::all()->each(function(Category $category) {
+//         $tag = Sitemap::addTag(route('viewCategory',$category->slug),$category->updated_at,'daily',0.8);
+//         $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for Nepali Music related matter and stories surrounding it all. Check this page to get informations about the ".$category->title." in Nepali Music." ,NULL,config('app.name'));
+//     });
+//     return Sitemap::render();
+// })->name('sitemap');
 
-    return $localBusiness->toArray();
-});
 
-Route::get('/spatiegenerate',function()
-{
-    foreach(Article::get() as $article) {
-        $article->addMediaFromUrl('https://dummyimage.com/3999x3999/000000/00CED1?text='.$article->slug)
-                ->toMediaCollection('cover');
-    }
-    dd(Article::find(11)->cover->getUrl('big'));
-});
-
-Route::get('/sitemap.xml',function() {
-    $tag = Sitemap::addTag(route('homepage'),Carbon::create('2021', '6', '6'),'daily',1);
-    $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,config('app.name'));
-    $tag = Sitemap::addTag(route('contactUs'),Carbon::create('2021', '6', '6'),'yearly',0.9);
-    $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,"Contact Us - ".config('app.name'));
-    Article::all()->each(function (Article $article) {
-        if($article->status == 'active') {
-            $tag = Sitemap::addTag(route('viewArticle',$article->slug),$article->updated_at,'daily',0.8);
-            $tag->addImage($article->cover->getUrl(), $article->description ? $article->description : NULL,NULL,$article->title.' - '.config('app.name'));
-        }
-    });
-    Category::all()->each(function(Category $category) {
-        $tag = Sitemap::addTag(route('viewCategory',$category->slug),$category->updated_at,'daily',0.8);
-        $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for Nepali Music related matter and stories surrounding it all. Check this page to get informations about the ".$category->title." in Nepali Music." ,NULL,config('app.name'));
-    });
-    return Sitemap::render();
-})->name('sitemap');
 Route::get('robots.txt', function(Robots $robots) {
     $robots->addUserAgent('*');
     if ($robots->shouldIndex()) {
@@ -101,3 +80,31 @@ Route::get('/category/{slug}',CategoryArticles::class)->name('viewCategory');
 Route::get('/{slug}',ArticleView::class)->name('viewArticle');
 
 // Auth::routes();
+
+
+
+    // Route::get('/schema',function() {
+    //     $article = Article::find(8);
+    //     $localBusiness = Schema::article()
+    //                             ->mainEntityOfPage(Schema::webSite()->url(route('homepage')))
+    //                             ->url(route('viewArticle',$article->slug))
+    //                             ->headline($article->title)
+    //                             ->image($article->cover->getUrl())
+    //                             ->datePublished($article->created_at)
+    //                             ->dateModified($article->updated_at)
+    //                             ->commentCount($article->comments->count())
+    //                             ->publisher(Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
+    //                             ->author($article->writer_flag ? Schema::person()->name($article->writer->name) : Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
+    //                             ->sameAs(array('https://www.facebook.com/StringsNBeatsNepal/','https://www.instagram.com/stringsnbeats/','https://www.twitter.com/strings_beats'));
+    
+    //     return $localBusiness->toArray();
+    // });
+    
+    // Route::get('/spatiegenerate',function()
+    // {
+    //     foreach(Article::get() as $article) {
+    //         $article->addMediaFromUrl('https://dummyimage.com/3999x3999/000000/00CED1?text='.$article->slug)
+    //                 ->toMediaCollection('cover');
+    //     }
+    //     dd(Article::find(11)->cover->getUrl('big'));
+    // });
