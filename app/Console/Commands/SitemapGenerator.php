@@ -51,7 +51,7 @@ class SitemapGenerator extends Command
 
     // Articles Sitemap
     $sitemap_articles = App::make("sitemap");
-    $sitemap_articles->setCache('laravel.sitemap.articles', 10);
+    $sitemap_articles->setCache('laravel.sitemap.articles', 3600);
     Article::get()->each(function (Article $article) use($sitemap_articles) {
         $image = [
             [
@@ -74,7 +74,7 @@ class SitemapGenerator extends Command
 
     // News Sitemap
     $sitemap_news = App::make("sitemap");
-    $sitemap_news->setCache('laravel.sitemap.articles', 10);
+    $sitemap_news->setCache('laravel.sitemap.articles', 3600);
     Article::get()->each(function (Article $article) use($sitemap_news) {
         $image = [
             [
@@ -96,7 +96,7 @@ class SitemapGenerator extends Command
 
     // Categories Sitemap
     $sitemap_categories = App::make("sitemap");
-    $sitemap_categories->setCache('laravel.sitemap.categories', 10);
+    $sitemap_categories->setCache('laravel.sitemap.categories', 3600);
     Category::get()->each(function (Category $category) use($sitemap_categories) {
         if($category->deleted_at == NULL) {
             $sitemap_categories->add(route('viewCategory',$category->slug), $category->updated_at, 0.5, 'daily');
@@ -107,7 +107,7 @@ class SitemapGenerator extends Command
     // Main Sitemap
 
     $sitemap = App::make("sitemap");
-    $sitemap->setCache('laravel.sitemap', 10);
+    $sitemap->setCache('laravel.sitemap', 3600);
     $sitemap->addSitemap(URL::to('sitemap-statics.xml'),Carbon::now());
     $sitemap->addSitemap(URL::to('sitemap-articles.xml'),Carbon::now());
     $sitemap->addSitemap(URL::to('sitemap-news.xml'),Carbon::now());
