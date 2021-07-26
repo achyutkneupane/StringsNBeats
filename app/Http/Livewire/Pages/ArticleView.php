@@ -32,10 +32,15 @@ class ArticleView extends Component
                 $articless = collect();
                 foreach($this->article->artists as $artist)
                 {
-                    foreach($artist->articles as $article)
-                        $articless->push($article);
+                    foreach($artist->articles as $article) {
+                        if($article->status == 'active' && $article->id != $this->article->id) {
+                            if(!$articless->contains('id',$article->id)) {
+                                $articless->push($article);
+                            }
+                        }
+                    }
                 }
-                return $articless->take(9);
+                return $articless->sortBy('views');
             });
             $this->description = $this->article->description ? $this->article->description : Str::limit(strip_tags($this->article->content),200);
             foreach($this->article->tags as $tag)

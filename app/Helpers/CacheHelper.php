@@ -43,6 +43,7 @@ class CacheHelper
             });
         });
         Article::orderBy('created_at','DESC')->each(function($article) {
+            Cache::forget('artist_articles_without_'.$article->id);
             Cache::forget('popular_five_without_'.$article->id);
             Cache::rememberForever('popular_five_without_'.$article->id, function () use($article) {
                 return Article::with('media')->orderBy('views','DESC')->where('status','active')->where('id','!=',$article->id)->take(5)->get();

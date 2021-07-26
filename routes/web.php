@@ -54,6 +54,86 @@ Route::get('/',LandingPage::class)->name('homepage');
 //     return Sitemap::render();
 // })->name('sitemap');
 
+Route::prefix('/sitemap')->group(function() {
+    Route::get('/',function() {
+        // Main Sitemap
+
+        $sitemap = App::make("sitemap");
+        $sitemap->setCache('laravel.sitemap', 3600);
+        $sitemap->addSitemap(route('staticsSitemap'),Carbon::now());
+        $sitemap->addSitemap(route('articlesSitemap'),Carbon::now());
+        $sitemap->addSitemap(route('newsSitemap'),Carbon::now());
+        $sitemap->addSitemap(route('categoriesSitemap'),Carbon::now());
+        return $sitemap->render('sitemapindex');
+    })->name('mainSitemap');
+    Route::get('/categories',function() {
+        // Categories Sitemap
+        $sitemap_categories = App::make("sitemap");
+        $sitemap_categories->setCache('laravel.sitemap.categories', 3600);
+        Category::get()->each(function (Category $category) use($sitemap_categories) {
+            if($category->deleted_at == NULL) {
+                $sitemap_categories->add(route('viewCategory',$category->slug), $category->updated_at, 0.5, 'daily');
+            }
+        });
+        return $sitemap_categories->render('xml');
+    })->name('categoriesSitemap');
+    Route::get('/news',function() {
+
+        // News Sitemap
+        $sitemap_news = App::make("sitemap");
+        $sitemap_news->setCache('laravel.sitemap.articles', 3600);
+        Article::get()->each(function (Article $article) use($sitemap_news) {
+            $image = [
+                [
+                    'url' => $article->cover->getUrl(),
+                    'title' => $article->title.' - '.config('app.name'),
+                    'caption' => $article->description ? $article->description : NULL
+                ],
+            ];
+            $googleNews = [
+                'sitename' => 'Strings N\' Beats',
+                'language' => 'en',
+                'publication_date' => $article->created_at,
+            ];
+            if($article->status == 'active') {
+                $sitemap_news->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,$article->title.' - '.config('app.name'),NULL,NULL,$googleNews,NULL);
+            }
+        });
+        return $sitemap_news->render('google-news');
+    })->name('newsSitemap');
+    Route::get('/statics',function() {
+        // Static Sitemap
+        $sitemap_statics = App::make("sitemap");
+        $sitemap_statics->setCache('laravel.sitemap.statics', 10);
+        $sitemap_statics->add(route('homepage'),Carbon::create('2021', '6', '6'), 1, 'daily');
+        $sitemap_statics->add(route('contactUs'),Carbon::create('2021', '6', '6'), 0.3, 'yearly');
+        return $sitemap_statics->render('xml');
+    })->name('staticsSitemap');
+    Route::get('/articles',function() {
+        // Articles Sitemap
+        $sitemap_articles = App::make("sitemap");
+        $sitemap_articles->setCache('laravel.sitemap.articles', 3600);
+        Article::get()->each(function (Article $article) use($sitemap_articles) {
+            $image = [
+                [
+                    'url' => $article->cover->getUrl(),
+                    'title' => $article->title.' - '.config('app.name'),
+                    'caption' => $article->description ? $article->description : NULL
+                ],
+            ];
+            $googleNews = [
+                'sitename' => config('app.name'),
+                'language' => 'en',
+                'publication_date' => '2016-01-03',
+                'access'           => 'Subscription',
+            ];
+            if($article->status == 'active') {
+                $sitemap_articles->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,'Kando',NULL,NULL,$googleNews,NULL);
+            }
+        });
+        return $sitemap_articles->render('xml');
+    })->name('articlesSitemap');
+});
 
 Route::get('robots.txt', function(Robots $robots) {
     $robots->addUserAgent('*');
