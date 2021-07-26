@@ -40,7 +40,7 @@ class ArticleView extends Component
                         }
                     }
                 }
-                return $articless->sortBy('views');
+                return $articless->sortByDesc('views');
             });
             $this->description = $this->article->description ? $this->article->description : Str::limit(strip_tags($this->article->content),200);
             foreach($this->article->tags as $tag)
@@ -60,7 +60,7 @@ class ArticleView extends Component
                             ->mainEntityOfPage(Schema::webSite()->url(route('homepage')))
                             ->url(route('viewArticle',$this->article->slug))
                             ->headline($this->article->title)
-                            ->description($this->article->description)
+                            ->description($this->description)
                             ->image($this->article->cover->getUrl())
                             ->datePublished($this->article->created_at)
                             ->dateModified($this->article->updated_at)

@@ -33,6 +33,7 @@ use Watson\Sitemap\Facades\Sitemap;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::feeds();
 
 Route::get('/',LandingPage::class)->name('homepage');
 

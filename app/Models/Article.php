@@ -6,12 +6,15 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use Illuminate\Support\Str;
 
-class Article extends Model implements HasMedia
+class Article extends Model implements HasMedia, Feedable
 {
     use HasFactory,SoftDeletes,Sluggable,HasMediaTrait;
     protected $dates = ['deleted_at'];
@@ -76,5 +79,28 @@ class Article extends Model implements HasMedia
              ->width(800)
              ->height(500)
              ->nonQueued();
+    }
+    public function toFeedItem(): FeedItem
+    {
+        return FeedItem::create()
+            ->id($this->slug)
+            ->title($this->title)
+            ->summary($this->description ? $this->description : Str::limit(strip_tags($this->content),200))
+            ->updated($this->created_at)
+            ->link(route('viewArticle',$this->slug))
+            ->author('Strings N\' Beats')
+            ->category($this->category->title);
+    }
+    public static function getFeedNews()
+    {
+        return Article::with('category')->where('category_id',1)->where('status','active')->get();
+    }
+    public static function getFeedNewReleases()
+    {
+        return Article::with('category')->where('category_id',2)->where('status','active')->get();
+    }
+    public static function getFeedArticles()
+    {
+        return Article::with('category')->where('category_id',3)->where('status','active')->get();
     }
 }
