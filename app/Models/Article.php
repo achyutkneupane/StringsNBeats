@@ -34,7 +34,7 @@ class Article extends Model implements HasMedia
     }
     public function artists()
     {
-        return $this->belongsToMany(Artist::class);
+        return $this->belongsToMany(Artist::class,'article_artist','article_id');
     }
     public function category()
     {

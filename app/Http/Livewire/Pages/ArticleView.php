@@ -10,7 +10,7 @@ use Spatie\SchemaOrg\Schema;
 
 class ArticleView extends Component
 {
-    public $slug,$article,$latests,$description,$keywords;
+    public $slug,$article,$latests,$description,$keywords,$populars,$artistArticles;
     public function mount($slug)
     {
         $this->slug = $slug;
@@ -19,11 +19,23 @@ class ArticleView extends Component
     public function render()
     {
         $this->article = Cache::rememberForever('article-'.$this->slug, function () {
-            return Article::with('category','writer','tags','artists','media')->where('slug',$this->slug)->first();
+            return Article::with('category','writer','tags','artists.articles.media','media','comments')->where('slug',$this->slug)->first();
         });
         if($this->article) {
-            $this->latests = Cache::rememberForever('latest_six_without_'.$this->article->id, function () {
-                return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(6)->get();
+            $this->latests = Cache::rememberForever('latest_five_without_'.$this->article->id, function () {
+                return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(5)->get();
+            });
+            $this->populars = Cache::rememberForever('popular_five_without_'.$this->article->id, function () {
+                return Article::with('media')->orderBy('views','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(5)->get();
+            });
+            $this->artistArticles = Cache::rememberForever('artist_articles_without_'.$this->article->id, function () {
+                $articless = collect();
+                foreach($this->article->artists as $artist)
+                {
+                    foreach($artist->articles as $article)
+                        $articless->push($article);
+                }
+                return $articless->take(9);
             });
             $this->description = $this->article->description ? $this->article->description : Str::limit(strip_tags($this->article->content),200);
             foreach($this->article->tags as $tag)

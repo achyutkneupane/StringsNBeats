@@ -37,9 +37,15 @@ class CacheHelper
             });
         });
         Article::orderBy('created_at','DESC')->each(function($article) {
-            Cache::forget('latest_six_without_'.$article->id);
-            Cache::rememberForever('latest_six_without_'.$article->id, function () use($article) {
-                return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$article->id)->take(6)->get();
+            Cache::forget('latest_five_without_'.$article->id);
+            Cache::rememberForever('latest_five_without_'.$article->id, function () use($article) {
+                return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$article->id)->take(5)->get();
+            });
+        });
+        Article::orderBy('created_at','DESC')->each(function($article) {
+            Cache::forget('popular_five_without_'.$article->id);
+            Cache::rememberForever('popular_five_without_'.$article->id, function () use($article) {
+                return Article::with('media')->orderBy('views','DESC')->where('status','active')->where('id','!=',$article->id)->take(5)->get();
             });
         });
     }
