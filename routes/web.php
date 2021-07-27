@@ -37,24 +37,6 @@ Route::feeds();
 
 Route::get('/',LandingPage::class)->name('homepage');
 
-// Route::get('/sitemap.xml',function() {
-//     $tag = Sitemap::addTag(route('homepage'),Carbon::create('2021', '6', '6'),'daily',1);
-//     $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,config('app.name'));
-//     $tag = Sitemap::addTag(route('contactUs'),Carbon::create('2021', '6', '6'),'yearly',0.9);
-//     $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more." ,NULL,"Contact Us - ".config('app.name'));
-//     Article::all()->each(function (Article $article) {
-//         if($article->status == 'active') {
-//             $tag = Sitemap::addTag(route('viewArticle',$article->slug),$article->updated_at,'daily',0.8);
-//             $tag->addImage($article->cover->getUrl(), $article->description ? $article->description : NULL,NULL,$article->title.' - '.config('app.name'));
-//         }
-//     });
-//     Category::all()->each(function(Category $category) {
-//         $tag = Sitemap::addTag(route('viewCategory',$category->slug),$category->updated_at,'daily',0.8);
-//         $tag->addImage(asset('statics/ogimage.jpg'), "Strings N’ Beats is the primary destination for Nepali Music related matter and stories surrounding it all. Check this page to get informations about the ".$category->title." in Nepali Music." ,NULL,config('app.name'));
-//     });
-//     return Sitemap::render();
-// })->name('sitemap');
-
 Route::prefix('/sitemap')->group(function() {
     Route::get('/',function() {
         // Main Sitemap
@@ -71,9 +53,17 @@ Route::prefix('/sitemap')->group(function() {
         // Categories Sitemap
         $sitemap_categories = App::make("sitemap");
         $sitemap_categories->setCache('laravel.sitemap.categories', 3600);
+        
         Category::get()->each(function (Category $category) use($sitemap_categories) {
             if($category->deleted_at == NULL) {
-                $sitemap_categories->add(route('viewCategory',$category->slug), $category->updated_at, 0.5, 'daily');
+                $image = [
+                    [
+                        'url' => asset('statics/ogimage.jpg'),
+                        'title' => $category->title.' - '.config('app.name'),
+                        'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events, and more."
+                    ],
+                ];
+                $sitemap_categories->add(route('viewCategory',$category->slug), $category->updated_at, 0.5, 'daily',$image,$category->title.' - '.config('app.name'));
             }
         });
         return $sitemap_categories->render('xml');
@@ -106,8 +96,23 @@ Route::prefix('/sitemap')->group(function() {
         // Static Sitemap
         $sitemap_statics = App::make("sitemap");
         $sitemap_statics->setCache('laravel.sitemap.statics', 10);
-        $sitemap_statics->add(route('homepage'),Carbon::create('2021', '6', '6'), 1, 'daily');
-        $sitemap_statics->add(route('contactUs'),Carbon::create('2021', '6', '6'), 0.3, 'yearly');
+        $image = [
+            [
+                'url' => asset('statics/ogimage.jpg'),
+                'title' => config('app.name'),
+                'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events, and more."
+            ],
+        ];
+        $sitemap_statics->add(route('homepage'),Carbon::create('2021', '6', '6'), 1, 'daily',$image,config('app.name'));
+
+        $contactimage = [
+            [
+                'url' => asset('statics/ogimage.jpg'),
+                'title' => 'Contact Us - '.config('app.name'),
+                'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events, and more."
+            ],
+        ];
+        $sitemap_statics->add(route('contactUs'),Carbon::create('2021', '6', '6'), 0.3, 'yearly',$contactimage);
         return $sitemap_statics->render('xml');
     })->name('staticsSitemap');
     Route::get('/articles',function() {
@@ -129,7 +134,7 @@ Route::prefix('/sitemap')->group(function() {
                 'access'           => 'Subscription',
             ];
             if($article->status == 'active') {
-                $sitemap_articles->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,'Kando',NULL,NULL,$googleNews,NULL);
+                $sitemap_articles->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,$article->title.' - '.config('app.name'),NULL,NULL,$googleNews,NULL);
             }
         });
         return $sitemap_articles->render('xml');
