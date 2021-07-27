@@ -77,7 +77,7 @@ Route::prefix('/sitemap')->group(function() {
             $image = [
                 [
                     'url' => $article->cover->getUrl(),
-                    'title' => $article->title.' - '.config('app.name'),
+                    'title' => $article->title,
                     'caption' => $article->description ? $article->description : NULL
                 ],
             ];
@@ -87,7 +87,7 @@ Route::prefix('/sitemap')->group(function() {
                 'publication_date' => $article->created_at,
             ];
             if($article->status == 'active') {
-                $sitemap_news->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,$article->title.' - '.config('app.name'),NULL,NULL,$googleNews,NULL);
+                $sitemap_news->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,$article->title,NULL,NULL,$googleNews,NULL);
             }
         });
         return $sitemap_news->render('google-news');
@@ -123,7 +123,7 @@ Route::prefix('/sitemap')->group(function() {
             $image = [
                 [
                     'url' => $article->cover->getUrl(),
-                    'title' => $article->title.' - '.config('app.name'),
+                    'title' => $article->title,
                     'caption' => $article->description ? $article->description : NULL
                 ],
             ];
@@ -134,7 +134,7 @@ Route::prefix('/sitemap')->group(function() {
                 'access'           => 'Subscription',
             ];
             if($article->status == 'active') {
-                $sitemap_articles->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,$article->title.' - '.config('app.name'),NULL,NULL,$googleNews,NULL);
+                $sitemap_articles->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,$article->title,NULL,NULL,$googleNews,NULL);
             }
         });
         return $sitemap_articles->render('xml');
@@ -145,7 +145,7 @@ Route::get('robots.txt', function(Robots $robots) {
     $robots->addUserAgent('*');
     if ($robots->shouldIndex()) {
         $robots->addDisallow('/panel');
-        $robots->addSitemap(route('sitemap'));
+        $robots->addSitemap(route('mainSitemap'));
     } else {
         $robots->addDisallow('/');
     }

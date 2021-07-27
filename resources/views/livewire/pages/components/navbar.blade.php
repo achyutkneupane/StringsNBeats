@@ -9,8 +9,8 @@
             @endauth
         </div>
         <div class="pt-1 text-white h3">
-            <a href="https://www.facebook.com/StringsNBeatsNepal/" target="_blank"><i class="text-white fab fa-facebook"></i></a>
-            <a href="https://www.instagram.com/stringsnbeats/" target="_blank"><i class="text-white fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/StringsNBeatsNepal" target="_blank"><i class="text-white fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/stringsnbeats" target="_blank"><i class="text-white fab fa-instagram"></i></a>
             <a href="https://www.twitter.com/strings_beats" target="_blank"><i class="text-white fab fa-twitter"></i></a>
             <a href="mailto:info@stringsnbeats.net" target="_blank"><i class="text-white fas fa-envelope"></i></a>
         </div>

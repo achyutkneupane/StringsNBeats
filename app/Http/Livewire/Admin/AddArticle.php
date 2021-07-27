@@ -19,7 +19,7 @@ class AddArticle extends Component
     public $tags,$categories,$artistList;
     public $articleTags,$title;
     public $rules = [
-        'articleTitle' => 'required|min:20|max:45',
+        'articleTitle' => 'required|min:35|max:65',
         'articleCategory' => 'required',
         'articleTags' => 'required',
         'artists' => 'required',
