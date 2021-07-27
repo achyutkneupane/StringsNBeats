@@ -99,7 +99,7 @@ Route::prefix('/sitemap')->group(function() {
         $image = [
             [
                 'url' => asset('statics/ogimage.jpg'),
-                'title' => config('app.name'),
+                'title' => config('app.name')." || Primary Destination for Nepali Music Contents",
                 'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events, and more."
             ],
         ];
