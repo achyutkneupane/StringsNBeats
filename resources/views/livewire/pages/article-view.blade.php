@@ -81,7 +81,7 @@
 </div>
 @push('meta_tags')
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
-    <meta name="title" content="@yield('title') - {{ config('app.name', 'Laravel') }}">
+    <meta name="title" content="@yield('title')">
     <meta name="description" content="{{ $description }}">
     <meta name="keywords" content="{{ $keywords }}">
     <meta property='article:published_time' content='{{ $article->created_at }}' />
@@ -89,14 +89,14 @@
 
     <meta property="og:type" content="article">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ $article->title }} - {{ config('app.name', 'Laravel') }}">
+    <meta property="og:title" content="{{ $article->title }}">
     <meta property="og:description" content="{{ $description }}">
     <meta property="og:image" content="{{ $article->cover ? $article->cover->getUrl() : '' }}">
     <meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:url" content="{{ url()->current() }}">
-    <meta name="twitter:title" content="{{ $article->title }} - {{ config('app.name', 'Laravel') }}">
+    <meta name="twitter:title" content="{{ $article->title }}">
     <meta name="twitter:description" content="{{ $description }}">
     <meta name="twitter:image" content="{{ $article->cover ? $article->cover->getUrl() : '' }}">
     <meta name="twitter:site" content="@strings_beats">
