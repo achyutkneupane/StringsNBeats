@@ -48,8 +48,6 @@
 </head>
 @if(Request()->route()->getPrefix() != '/panel')
 <body>
-    <script async src="https://cse.google.com/cse.js?cx=c24381ec373e4d778"></script>
-    <div class="gcse-search"></div>
     {{ $slot }}
 @else
 <body class="hold-transition sidebar-mini">
