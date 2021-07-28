@@ -65,17 +65,17 @@ class Article extends Model implements HasMedia, Feedable
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('small')
-             ->format(Manipulations::FORMAT_WEBP)
+            //  ->format(Manipulations::FORMAT_WEBP)
              ->width(100)
              ->height(100)
              ->nonQueued();
         $this->addMediaConversion('medium')
-             ->format(Manipulations::FORMAT_WEBP)
+            //  ->format(Manipulations::FORMAT_WEBP)
              ->width(300)
              ->height(300)
              ->nonQueued();
         $this->addMediaConversion('big')
-             ->format(Manipulations::FORMAT_WEBP)
+            //  ->format(Manipulations::FORMAT_WEBP)
              ->width(800)
              ->height(500)
              ->nonQueued();

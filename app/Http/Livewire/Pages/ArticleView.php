@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages;
 
 use App\Models\Article;
+use App\Models\Artist;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -10,7 +11,7 @@ use Spatie\SchemaOrg\Schema;
 
 class ArticleView extends Component
 {
-    public $slug,$article,$latests,$description,$keywords,$populars,$artistArticles;
+    public $slug,$article,$latests,$description,$keywords,$populars,$artistArticles,$coverImage;
     public function mount($slug)
     {
         if(strpos($slug,'--')) {
@@ -36,8 +37,10 @@ class ArticleView extends Component
     public function render()
     {
         $this->article = Cache::rememberForever('article-'.$this->slug, function () {
-            return Article::with('category','writer','tags','artists.articles.media','media','comments')->where('slug',$this->slug)->first();
+            return Article::with('category','writer','tags','artists','media','comments')->where('slug',$this->slug)->first();
         });
+        $this->coverImage = $this->article->cover->getUrl();
+        // dd($this->article);
         if($this->article) {
             $this->latests = Cache::rememberForever('latest_five_without_'.$this->article->id, function () {
                 return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(5)->get();
@@ -49,7 +52,7 @@ class ArticleView extends Component
                 $articless = collect();
                 foreach($this->article->artists as $artist)
                 {
-                    foreach($artist->articles as $articlee) {
+                    foreach(Artist::with('articles.media')->find($artist->id)->articles as $articlee) {
                         if($articlee->status == 'active' && $articlee->id != $this->article->id) {
                             if(!$articless->contains('id',$articlee->id)) {
                                 $articless->push($articlee);

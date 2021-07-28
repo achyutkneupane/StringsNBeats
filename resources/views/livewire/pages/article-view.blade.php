@@ -91,14 +91,14 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title')">
     <meta property="og:description" content="{{ $description }}">
-    <meta property="og:image" content="{{ $article->cover ? $article->cover->getUrl() : '' }}">
+    <meta property="og:image" content="{{ $coverImage }}">
     <meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}">
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:url" content="{{ url()->current() }}">
     <meta name="twitter:title" content="@yield('title')">
     <meta name="twitter:description" content="{{ $description }}">
-    <meta name="twitter:image" content="{{ $article->cover ? $article->cover->getUrl() : '' }}">
+    <meta name="twitter:image" content="{{ $coverImage }}">
     <meta name="twitter:site" content="@strings_beats">
     {!! $schemaScripts !!}
 @endpush
