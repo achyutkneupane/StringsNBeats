@@ -31,11 +31,6 @@ use MadWeb\Robots\Robots;
 |
 */
 Route::feeds();
-Route::get('/test',function() {
-    $date = Carbon::create(2021,7,30,4,0,0);
-    dd($date->subDay()->isBirthday(),Carbon::now());
-    dd(Carbon::now()->subDay());
-});
 Route::get('/',LandingPage::class)->name('homepage');
 
 Route::prefix('/sitemap')->group(function() {
