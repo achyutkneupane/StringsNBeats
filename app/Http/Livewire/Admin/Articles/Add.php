@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admin\Articles;
 
 use App\Helpers\CacheHelper;
 use App\Models\Article;
@@ -11,7 +11,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 
-class AddArticle extends Component
+class Add extends Component
 {
     use WithFileUploads;
     public $articleTitle,$articleCategory,$artists,$featuredImage,$articleContent,$featured,$articleDescription;
@@ -157,6 +157,6 @@ class AddArticle extends Component
         $this->tags = Tag::orderBy('title','ASC')->get();
         $this->categories = Category::orderBy('title','ASC')->get();
         $this->artistList = Artist::orderBy('name','ASC')->get();
-        return view('livewire.admin.add-article');
+        return view('livewire.admin.articles.add');
     }
 }

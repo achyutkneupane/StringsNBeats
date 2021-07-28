@@ -18,10 +18,18 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('adminArticles') }}" class="nav-link {{ request()->routeIs('adminArticles') ? "active" : '' }}">
+            <a href="{{ route('adminArticles') }}" class="nav-link {{ (request()->routeIs('adminArticles') || request()->routeIs('adminAddArticles') || request()->routeIs('adminEditArticles')) ? "active" : '' }}">
               <i class="nav-icon far fa-newspaper"></i>
               <p>
                 Articles
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('adminArtists') }}" class="nav-link {{ request()->routeIs('adminArtists') ? "active" : '' }}">
+              <i class="nav-icon far fa-newspaper"></i>
+              <p>
+                Artists
               </p>
             </a>
           </li>

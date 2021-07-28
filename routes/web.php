@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Livewire\Admin\AddArticle;
+use App\Http\Livewire\Admin\Articles\Add as AddArticle;
 use App\Http\Livewire\Admin\AddYoutube;
-use App\Http\Livewire\Admin\Articles;
-use App\Http\Livewire\Admin\EditArticle;
+use App\Http\Livewire\Admin\Articles\ListArticles;
+use App\Http\Livewire\Admin\Articles\EditArticle;
+use App\Http\Livewire\Admin\Artist\AddArtist;
+use App\Http\Livewire\Admin\Artist\ListArtists;
 use App\Http\Livewire\Admin\Dashboard;
 use App\Http\Livewire\Pages\AboutUs;
 use App\Http\Livewire\Pages\ArticleView;
@@ -15,13 +17,8 @@ use App\Models\Article;
 use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 use MadWeb\Robots\Robots;
-use Spatie\SchemaOrg\Schema;
-use Watson\Sitemap\Facades\Sitemap;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +31,11 @@ use Watson\Sitemap\Facades\Sitemap;
 |
 */
 Route::feeds();
-
+Route::get('/test',function() {
+    $date = Carbon::create(2021,7,30,4,0,0);
+    dd($date->subDay()->isBirthday(),Carbon::now());
+    dd(Carbon::now()->subDay());
+});
 Route::get('/',LandingPage::class)->name('homepage');
 
 Route::prefix('/sitemap')->group(function() {
@@ -154,9 +155,13 @@ Route::get('robots.txt', function(Robots $robots) {
 Route::prefix('/panel')->middleware('auth')->group(function() {
     Route::get('/',Dashboard::class)->name('adminDashboard');
     Route::get('/youtube', AddYoutube::class)->middleware('auth');
-    Route::get('/articles',Articles::class)->name('adminArticles');
+    
+    Route::get('/articles',ListArticles::class)->name('adminArticles');
     Route::get('/articles/add',AddArticle::class)->name('adminAddArticles');
     Route::get('/articles/edit/{articleId}',EditArticle::class)->name('adminEditArticles');
+
+    Route::get('/artists', ListArtists::class)->name('adminArtists');
+    Route::get('/artists/add', AddArtist::class)->name('adminAddArtist');
 });
 
 Route::get('/login',Login::class)->name('login');

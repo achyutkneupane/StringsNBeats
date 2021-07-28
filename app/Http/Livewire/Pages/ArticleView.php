@@ -13,7 +13,24 @@ class ArticleView extends Component
     public $slug,$article,$latests,$description,$keywords,$populars,$artistArticles;
     public function mount($slug)
     {
-        $this->slug = $slug;
+        if(strpos($slug,'--')) {
+            $str = str_replace('---------------', '-', $slug);
+            $str = str_replace('--------------', '-', $slug);
+            $str = str_replace('-------------', '-', $slug);
+            $str = str_replace('------------', '-', $slug);
+            $str = str_replace('-----------', '-', $slug);
+            $str = str_replace('----------', '-', $slug);
+            $str = str_replace('---------', '-', $slug);
+            $str = str_replace('--------', '-', $slug);
+            $str = str_replace('-------', '-', $slug);
+            $str = str_replace('------', '-', $str);
+            $str = str_replace('-----', '-', $str);
+            $str = str_replace('----', '-', $str);
+            $str = str_replace('---', '-', $str);
+            $str = str_replace('--', '-', $str);
+            $this->slug = $str;
+            redirect()->route('viewArticle',$this->slug);
+        }
         $this->keywords = 'StringsNBeats,stringsnbeats.net,strings n beats Nepal,Nepal,Nepali Music,Nepali Artists,Nepali song';
     }
     public function render()

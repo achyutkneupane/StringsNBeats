@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admin\Articles;
 
 use App\Helpers\CacheHelper;
 use App\Models\Article;
@@ -181,6 +181,6 @@ class EditArticle extends Component
         $this->tags = Tag::orderBy('title','ASC')->get();
         $this->categories = Category::orderBy('title','ASC')->get();
         $this->artistList = Artist::orderBy('name','ASC')->get();
-        return view('livewire.admin.edit-article');
+        return view('livewire.admin.articles.edit-article');
     }
 }

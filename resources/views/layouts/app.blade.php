@@ -8,6 +8,7 @@
     @include('feed::links')
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="canonical" href="{{ strtolower(request()->url()) }}" />
     @if(Request()->route()->getPrefix() != '/panel')
     {!! Robots::metaTag() !!}
     @endif

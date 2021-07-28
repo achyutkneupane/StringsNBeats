@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\Admin\Articles;
 
 use App\Models\Article;
 use Livewire\Component;
 
-class Articles extends Component
+class ListArticles extends Component
 {
     public $title;
     public function mount()
@@ -15,6 +15,6 @@ class Articles extends Component
     public function render()
     {
         $articles = Article::orderBy('created_at','DESC')->with('category','writer')->get();
-        return view('livewire.admin.articles',compact('articles'));
+        return view('livewire.admin.articles.list-articles',compact('articles'));
     }
 }

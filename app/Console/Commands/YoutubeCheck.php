@@ -124,9 +124,9 @@ class YoutubeCheck extends Command
                             }
                         }
                     }
-                    if($releaseDate->isBirthday() && !Cache::has('releasedNotifier-'.$videoId)) {
+                    if($releaseDate->subDay()->isBirthday() && !Cache::has('releasedNotifier-'.$videoId)) {
                         Cache::rememberForever('releasedNotifier-'.$videoId,function() { return TRUE; });
-                        if(!$releaseDate->isToday())
+                        if(!$releaseDate->subDay()->isToday())
                         {
                             $diff = $releaseDate->diffInYears() +1;
                             try {
