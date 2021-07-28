@@ -49,10 +49,10 @@ class ArticleView extends Component
                 $articless = collect();
                 foreach($this->article->artists as $artist)
                 {
-                    foreach($artist->articles as $article) {
-                        if($article->status == 'active' && $article->id != $this->article->id) {
-                            if(!$articless->contains('id',$article->id)) {
-                                $articless->push($article);
+                    foreach($artist->articles as $articlee) {
+                        if($articlee->status == 'active' && $articlee->id != $this->article->id) {
+                            if(!$articless->contains('id',$articlee->id)) {
+                                $articless->push($articlee);
                             }
                         }
                     }
