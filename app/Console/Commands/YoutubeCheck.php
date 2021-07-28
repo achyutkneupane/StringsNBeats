@@ -128,7 +128,7 @@ class YoutubeCheck extends Command
                         Cache::rememberForever('releasedNotifier-'.$videoId,function() { return TRUE; });
                         if(!$releaseDate->subDay()->isToday())
                         {
-                            $diff = $releaseDate->diffInYears() +1;
+                            $diff = $releaseDate->diffInYears();
                             try {
                                 Notification::send('-1001421932477',new YoutubeNotification("https://youtu.be/".$videoId." was released on this day ".$diff." year(s) ago."));
                             }
