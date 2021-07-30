@@ -17,7 +17,7 @@
     </div>
     <div class="my-2 bg-white col-12 d-flex flex-column justify-content-between sticky-top" style='z-index: 50;'>
         <span class="text-center col-12 text-danger text-uppercase display-4">
-            <img src="{{ asset('statics/logo-text.png') }}" class='logoimg my-0 my-md-2'>
+            <img src="{{ asset('statics/logo-text.png') }}" class='logoimg my-0 my-md-2' alt="Strings N' Beats" title="Strings N' Beats" loading='lazy'>
         </span>
         @if(request()->routeIs('homepage'))
         <h1 style='display:none'>Strings N' Beats</h1>
