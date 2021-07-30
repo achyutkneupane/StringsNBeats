@@ -7,14 +7,14 @@ use Livewire\Component;
 
 class ListArticles extends Component
 {
-    public $title;
+    public $title,$articles;
     public function mount()
     {
         $this->title = "Articles";
     }
     public function render()
     {
-        $articles = Article::orderBy('created_at','DESC')->with('category','writer')->get();
-        return view('livewire.admin.articles.list-articles',compact('articles'));
+        $this->articles = Article::orderBy('created_at','DESC')->with('category','writer')->get();
+        return view('livewire.admin.articles.list-articles');
     }
 }

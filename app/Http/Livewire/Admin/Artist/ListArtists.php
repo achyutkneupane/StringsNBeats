@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class ListArtists extends Component
 {
-    public $title;
+    public $title,$artists;
     public function mount()
     {
         $this->title = "Artists";
@@ -18,7 +18,7 @@ class ListArtists extends Component
     }
     public function render()
     {
-        $artists = Artist::with('articles','albums','songs')->orderBy('created_at','DESC')->get();
-        return view('livewire.admin.artist.list-artists',compact('artists'));
+        $this->artists = Artist::with('articles','albums','songs')->orderBy('created_at','DESC')->get();
+        return view('livewire.admin.artist.list-artists');
     }
 }

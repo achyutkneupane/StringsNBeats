@@ -7,6 +7,7 @@ use App\Http\Livewire\Admin\Articles\EditArticle;
 use App\Http\Livewire\Admin\Artist\AddArtist;
 use App\Http\Livewire\Admin\Artist\ListArtists;
 use App\Http\Livewire\Admin\Dashboard;
+use App\Http\Livewire\Admin\Song\ListSongs;
 use App\Http\Livewire\Pages\AboutUs;
 use App\Http\Livewire\Pages\ArticleView;
 use App\Http\Livewire\Pages\CategoryArticles;
@@ -167,6 +168,9 @@ Route::prefix('/panel')->middleware('auth')->group(function() {
 
     Route::get('/artists', ListArtists::class)->name('adminArtists');
     Route::get('/artists/add', AddArtist::class)->name('adminAddArtist');
+    Route::get('/artists/edit/{artistId}', AddArtist::class)->name('adminEditArtist');
+
+    Route::get('/songs', ListSongs::class)->name('adminSongs');
 });
 
 Route::get('/login',Login::class)->name('login');

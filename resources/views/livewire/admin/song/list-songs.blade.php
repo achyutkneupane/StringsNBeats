@@ -9,52 +9,55 @@
                             <div class="card col-lg-10">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
-                                        <h5 class="card-title">All Artists</h5>
-                                        <a class="px-3 py-2 btn btn-success" href="{{ route('adminAddArtist') }}">+ Add</a>
+                                        <h5 class="card-title">All Songs</h5>
+                                        <a class="px-3 py-2 btn btn-success" href="">+ Add</a>
                                     </div>
                                     <p class="card-text">
                                         <table class="table table-hover table-bordered">
                                             <thead>
                                               <tr class="text-center">
                                                 <th scope="col">ID</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Slug</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Artist</th>
+                                                <th scope="col">Album</th>
                                                 <th scope="col">Articles</th>
-                                                <th scope="col">Albums</th>
-                                                <th scope="col">Songs</th>
                                                 <th scope="col" class="text-right">Actions</th>
                                               </tr>
                                             </thead>
                                             <tbody class="user-select-none">
-                                                @if($artists->count() > 0)
-                                                @foreach ($artists as $artist)
+                                                @if($songs->count() > 0)
+                                                @foreach ($songs as $song)
                                                 <tr>
-                                                    <th scope="row">{{ $artist->id }}</th>
+                                                    <th scope="row">{{ $song->id }}</th>
                                                     <td>
+                                                        {{ ucwords($song->title) }}
+                                                    </td>
+                                                    <td>
+                                                        @foreach($song->artists as $artist)
+                                                        {{ dd($loop->count != 1 && $loop->last) }}
+                                                        @if($loop->count != 1 && $loop->last)
                                                         {{ ucwords($artist->name) }}
+                                                        @else
+                                                        {{ ucwords($artist->name) }},
+                                                        @endif
+                                                        @endforeach
                                                     </td>
                                                     <td>
-                                                        {{ $artist->slug }}
+                                                        {{ $song->album ? $song->album->name : 'N/A' }}
                                                     </td>
                                                     <td>
-                                                        {{ $artist->articles->count() }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $artist->albums->count() }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $artist->songs->count() }}
+                                                        {{ $song->articles->count() }}
                                                     </td>
                                                     <td class="text-right">
                                                         <a href="" class="btn btn-warning">Edit</a>
-                                                        <a wire:click="deleteArtist({{ $artist->id }})" class="btn btn-danger">Delete</a>
+                                                        <a class="btn btn-danger">Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
                                                 @else
                                                 <tr>
                                                     <td colspan="7" class="text-center">
-                                                        No artists till now. Click <b>+Add</b> to add new.
+                                                        No songs till now. Click <b>+Add</b> to add new.
                                                     </td>
                                                 </tr>
                                                 @endif

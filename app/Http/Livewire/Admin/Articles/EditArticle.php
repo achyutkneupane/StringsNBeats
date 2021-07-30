@@ -6,6 +6,7 @@ use App\Helpers\CacheHelper;
 use App\Models\Article;
 use App\Models\Artist;
 use App\Models\Category;
+use App\Models\Song;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
@@ -15,9 +16,9 @@ use Illuminate\Support\Str;
 class EditArticle extends Component
 {
     use WithFileUploads;
-    public $articleTitle,$articleCategory,$artists,$featuredImage,$articleContent,$featured,$featuredImageView,$articleDescription,$articleSlug;
+    public $articleTitle,$articleCategory,$artists,$featuredImage,$articleContent,$featured,$featuredImageView,$articleDescription,$articleSlug,$articleSongs;
     public $addTagValue,$addArtistValue;
-    public $tags,$categories,$artistList;
+    public $tags,$categories,$artistList,$songs;
     public $articleTags,$title,$article,$articleContentFinal;
     public $rules = [
         'articleTitle' => 'required|min:35|max:65',
@@ -37,6 +38,7 @@ class EditArticle extends Component
         $this->articleCategory = $article->category->id;
         $this->featured = $article->featured;
         $this->articleTags = $article->tags->pluck('id');
+        $this->articleSongs = $article->songs->pluck('id');
         $this->artists = $article->artists->pluck('id');
         $this->articleDescription = $article->description;
         $this->articleSlug = $article->slug;
@@ -59,6 +61,7 @@ class EditArticle extends Component
     public function editArticle()
     {
         $articleTags = array();
+        $articleSongs = array();
         $artists = array();
         $this->validate();
         $article = $this->article;
@@ -112,6 +115,21 @@ class EditArticle extends Component
                 array_push($artists,$artist);
             }
         }
+        foreach($this->articleSongs as $song)
+        {
+            if(!Song::where('id',$song)->count())
+            {
+                $s = Song::create([
+                    'title' => $song
+                ]);
+                array_push($articleSongs,$s->id);
+            }
+            else
+            {
+                array_push($articleSongs,$song);
+            }
+        }
+        $article->songs()->sync($articleSongs);
         $article->tags()->sync($articleTags);
         $article->artists()->sync($artists);
         CacheHelper::updateCache();
@@ -120,6 +138,7 @@ class EditArticle extends Component
     public function saveAsDraft()
     {
         $articleTags = array();
+        $articleSongs = array();
         $artists = array();
         $this->validate([
             'articleTitle' => 'required|min:35|max:65',
@@ -171,6 +190,21 @@ class EditArticle extends Component
                 array_push($artists,$artist);
             }
         }
+        foreach($this->articleSongs as $song)
+        {
+            if(!Song::where('id',$song)->count())
+            {
+                $s = Song::create([
+                    'title' => $song
+                ]);
+                array_push($articleSongs,$s->id);
+            }
+            else
+            {
+                array_push($articleSongs,$song);
+            }
+        }
+        $article->songs()->sync($articleSongs);
         $article->tags()->sync($articleTags);
         $article->artists()->sync($artists);
         $this->featuredImageView = true;
@@ -179,6 +213,7 @@ class EditArticle extends Component
     public function render()
     {
         $this->tags = Tag::orderBy('title','ASC')->get();
+        $this->songs = Song::orderBy('title','ASC')->get();
         $this->categories = Category::orderBy('title','ASC')->get();
         $this->artistList = Artist::orderBy('name','ASC')->get();
         return view('livewire.admin.articles.edit-article');

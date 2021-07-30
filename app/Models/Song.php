@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Song extends Model
 {
     use HasFactory,Sluggable;
+    protected $guarded = [];
     public function sluggable(): array
     {
         return [
@@ -21,8 +22,12 @@ class Song extends Model
     {
         return $this->belongsTo(Album::class);
     }
-    public function artist()
+    public function artists()
     {
         return $this->belongsToMany(Artist::class);
+    }
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
     }
 }

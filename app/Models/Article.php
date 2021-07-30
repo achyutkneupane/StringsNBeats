@@ -47,6 +47,10 @@ class Article extends Model implements HasMedia, Feedable
     {
         return $this->belongsToMany(Tag::class);
     }
+    public function songs()
+    {
+        return $this->belongsToMany(Song::class,'article_song','article_id');
+    }
     public function comments()
     {
         return $this->hasMany(Comment::class);

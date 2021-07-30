@@ -26,10 +26,18 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('adminArtists') }}" class="nav-link {{ request()->routeIs('adminArtists') ? "active" : '' }}">
-              <i class="nav-icon far fa-newspaper"></i>
+            <a href="{{ route('adminArtists') }}" class="nav-link {{ (request()->routeIs('adminArtists') ||  request()->routeIs('adminAddArtist') || request()->routeIs('adminEditArtist')) ? "active" : '' }}">
+              <i class="nav-icon fas fa-users"></i>
               <p>
                 Artists
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('adminSongs') }}" class="nav-link {{ (request()->routeIs('adminSongs') ||  request()->routeIs('adminAddArtist') || request()->routeIs('adminEditArtist')) ? "active" : '' }}">
+              <i class="nav-icon fas fa-music"></i>
+              <p>
+                Songs
               </p>
             </a>
           </li>

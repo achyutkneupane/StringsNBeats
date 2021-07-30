@@ -64,6 +64,21 @@
                                                         @enderror
                                                     </div>
                                                 </div>
+                                                <div class="form-row" wire:ignore>
+                                                    <div class="form-group col-lg-12">
+                                                        <div class="d-flex justify-content-between">
+                                                            <label for="articleSongs">Songs</label>
+                                                        </div>
+                                                        <select class="form-control select2" id="articleSongs" wire:model.lazy="articleSongs" multiple="multiple">
+                                                            @foreach($songs as $song)
+                                                                <option value="{{ $song->id }}">{{ $song->title }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('articleSongs')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-lg-12">
                                                         <label for="articleCategory">Category</label>
@@ -224,6 +239,11 @@
             allowClear: true,
             tags: true,
         });
+        $('#articleSongs').select2({
+            placeholder: "Select songs",
+            allowClear: true,
+            tags: true,
+        });
         $('#artists').select2({
             placeholder: "Select an Artist",
             allowClear: true,
@@ -232,6 +252,10 @@
         $('#articleTags').on('change', function (e) {
             var data = $('#articleTags').select2("val");
             @this.set('articleTags', data);
+        });
+        $('#articleSongs').on('change', function (e) {
+            var data = $('#articleSongs').select2("val");
+            @this.set('articleSongs', data);
         });
         $('#artists').on('change', function (e) {
             var data = $('#artists').select2("val");
