@@ -16,9 +16,12 @@
         </div>
     </div>
     <div class="my-2 bg-white col-12 d-flex flex-column justify-content-between sticky-top" style='z-index: 50;'>
-        <{{ request()->routeIs('homepage') ? "h1" : 'span' }} class="text-center col-12 text-danger text-uppercase display-4 logoText">
-            Strings N' Beats
-        </{{ request()->routeIs('homepage') ? "h1" : 'span' }}>
+        <span class="text-center col-12 text-danger text-uppercase display-4">
+            <img src="{{ asset('statics/logo-text.png') }}" class='logoimg my-0 my-md-2'>
+        </span>
+        @if(request()->routeIs('homepage'))
+        <h1 style='display:none'>Strings N' Beats</h1>
+        @endif
         <div class="d-flex justify-content-center col-12">
             <div class="p-0 text-white col-12 bg-primary d-flex justify-content-between align-items-center">
                 <a class="m-0 text-white nav-link bg-danger h-100 d-flex align-items-center py-3" href="{{ route('homepage') }}"><i class="fas fa-home"></i></a>
@@ -38,19 +41,18 @@
 </div>
 @push('styles')
 <style>
-    @font-face {
-        font-family: 'Futura Poster';
-        src: URL("{{ asset('statics/ftpstrps.ttf') }}");
-    }
-    .logoText {
-        font-family: 'Futura Poster';
-    }
     .categoryBar {
         width: 100%;
+    }
+    .logoimg {
+        width: 75%;
     }
     @media (min-width: 992px) {
         .categoryBar {
             max-width: 35%;
+        }
+        .logoimg {
+            width: 50%;
         }
     }
 </style>

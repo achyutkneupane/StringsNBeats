@@ -8,10 +8,10 @@
                     <div class="col-12 col-lg-9">
                         <div class='d-flex flex-column'>
                             <div class="text-white card bg-dark">
-                                <img class="card-img" src="{{ $article->cover ? $article->cover->getUrl('big') : '' }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}" loading='lazy' width='800'>
+                                <img class="card-img" src="{{ $article->cover ? $article->cover->getUrl('big') : '' }}" style="opacity: 0.2" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}" loading='lazy' width='800' height="500">
                                 <div class="text-center align-middle card-img-overlay d-flex flex-column justify-content-center">
                                     <h1 class="card-title text-capitalize articleTitle">
-                                        {{ $article->title }}
+                                        {{ $article->title }}<span style='display:none'> - Strings N' Beats</span>
                                     </h1>
                                 </div>
                             </div>
