@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\Pages;
 
 use App\Models\Song;
+use Carbon\Carbon;
 use Livewire\Component;
 use Spatie\SchemaOrg\Schema;
 
 class SongView extends Component
 {
-    public $slug,$song,$schemaScripts;
+    public $slug,$song,$duration;
     public function mount($slug)
     {
         if(strpos($slug,'--')) {
@@ -30,7 +31,12 @@ class SongView extends Component
             redirect()->route('viewSong',$this->slug);
         }
         $this->slug = $slug;
+    }
+    public function render()
+    {
         $this->song = Song::with('artists','media')->where('slug',$this->slug)->first();
+        list($minutes, $seconds) = explode(':', $this->song->duration, 2);
+        $this->duration = $seconds+$minutes*60;
         $schemas = Schema::musicRecording()
                          ->byArtist(Schema::musicGroup()
                                           ->legalName($this->song->artists->first()->name))
@@ -57,9 +63,6 @@ class SongView extends Component
                                                             $this->song->spotify ? 'https://open.spotify.com/track/'.$this->song->spotify : NULL)));
 
         $schemaScripts = $schemas->toScript();
-    }
-    public function render()
-    {
-        return view('livewire.pages.song-view');
+        return view('livewire.pages.song-view',compact('schemaScripts'));
     }
 }

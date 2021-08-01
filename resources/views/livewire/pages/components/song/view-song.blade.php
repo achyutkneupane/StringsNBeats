@@ -102,6 +102,7 @@
                                 </div>
                             </div>
                             @endif
+                            <div class="my-4 sharethis-inline-share-buttons" style='z-index: 9;'></div>
                         </div>
                     </div>
                     <hr />
@@ -155,4 +156,7 @@
         font-weight: 900 !important;
     }
 </style>
+@endpush
+@push('scripts')
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=60c351e4485ac10011d3049d&product=sop' async='async'></script>
 @endpush

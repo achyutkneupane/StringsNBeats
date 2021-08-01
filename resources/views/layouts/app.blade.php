@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" href="{{ asset('statics/snb-favicon.png') }}"/>
 	
 @stack('meta_tags')
-@if(!request()->routeIs('viewArticle') && request()->route()->getPrefix() != '/panel')
+@if(!request()->routeIs('viewArticle') && !request()->routeIs('viewSong') && request()->route()->getPrefix() != '/panel')
 {!! Spatie\SchemaOrg\Schema::webSite()->url(route('homepage'))->name('Strings N\' Beats')->image(asset('statics/ogimage.jpg'))
                             ->publisher(Spatie\SchemaOrg\Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Spatie\SchemaOrg\Schema::imageObject()->url(asset('statics/logo-small.png'))))
                             ->author(Spatie\SchemaOrg\Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Spatie\SchemaOrg\Schema::imageObject()->url(asset('statics/logo-small.png'))))
