@@ -5,7 +5,7 @@
                 <div class="d-flex flex-column">
                     <div class='px-4 text-center d-flex flex-column flex-lg-row justify-content-center align-items-center w-100 bg-danger'>
                         <h1 class='pt-2 text-white' style='font-size: 1.3rem;'>
-                            {{ $song->title }}
+                            {{ $song->title }} - {{ $song->artists->first()->name }}
                         </h1>
                     </div>
                     <div class='my-2 row'>
