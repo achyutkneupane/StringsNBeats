@@ -134,7 +134,7 @@
                                 </p>
                                 @endif
                                 @if($song->spotify)
-                                    <a href='https://open.spotify.com/track/{{ $song->noodle }}' target='_blank' ref='nofollow' loading='lazy' class='mt-2 text-center'><img src='{{ asset('statics/listen-on-spotify.jpg') }}' width="40%" alt="Listen on Spotify - Strings N' Beats" title="Listen on Spotify - Strings N' Beats"></a>
+                                    <a href='https://open.spotify.com/track/{{ $song->spotify }}' target='_blank' ref='nofollow' loading='lazy' class='mt-2 text-center'><img src='{{ asset('statics/listen-on-spotify.jpg') }}' width="40%" alt="Listen on Spotify - Strings N' Beats" title="Listen on Spotify - Strings N' Beats"></a>
                                 @endif
                             </div>
                         </div>
