@@ -37,9 +37,13 @@ class SongView extends Component
         $this->song = Song::with('artists','media')->where('slug',$this->slug)->first();
         list($minutes, $seconds) = explode(':', $this->song->duration, 2);
         $this->duration = $seconds+$minutes*60;
+        $artists = array();
+        foreach($this->song->artists as $artist)
+        {
+            array_push($artists,Schema::person()->name($artist->name));
+        }
         $schemas = Schema::musicRecording()
-                         ->byArtist(Schema::musicGroup()
-                                          ->legalName($this->song->artists->first()->name))
+                         ->byArtist($artists)
                          ->duration($this->song->duration)
                          ->thumbnailUrl($this->song->image->getUrl())
                          ->url(route('viewSong',$this->song->slug))
@@ -50,6 +54,7 @@ class SongView extends Component
                                             ->name($this->song->title)
                                             ->description($this->song->description)
                                             ->alternateName($this->song->name)
+                                            ->contributor($this->song->arranger)
                                             ->composer($this->song->composer)
                                             ->genre($this->song->genre)
                                             ->lyricist(Schema::person()->name($this->song->lyricist))
