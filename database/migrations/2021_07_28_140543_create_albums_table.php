@@ -22,8 +22,6 @@ class CreateAlbumsTable extends Migration
             $table->enum('type',array('album','ep'));
             $table->unsignedBigInteger('artist_id')->nullable();
             $table->date('released_at')->nullable();
-            $table->string('logo_link')->nullable();
-            $table->string('image')->nullable();
             $table->timestamps();
             $table->foreign('artist_id')->references('id')->on('artists');
         });

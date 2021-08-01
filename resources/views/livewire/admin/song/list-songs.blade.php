@@ -34,8 +34,7 @@
                                                     </td>
                                                     <td>
                                                         @foreach($song->artists as $artist)
-                                                        {{ dd($loop->count != 1 && $loop->last) }}
-                                                        @if($loop->count != 1 && $loop->last)
+                                                        @if($loop->last)
                                                         {{ ucwords($artist->name) }}
                                                         @else
                                                         {{ ucwords($artist->name) }},
@@ -49,7 +48,7 @@
                                                         {{ $song->articles->count() }}
                                                     </td>
                                                     <td class="text-right">
-                                                        <a href="" class="btn btn-warning">Edit</a>
+                                                        <a href="{{ route('adminEditSong',$song->id) }}" class="btn btn-warning">Edit</a>
                                                         <a class="btn btn-danger">Delete</a>
                                                     </td>
                                                 </tr>

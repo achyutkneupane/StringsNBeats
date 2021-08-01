@@ -7,6 +7,7 @@ use App\Http\Livewire\Admin\Articles\EditArticle;
 use App\Http\Livewire\Admin\Artist\AddArtist;
 use App\Http\Livewire\Admin\Artist\ListArtists;
 use App\Http\Livewire\Admin\Dashboard;
+use App\Http\Livewire\Admin\Song\EditSong;
 use App\Http\Livewire\Admin\Song\ListSongs;
 use App\Http\Livewire\Pages\AboutUs;
 use App\Http\Livewire\Pages\ArticleView;
@@ -14,8 +15,10 @@ use App\Http\Livewire\Pages\CategoryArticles;
 use App\Http\Livewire\Pages\ContactUs;
 use App\Http\Livewire\Pages\LandingPage;
 use App\Http\Livewire\Pages\Login;
+use App\Http\Livewire\Pages\SongView;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Song;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -54,6 +57,7 @@ Route::prefix('/sitemap')->group(function() {
         $sitemap->addSitemap(route('articlesSitemap'),Carbon::now());
         $sitemap->addSitemap(route('newsSitemap'),Carbon::now());
         $sitemap->addSitemap(route('categoriesSitemap'),Carbon::now());
+        $sitemap->addSitemap(route('songsSitemap'),Carbon::now());
         return $sitemap->render('sitemapindex');
     })->name('mainSitemap');
     Route::get('/categories',function() {
@@ -75,6 +79,25 @@ Route::prefix('/sitemap')->group(function() {
         });
         return $sitemap_categories->render('xml');
     })->name('categoriesSitemap');
+    Route::get('/songs',function() {
+        // Categories Sitemap
+        $sitemap_songs = App::make("sitemap");
+        $sitemap_songs->setCache('laravel.sitemap.songs', 3600);
+        
+        Song::get()->each(function (Song $song) use($sitemap_songs) {
+            if($song->published_at != NULL) {
+                $image = [
+                    [
+                        'url' => $song->image->getUrl(),
+                        'title' => $song->title.' - '.$song->artists->first()->name.' - '.config('app.name'),
+                        'caption' => $song->description
+                    ],
+                ];
+                $sitemap_songs->add(route('viewSong',$song->slug), Carbon::parse($song->released_at), 0.9, 'daily',$image,$song->title.' - '.config('app.name'));
+            }
+        });
+        return $sitemap_songs->render('xml');
+    })->name('songsSitemap');
     Route::get('/news',function() {
 
         // News Sitemap
@@ -171,12 +194,14 @@ Route::prefix('/panel')->middleware('auth')->group(function() {
     Route::get('/artists/edit/{artistId}', AddArtist::class)->name('adminEditArtist');
 
     Route::get('/songs', ListSongs::class)->name('adminSongs');
+    Route::get('/songs/edit/{songId}', EditSong::class)->name('adminEditSong');
 });
 
 Route::get('/login',Login::class)->name('login');
 Route::get('/about-us',AboutUs::class)->name('aboutUs');
 Route::get('/contact-us',ContactUs::class)->name('contactUs');
 Route::get('/category/{slug}',CategoryArticles::class)->name('viewCategory');
+Route::get('/song/{slug}',SongView::class)->name('viewSong');
 Route::get('/{slug}',ArticleView::class)->name('viewArticle');
 
 // Auth::routes();

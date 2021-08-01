@@ -14,7 +14,6 @@ class ChangeYoutubeTypeInArtists extends Migration
     public function up()
     {
         Schema::table('artists', function (Blueprint $table) {
-            $table->string('image')->nullable()->after('logo_link');
             $table->string('tiktok')->nullable()->after('twitter');
             $table->string('nickname')->nullable()->after('name');
             $table->boolean('active')->default(true)->after('founded_at');

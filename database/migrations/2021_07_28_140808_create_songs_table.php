@@ -34,8 +34,6 @@ class CreateSongsTable extends Migration
             $table->string('youtube')->nullable();
             $table->string('noodle')->nullable();
             $table->string('spotify')->nullable();
-            $table->string('logo_link')->nullable();
-            $table->string('image')->nullable();
             $table->timestamps();
             $table->foreign('album_id')->references('id')->on('albums');
         });

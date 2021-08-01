@@ -70,7 +70,7 @@
                                                             <label for="articleSongs">Songs</label>
                                                         </div>
                                                         <select class="form-control select2" id="articleSongs" wire:model.lazy="articleSongs" multiple="multiple">
-                                                            @foreach($songs as $song)
+                                                            @foreach($songs as $song    )
                                                                 <option value="{{ $song->id }}">{{ $song->title }}</option>
                                                             @endforeach
                                                         </select>

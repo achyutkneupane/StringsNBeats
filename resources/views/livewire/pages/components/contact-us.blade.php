@@ -1,7 +1,7 @@
 <div class="mt-5 mb-2 col-12">
     <div class="container">
         <div class="d-flex justify-content-between row">
-            <div class="items-center col-md-12 d-flex flex-column justify-content-center">
+            <div class="col-md-12 d-flex flex-column justify-content-center">
                 <h1 class="text-center text-uppercase">
                     Contact Us
                 </h1>
@@ -15,8 +15,8 @@
                     </div>
                 </div>
                 @endif
-                <div class="my-4 row justify-content-center">
-                    <div class="d-flex flex-column col-lg-7">
+                <div class="flex-row my-4 d-flex justify-content-center">
+                    <div class="col-lg-8">
                         <div class="form-group col-12">
                             <label>Name</label>
                             <input type="text" wire:model.lazy="name" placeholder="Enter Full Name" class="form-control" wire:loading.attr="disabled" wire:target='sendContact'>

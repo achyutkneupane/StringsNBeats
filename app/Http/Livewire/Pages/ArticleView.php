@@ -77,7 +77,6 @@ class ArticleView extends Component
                 $this->article->save();
             }
             $schemas = Schema::article()
-                            ->mainEntityOfPage(Schema::webSite()->url(route('homepage')))
                             ->url(route('viewArticle',$this->article->slug))
                             ->headline($this->article->title)
                             ->description($this->description)

@@ -17,6 +17,24 @@ class CategoryArticles extends Component
     }
     public function mount($slug)
     {
+        if(strpos($slug,'--')) {
+            $str = str_replace('---------------', '-', $slug);
+            $str = str_replace('--------------', '-', $slug);
+            $str = str_replace('-------------', '-', $slug);
+            $str = str_replace('------------', '-', $slug);
+            $str = str_replace('-----------', '-', $slug);
+            $str = str_replace('----------', '-', $slug);
+            $str = str_replace('---------', '-', $slug);
+            $str = str_replace('--------', '-', $slug);
+            $str = str_replace('-------', '-', $slug);
+            $str = str_replace('------', '-', $str);
+            $str = str_replace('-----', '-', $str);
+            $str = str_replace('----', '-', $str);
+            $str = str_replace('---', '-', $str);
+            $str = str_replace('--', '-', $str);
+            $this->slug = $str;
+            redirect()->route('viewCategory',$this->slug);
+        }
         $this->searchQuery = '';
         $this->slug = $slug;
     }
