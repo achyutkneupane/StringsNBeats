@@ -130,11 +130,11 @@
                                 @if($song->noodle)
                                 <p class='my-0'>
                                     <a href='https://noodlerex.com.np/songs/{{ $song->noodle }}' target='_blank' ref='nofollow'>Buy From Noodle : https://noodlerex.com.np/songs/{{ $song->noodle }}</a>
-                                    {{-- <img src='{{ asset('statics/buy-from-noodle.jpg') }}' width='100%' alt="Buy from Noodle - Strings N' Beats" title="Buy from Noodle - Strings N' Beats"> --}}
+                                    {{-- <img src='{{ asset('statics/buy-from-noodle.jpg') }}' loading='lazy' width='100%' alt="Buy from Noodle - Strings N' Beats" title="Buy from Noodle - Strings N' Beats"> --}}
                                 </p>
                                 @endif
                                 @if($song->spotify)
-                                    <a href='https://noodlerex.com.np/songs/{{ $song->noodle }}' target='_blank' ref='nofollow' class='mt-2 text-center'><img src='{{ asset('statics/listen-on-spotify.jpg') }}' width="40%" alt="Listen on Spotify - Strings N' Beats" title="Listen on Spotify - Strings N' Beats"></a>
+                                    <a href='https://open.spotify.com/track/{{ $song->noodle }}' target='_blank' ref='nofollow' loading='lazy' class='mt-2 text-center'><img src='{{ asset('statics/listen-on-spotify.jpg') }}' width="40%" alt="Listen on Spotify - Strings N' Beats" title="Listen on Spotify - Strings N' Beats"></a>
                                 @endif
                             </div>
                         </div>
