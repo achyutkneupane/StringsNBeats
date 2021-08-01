@@ -16,7 +16,7 @@
 
 <meta property="og:type" content="music.song">
 <meta property="og:url" content="{{ url()->current() }}">
-<meta property="og:title" content="{{ $song->title }}">
+<meta property="og:title" content="{{ $song->title }} - {{ $song->artists->first()->name }}">
 <meta property="og:description" content="{{ $song->description }}">
 <meta property="og:image" content="{{ $song->image->getUrl() }}">
 <meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}">
