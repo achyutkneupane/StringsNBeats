@@ -40,7 +40,7 @@ class SongView extends Component
         $artists = array();
         foreach($this->song->artists as $artist)
         {
-            array_push($artists,Schema::person()->name($artist->name));
+            array_push($artists,Schema::person()->name(ucwords($artist->name)));
         }
         $schemas = Schema::musicRecording()
                          ->byArtist($artists)
@@ -51,13 +51,13 @@ class SongView extends Component
                                          $this->song->noodle ? 'https://noodlerex.com.np/songs/'.$this->song->noodle : NULL,
                                          $this->song->spotify ? 'https://open.spotify.com/track/'.$this->song->spotify : NULL))
                          ->recordingOf(Schema::musicComposition()
-                                            ->name($this->song->title)
+                                            ->name(ucwords($this->song->title))
                                             ->description($this->song->description)
                                             ->alternateName($this->song->name)
-                                            ->contributor(Schema::person()->name($this->song->arranger))
-                                            ->composer(Schema::person()->name($this->song->composer))
+                                            ->contributor(Schema::person()->name(ucwords($this->song->arranger)))
+                                            ->composer(Schema::person()->name(ucwords($this->song->composer)))
                                             ->genre($this->song->genre)
-                                            ->lyricist(Schema::person()->name($this->song->lyricist))
+                                            ->lyricist(Schema::person()->name(ucwords($this->song->lyricist)))
                                             ->lyrics(Schema::creativeWork()->text(strip_tags($this->song->lyrics_en)))
                                             ->url(route('viewSong',$this->song->slug))
                                             ->recordedAt($this->song->recorded_at)
