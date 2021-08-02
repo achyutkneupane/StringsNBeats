@@ -133,9 +133,9 @@
                                     {{-- <img src='{{ asset('statics/buy-from-noodle.webp') }}' loading='lazy' width='100%' alt="Buy from Noodle - Strings N' Beats" title="Buy from Noodle - Strings N' Beats"> --}}
                                 </p>
                                 @endif
-                                @if($song->spotify)
+                                {{-- @if($song->spotify)
                                     <a href='https://open.spotify.com/track/{{ $song->spotify }}' target='_blank' ref='nofollow' loading='lazy' class='mt-2 text-center'><img src='{{ asset('statics/listen-on-spotify.webp') }}' width="40%" alt="Listen on Spotify - Strings N' Beats" title="Listen on Spotify - Strings N' Beats"></a>
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
                     </div>
