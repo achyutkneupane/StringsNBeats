@@ -199,7 +199,6 @@ Route::get('robots.txt', function(Robots $robots) {
     $robots->addUserAgent('*');
     if ($robots->shouldIndex()) {
         $robots->addDisallow('/panel');
-        $robots->addSitemap(route('mainSitemap'));
     } else {
         $robots->addDisallow('/');
     }
