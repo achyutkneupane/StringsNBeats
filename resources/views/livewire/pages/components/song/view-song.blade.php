@@ -124,9 +124,11 @@
                                 </div>
                             </div>
                             <div class='col-lg-7 d-flex flex-column articleText'>
+                                @if($song->noodle)
                                 <p class='mt-4 mb-0'>
                                     <iframe src="https://www.youtube.com/embed/{{ $song->youtube }}?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </p>
+                                @endif
                                 @if($song->noodle)
                                 <p class='my-0'>
                                     <a href='https://noodlerex.com.np/songs/{{ $song->noodle }}' target='_blank' ref='nofollow'>Buy from Noodle: https://noodlerex.com.np/songs/{{ $song->noodle }}</a>

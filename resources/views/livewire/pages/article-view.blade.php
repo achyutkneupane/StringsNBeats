@@ -37,7 +37,7 @@
                             </div>
                             <div class="d-flex flex-column">
                                 <h3 class="py-1 mt-4 text-center text-white col-12 font-weight-bold text-uppercase bg-danger">
-                                    More of the Artist
+                                    Related Articles
                                 </h3>
                                 <div class="flex-wrap d-flex justify-content-center">
                                     @if($artistArticles->count() > 0)

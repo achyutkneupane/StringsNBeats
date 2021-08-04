@@ -53,10 +53,6 @@ class EditArticle extends Component
         if($propertyName == 'featuredImage') {
             $this->featuredImageView = false;
         }
-        elseif($propertyName == 'articleContent') {
-            if($this->article->writer->id == auth()->id())
-                $this->saveAsDraft();
-        }
     }
     public function editArticle()
     {
