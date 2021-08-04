@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 
 class EditArticle extends Component
 { 
+    use WithFileUploads;
     public $articleTitle,$articleCategory,$artists,$featuredImage,$articleContent,$featured,$featuredImageView,$articleDescription,$articleSlug,$articleSongs;
     public $addTagValue,$addArtistValue;
     public $tags,$categories,$artistList,$songs;
