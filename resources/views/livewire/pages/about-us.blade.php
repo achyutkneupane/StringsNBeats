@@ -1,4 +1,4 @@
-<div class="container">
+<div class='fullPage container'>
     @section('title','About Us')
     <div class="row">
         @livewire('pages.components.navbar')

@@ -31,13 +31,14 @@ class LandingPage extends Component
     public function render()
     {
         $articleSearchTerm = '%'.$this->q.'%';
-        $articles = Article::with('media','category','writer')
+        $articles = NULL;
+        if($this->q) {
+            $articles = Article::with('media','category','writer')
                             ->orderBy('created_at','DESC')
                             ->where('status','active')
                             ->where(function($query) use($articleSearchTerm) {
                                 $query->where('title','like',$articleSearchTerm)
                                     ->orWhere('description','like',$articleSearchTerm)
-                                    ->orWhere('content','like',$articleSearchTerm)
                                     ->orWhereHas('tags', function($tag) use($articleSearchTerm) {
                                         $tag->where('title','like',$articleSearchTerm);
                                     })
@@ -45,6 +46,7 @@ class LandingPage extends Component
                                         $artist->where('name','like',$articleSearchTerm);
                                 });
                             })->take($this->activePerPage)->get();
+                        }
         return view('livewire.pages.landing-page',compact('articles'));
     }
 }

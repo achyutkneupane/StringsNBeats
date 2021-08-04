@@ -1,8 +1,7 @@
 <div class='col-12'>
-    <div class="py-2 text-white border col-12 bg-primary d-flex justify-content-between text-uppercase h6">
+    <div class="py-2 text-white col-12 bg-primary d-flex justify-content-between text-uppercase h6">
         <div class="p-1 align-middle d-flex">
             <a class="text-white nav-link" href="{{ asset('/') }}">Home</a>
-            {{-- <a class="text-white nav-link" href="{{ route('aboutUs') }}">About Us</a> --}}
             <a class="text-white nav-link" href="{{ route('contactUs') }}">Contact Us</a>
             @auth
             <a class="text-white nav-link" href="{{ route('adminDashboard') }}" data-turbolinks="false">Panel</a>

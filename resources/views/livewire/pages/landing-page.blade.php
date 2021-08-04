@@ -1,4 +1,4 @@
-<div class="container">
+<div class='fullPage container'>
     <div class="row">
         @livewire('pages.components.navbar', ['q' => $q])
         @if($q == '')

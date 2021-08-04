@@ -5,10 +5,10 @@
                 <div class="d-flex flex-column">
                     <div class='d-flex flex-column flex-lg-row justify-content-between align-items-center w-100 text-center bg-danger px-4'>
                         <h1 class='text-white pt-2' style='font-size: 1.5rem;'>
-                            {{ $category->title }}
+                            {{ $title }}
                         </h1>
                         <div class='py-2 categoryBar'>
-                            <input type="text" class='form-control' wire:model='q' placeholder='Search Article in {{ $category->title }}'>
+                            <input type="text" class='form-control' wire:model='q' placeholder='Search in {{ $title }}'>
                         </div>
                     </div>
                     @if($articles->count() > 0)
@@ -30,6 +30,7 @@
                         </div>
                     </a>
                     @endforeach
+                    @if($this->category != null)
                     <div
                         x-data="{
                             observe () {
@@ -48,9 +49,10 @@
                         }"
                         x-init="observe"
                     ></div>
+                    @endif
                     @else
                     <div class='w-100 text-center px-4 py-2 border mt-4'>
-                        No {{ strtolower($category->title) }} found
+                        No results found
                     </div>
                     @endif
                 </div>

@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class CategoryArticles extends Component
 {
-    public $category,$slug,$searchQuery;
+    public $category,$slug,$searchQuery,$title;
     public $listeners = ['updateCategoryQuery'];
     public function updateCategoryQuery($searchQuery)
     {
@@ -43,6 +43,13 @@ class CategoryArticles extends Component
         $this->category = Cache::rememberForever('catSlug-'.$this->slug, function () {
             return Category::where('slug',$this->slug)->first();
         });
+        if($this->slug == 'all')
+        {
+            $this->title = 'All Articles';
+        }
+        else {
+            $this->title = $this->category->title;
+        }
         return view('livewire.pages.category-articles');
     }
 }

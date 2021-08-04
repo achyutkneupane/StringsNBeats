@@ -1,4 +1,4 @@
-<div class="container">
+<div class='fullPage container'>
     @section('title',$song->title)
     <div class="d-flex flex-column align-content-between">
         @livewire('pages.components.navbar')

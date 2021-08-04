@@ -14,6 +14,7 @@ use App\Http\Livewire\Pages\ArticleView;
 use App\Http\Livewire\Pages\CategoryArticles;
 use App\Http\Livewire\Pages\ContactUs;
 use App\Http\Livewire\Pages\LandingPage;
+use App\Http\Livewire\Pages\ListSongs as PagesListSongs;
 use App\Http\Livewire\Pages\Login;
 use App\Http\Livewire\Pages\SongView;
 use App\Models\Article;
@@ -64,14 +65,37 @@ Route::prefix('/sitemap')->group(function() {
         // Categories Sitemap
         $sitemap_categories = App::make("sitemap");
         $sitemap_categories->setCache('laravel.sitemap.categories', 3600);
-        
+        $image = [
+            [
+                'url' => asset('statics/ogimage.jpg'),
+                'title' => 'All Articles - '.config('app.name'),
+                'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. Click here to list all the articles/news written in Strings N' Beats."
+            ],
+        ];
+        $sitemap_categories->add(route('viewCategory','all'), now(), 0.5, 'daily',$image,'All Articles - '.config('app.name'));
+        $image = [
+            [
+                'url' => asset('statics/ogimage.jpg'),
+                'title' => 'Songs - '.config('app.name'),
+                'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. Click here to see the songs listed in Strings N' Beats."
+            ],
+        ];
+        $sitemap_categories->add(route('listSongs'), now(), 0.5, 'daily',$image,'Songs - '.config('app.name'));
+        $image = [
+            [
+                'url' => asset('statics/ogimage.jpg'),
+                'title' => 'All Songs - '.config('app.name'),
+                'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. Click here to see all the songs listed in Strings N' Beats."
+            ],
+        ];
+        $sitemap_categories->add(route('listAllSongs','all'), now(), 0.5, 'daily',$image,'All Songs - '.config('app.name'));
         Category::get()->each(function (Category $category) use($sitemap_categories) {
             if($category->deleted_at == NULL) {
                 $image = [
                     [
                         'url' => asset('statics/ogimage.jpg'),
                         'title' => $category->title.' - '.config('app.name'),
-                        'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events, and more."
+                        'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. Click here to list all the ".strtolower($category->title)>" written in Strings N' Beats"
                     ],
                 ];
                 $sitemap_categories->add(route('viewCategory',$category->slug), $category->updated_at, 0.5, 'daily',$image,$category->title.' - '.config('app.name'));
@@ -139,7 +163,7 @@ Route::prefix('/sitemap')->group(function() {
             [
                 'url' => asset('statics/ogimage.jpg'),
                 'title' => 'Contact Us - '.config('app.name'),
-                'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events, and more."
+                'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. Click here to contact us."
             ],
         ];
         $sitemap_statics->add(route('contactUs'),Carbon::create('2021', '6', '6'), 0.3, 'yearly',$contactimage);
@@ -202,6 +226,8 @@ Route::get('/about-us',AboutUs::class)->name('aboutUs');
 Route::get('/contact-us',ContactUs::class)->name('contactUs');
 Route::get('/category/{slug}',CategoryArticles::class)->name('viewCategory');
 Route::get('/song/{slug}',SongView::class)->name('viewSong');
+Route::get('/songs',PagesListSongs::class)->name('listSongs');
+Route::get('/songs/{all}',PagesListSongs::class)->name('listAllSongs');
 Route::get('/{slug}',ArticleView::class)->name('viewArticle');
 
 // Auth::routes();
