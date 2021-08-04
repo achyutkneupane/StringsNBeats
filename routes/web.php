@@ -72,7 +72,7 @@ Route::prefix('/sitemap')->group(function() {
                 'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. Click here to list all the articles/news written in Strings N' Beats."
             ],
         ];
-        $sitemap_categories->add(route('viewCategory','all'), now(), 0.5, 'daily',$image,'All Articles - '.config('app.name'));
+        $sitemap_categories->add(route('viewCategory','all'), now(), 0.7, 'hourly',$image,'All Articles - '.config('app.name'));
         $image = [
             [
                 'url' => asset('statics/ogimage.jpg'),
@@ -80,7 +80,7 @@ Route::prefix('/sitemap')->group(function() {
                 'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. Click here to see the songs listed in Strings N' Beats."
             ],
         ];
-        $sitemap_categories->add(route('listSongs'), now(), 0.5, 'daily',$image,'Songs - '.config('app.name'));
+        $sitemap_categories->add(route('listSongs'), now(), 0.9, 'hourly',$image,'Songs - '.config('app.name'));
         $image = [
             [
                 'url' => asset('statics/ogimage.jpg'),
@@ -88,7 +88,7 @@ Route::prefix('/sitemap')->group(function() {
                 'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. Click here to see all the songs listed in Strings N' Beats."
             ],
         ];
-        $sitemap_categories->add(route('listAllSongs','all'), now(), 0.5, 'daily',$image,'All Songs - '.config('app.name'));
+        $sitemap_categories->add(route('listAllSongs','all'), now(), 0.7, 'hourly',$image,'All Songs - '.config('app.name'));
         Category::get()->each(function (Category $category) use($sitemap_categories) {
             if($category->deleted_at == NULL) {
                 $image = [
@@ -98,7 +98,7 @@ Route::prefix('/sitemap')->group(function() {
                         'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. Click here to list all the ".strtolower($category->title)>" written in Strings N' Beats"
                     ],
                 ];
-                $sitemap_categories->add(route('viewCategory',$category->slug), $category->updated_at, 0.5, 'daily',$image,$category->title.' - '.config('app.name'));
+                $sitemap_categories->add(route('viewCategory',$category->slug), $category->updated_at, 0.9, 'hourly',$image,$category->title.' - '.config('app.name'));
             }
         });
         return $sitemap_categories->render('xml');
@@ -117,7 +117,7 @@ Route::prefix('/sitemap')->group(function() {
                         'caption' => $song->description
                     ],
                 ];
-                $sitemap_songs->add(route('viewSong',$song->slug), Carbon::parse($song->released_at), 0.9, 'daily',$image,$song->title.' - '.config('app.name'));
+                $sitemap_songs->add(route('viewSong',$song->slug), Carbon::parse($song->released_at), 0.8, 'hourly',$image,$song->title.' - '.config('app.name'));
             }
         });
         return $sitemap_songs->render('xml');
@@ -141,7 +141,7 @@ Route::prefix('/sitemap')->group(function() {
                 'publication_date' => $article->created_at,
             ];
             if($article->status == 'active') {
-                $sitemap_news->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,$article->title,NULL,NULL,$googleNews,NULL);
+                $sitemap_news->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'hourly',$image,$article->title,NULL,NULL,$googleNews,NULL);
             }
         });
         return $sitemap_news->render('google-news');
@@ -157,7 +157,7 @@ Route::prefix('/sitemap')->group(function() {
                 'caption' => "Strings N’ Beats is the primary destination for Nepali music-related matters and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events, and more."
             ],
         ];
-        $sitemap_statics->add(route('homepage'),Carbon::create('2021', '6', '6'), 1, 'daily',$image,config('app.name'));
+        $sitemap_statics->add(route('homepage'),Carbon::create('2021', '6', '6'), 1, 'hourly',$image,config('app.name'));
 
         $contactimage = [
             [
@@ -188,7 +188,7 @@ Route::prefix('/sitemap')->group(function() {
                 'access'           => 'Subscription',
             ];
             if($article->status == 'active') {
-                $sitemap_articles->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'weekly',$image,$article->title,NULL,NULL,$googleNews,NULL);
+                $sitemap_articles->add(route('viewArticle',$article->slug), $article->updated_at, 0.9, 'hourly',$image,$article->title,NULL,NULL,$googleNews,NULL);
             }
         });
         return $sitemap_articles->render('xml');
