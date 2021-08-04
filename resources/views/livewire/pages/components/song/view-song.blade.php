@@ -131,8 +131,7 @@
                                 @endif
                                 @if($song->noodle)
                                 <p class='my-0'>
-                                    <a href='https://noodlerex.com.np/songs/{{ $song->noodle }}' target='_blank' ref='nofollow'>Buy from Noodle: https://noodlerex.com.np/songs/{{ $song->noodle }}</a>
-                                    {{-- <img src='{{ asset('statics/buy-from-noodle.webp') }}' loading='lazy' width='100%' alt="Buy from Noodle - Strings N' Beats" title="Buy from Noodle - Strings N' Beats"> --}}
+                                    <a href='https://noodlerex.com.np/songs/{{ $song->noodle }}' target='_blank' ref='nofollow'><img src='{{ asset('statics/buy-from-noodle.webp') }}' loading='lazy' width='100%' alt="Buy from Noodle - Strings N' Beats" title="Buy from Noodle - Strings N' Beats"></a>
                                 </p>
                                 @endif
                                 {{-- @if($song->spotify)
