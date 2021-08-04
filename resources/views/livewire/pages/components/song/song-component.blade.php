@@ -1,6 +1,6 @@
 <a class='col-lg-4 py-1' href='{{ route('viewSong',$song->slug) }}'>
     <div class='text-center py-2 border'>
-        <img src='{{ $song->image ? $song->image->getUrl('medium') : 'https://dummyimage.com/300x300/ffffff/00CED1?text='.$song->slug }}' class='mx-auto object-cover' width='300' height='300'>
+        <img src='{{ $song->image ? $song->image->getUrl('medium') : 'https://dummyimage.com/300x300/ffffff/00CED1?text='.$song->slug }}' class='w-100 object-cover' width='300' height='300'>
         <h3 class='my-2'>
             {{ $song->title }}
         </h3>
