@@ -10,7 +10,7 @@
                     </div>
                     <div class='my-2 row'>
                         <div class='col-lg-5 d-flex flex-column justify-content-center'>
-                            <img src='{{ $song->image->getUrl('big') }}' width='100%' alt='{{ $song->title }} - {{ config('app.name') }}' title='{{ $song->title }} - {{ config('app.name') }}'>
+                            <img src='{{ $song->image->getUrl('big') }}' width='100%' alt='{{ $song->title }} - {{ config('app.name') }}' title='{{ $song->title }} - {{ config('app.name') }}' loading='lazy'>
                         </div>
                         <div class='col-lg-7 d-flex flex-column justify-content-center'>
                             <div class='flex-row my-1 d-flex w-100'>
