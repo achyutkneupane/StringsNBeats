@@ -63,7 +63,7 @@ class SongView extends Component
                                             ->recordedAt($this->song->recorded_at)
                                             ->thumbnailUrl($this->song->image->getUrl())
                                             ->sdDatePublished($this->song->published_at)
-                                            ->sameAs(array('https://youtu.be/'.$this->song->youtube,
+                                            ->sameAs(array($this->song->youtube ? 'https://youtu.be/'.$this->song->youtube : NULL,
                                                             $this->song->noodle ? 'https://noodlerex.com.np/songs/'.$this->song->noodle : NULL,
                                                             $this->song->spotify ? 'https://open.spotify.com/track/'.$this->song->spotify : NULL)));
 
