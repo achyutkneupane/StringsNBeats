@@ -124,7 +124,7 @@
                                 </div>
                             </div>
                             <div class='col-lg-7 d-flex flex-column articleText'>
-                                @if($song->noodle)
+                                @if($song->youtube)
                                 <p class='mt-4 mb-0'>
                                     <iframe src="https://www.youtube.com/embed/{{ $song->youtube }}?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </p>
