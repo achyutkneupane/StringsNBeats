@@ -155,6 +155,19 @@
             }
         }
     </style>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+    <amp-analytics type="gtag" data-credentials="include">
+        <script type="application/json">
+            {
+                "vars" : {
+                    "gtag_id": "G-HS0XEPQE5K",
+                    "config" : {
+                        "G-HS0XEPQE5K": { "groups": "default" }
+                    }
+                }
+            }
+        </script>
+    </amp-analytics>
 </head>
 
 <body>
@@ -231,18 +244,5 @@
             </div>
         @endforeach
     </div>
-    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
-    <amp-analytics type="gtag" data-credentials="include">
-        <script type="application/json">
-            {
-                "vars" : {
-                    "gtag_id": "G-HS0XEPQE5K",
-                    "config" : {
-                        "G-HS0XEPQE5K": { "groups": "default" }
-                    }
-                }
-            }
-        </script>
-    </amp-analytics>
 </body>
 </html>
