@@ -11,10 +11,11 @@
 <meta name="title" content="{{ $song->title }} - {{ ucwords($song->artists->first()->name) }} - {{ config('app.name', 'Laravel') }}">
 <meta name="description" content="{{ $song->description }}">
 <meta name="keywords" content="Strings N' Beats,StringsNBeats,stringsnbeats,stringsnbeats.net,stringsnbeats.com,stringsnbeatsnepal,music,Nepal,Nepali,Nepalese Music,Lyrics,Cover">
-{{-- <meta property='article:published_time' content='{{ Carbon\Carbon::create('2021', '6', '6') }}' />
-<meta property='article:section' content='website' /> --}}
+<meta property='article:published_time' content='{{ $song->published_at }}' />
+<meta property='article:modified_time' content='{{ $song->updated_at }}' />
+<meta property='article:author' content="Strings N' Beats" />
 
-<meta property="og:type" content="music.song">
+<meta property="og:type" content="article">
 <meta property="og:url" content="{{ url()->current() }}">
 <meta property="og:title" content="{{ $song->title }} - {{ ucwords($song->artists->first()->name) }}">
 <meta property="og:description" content="{{ $song->description }}">

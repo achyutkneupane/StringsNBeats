@@ -101,6 +101,7 @@
     <meta name="twitter:image" content="{{ $coverImage }}">
     <meta name="twitter:site" content="@strings_beats">
     {!! $schemaScripts !!}
+    <link rel="amphtml" href="{{ strtolower(route('viewAmpArticle',$slug)) }}">
 @endpush
 @push('scripts')
 <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=60c351e4485ac10011d3049d&product=sop' async='async'></script>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AmpController;
 use App\Http\Livewire\Admin\Articles\Add as AddArticle;
 use App\Http\Livewire\Admin\AddYoutube;
 use App\Http\Livewire\Admin\Articles\ListArticles;
@@ -10,6 +11,7 @@ use App\Http\Livewire\Admin\Dashboard;
 use App\Http\Livewire\Admin\Song\EditSong;
 use App\Http\Livewire\Admin\Song\ListSongs;
 use App\Http\Livewire\Pages\AboutUs;
+use App\Http\Livewire\Pages\ArticleAmpView;
 use App\Http\Livewire\Pages\ArticleView;
 use App\Http\Livewire\Pages\CategoryArticles;
 use App\Http\Livewire\Pages\ContactUs;
@@ -227,6 +229,7 @@ Route::get('/category/{slug}',CategoryArticles::class)->name('viewCategory');
 Route::get('/song/{slug}',SongView::class)->name('viewSong');
 Route::get('/songs',PagesListSongs::class)->name('listSongs');
 Route::get('/songs/{all}',PagesListSongs::class)->name('listAllSongs');
+Route::get('/amp/{slug}',[AmpController::class,'render'])->name('viewAmpArticle');
 Route::get('/{slug}',ArticleView::class)->name('viewArticle');
 
 // Auth::routes();

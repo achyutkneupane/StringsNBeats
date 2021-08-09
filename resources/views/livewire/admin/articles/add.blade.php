@@ -273,7 +273,7 @@
         ],
         toolbar: 'undo redo | formatselect | ' +
         'bold italic | alignleft aligncenter ' +
-        'alignright alignjustify | bullist numlist | blockquote media ',
+        'alignright alignjustify | bullist numlist | blockquote image media ',
         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
         setup: function (editor) {
             editor.on('init change', function () {
