@@ -159,7 +159,7 @@
     <div>
         <a href='{{ route('homepage') }}'><amp-img src="http://stringsnbeats.net/statics/logo-text.webp" height="46" layout="fixed-height" style="margin-bottom: 25px;"></amp-img></a>
         <amp-img
-            src="{{ $article->image ? $article->image->getUrl('big') : '' }}"
+            src="{{ $article->cover ? $article->cover->getUrl('big') : '' }}"
             width="500" height="350"
             alt="{{ $article->title }} - {{ config('app.name') }}"
             layout="responsive"
@@ -168,7 +168,7 @@
             on="tap:amp-lightbox-gallery.activate">
             <i-amphtml-sizer slot="i-amphtml-svc" style="padding-top: 100%;"></i-amphtml-sizer><img decoding="async"
                 alt="{{ $article->title }} - {{ config('app.name') }}"
-                src="{{ $article->image ? $article->image->getUrl('big') : '' }}"
+                src="{{ $article->cover ? $article->cover->getUrl('big') : '' }}"
                 class="i-amphtml-fill-content i-amphtml-replaced-content" i-amphtml-auto-lightbox-visited="">
         </amp-img>
         <h1>{{ $article->title }}</h1>
@@ -209,7 +209,7 @@
         @foreach ($latests as $latest)
             <div style='margin-left: auto; margin-right: auto; margin-bottom: 40px; width: 85%;'>
                 <amp-img
-                    src="{{ $latest->image ? $latest->image->getUrl('medium') : '' }}"
+                    src="{{ $latest->cover ? $latest->cover->getUrl('medium') : '' }}"
                     width="500" height="500"
                     alt="{{ $latest->title }} - {{ config('app.name') }}"
                     layout="responsive"
@@ -218,7 +218,7 @@
                     on="tap:amp-lightbox-gallery.activate">
                     <i-amphtml-sizer slot="i-amphtml-svc" style="padding-top: 100%;"></i-amphtml-sizer><img decoding="async"
                         alt="{{ $latest->title }} - {{ config('app.name') }}"
-                        src="{{ $latest->image ? $latest->image->getUrl('medium') : '' }}"
+                        src="{{ $latest->cover ? $latest->cover->getUrl('medium') : '' }}"
                         class="i-amphtml-fill-content i-amphtml-replaced-content" i-amphtml-auto-lightbox-visited="">
                 </amp-img>
                 <a href='{{ route('viewAmpArticle',$latest->slug) }}' style='text-decoration: none;'>
