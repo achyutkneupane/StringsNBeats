@@ -156,6 +156,19 @@
             }
         }
     </style>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+    <amp-analytics type="gtag" data-credentials="include">
+        <script type="application/json">
+            {
+                "vars" : {
+                    "gtag_id": "G-HS0XEPQE5K",
+                    "config" : {
+                        "G-HS0XEPQE5K": { "groups": "default" }
+                    }
+                }
+            }
+        </script>
+    </amp-analytics>
 </head>
 
 <body>
@@ -166,14 +179,8 @@
             width="500" height="350"
             alt="{{ $article->title }} - {{ config('app.name') }}"
             layout="responsive"
-            loading="lazy"
-            class="i-amphtml-element i-amphtml-layout-responsive i-amphtml-layout-size-defined i-amphtml-built i-amphtml-layout"
-            i-amphtml-layout="responsive" i-amphtml-auto-lightbox-visited="" lightbox="i-amphtml-auto-lightbox-0"
+            lightbox="i-amphtml-auto-lightbox-0"
             on="tap:amp-lightbox-gallery.activate">
-            <i-amphtml-sizer slot="i-amphtml-svc" style="padding-top: 100%;"></i-amphtml-sizer><img decoding="async"
-                alt="{{ $article->title }} - {{ config('app.name') }}"
-                src="{{ $article->cover ? $article->cover->getUrl('big') : '' }}"
-                class="i-amphtml-fill-content i-amphtml-replaced-content" i-amphtml-auto-lightbox-visited="">
         </amp-img>
         <h1>{{ $article->title }}</h1>
         <h3 class="mt-2 text-capitalize">
@@ -217,14 +224,8 @@
                     width="500" height="500"
                     alt="{{ $latest->title }} - {{ config('app.name') }}"
                     layout="responsive"
-                    class="i-amphtml-element i-amphtml-layout-responsive i-amphtml-layout-size-defined i-amphtml-built i-amphtml-layout"
-                    i-amphtml-layout="responsive" i-amphtml-auto-lightbox-visited="" lightbox="i-amphtml-auto-lightbox-0"
+                    lightbox="i-amphtml-auto-lightbox-0"
                     on="tap:amp-lightbox-gallery.activate">
-                    <i-amphtml-sizer slot="i-amphtml-svc" style="padding-top: 100%;"></i-amphtml-sizer><img decoding="async"
-                        alt="{{ $latest->title }} - {{ config('app.name') }}"
-                        src="{{ $latest->cover ? $latest->cover->getUrl('medium') : '' }}"
-                        loading="lazy"
-                        class="i-amphtml-fill-content i-amphtml-replaced-content" i-amphtml-auto-lightbox-visited="">
                 </amp-img>
                 <a href='{{ route('viewAmpArticle',$latest->slug) }}' style='text-decoration: none;'>
                     <h3 style='margin-top: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px; text-align: center; text-transform: uppercase;'>
@@ -234,19 +235,5 @@
             </div>
         @endforeach
     </div>
-
-    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
-    <amp-analytics type="gtag" data-credentials="include">
-        <script type="application/json">
-            {
-                "vars" : {
-                    "gtag_id": "G-HS0XEPQE5K",
-                    "config" : {
-                        "G-HS0XEPQE5K": { "groups": "default" }
-                    }
-                }
-            }
-        </script>
-    </amp-analytics>
 </body>
 </html>
