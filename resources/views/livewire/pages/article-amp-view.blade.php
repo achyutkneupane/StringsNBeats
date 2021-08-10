@@ -156,19 +156,6 @@
             }
         }
     </style>
-    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
-    <amp-analytics type="gtag" data-credentials="include">
-        <script type="application/json">
-            {
-                "vars" : {
-                    "gtag_id": "G-HS0XEPQE5K",
-                    "config" : {
-                        "G-HS0XEPQE5K": { "groups": "default" }
-                    }
-                }
-            }
-        </script>
-    </amp-analytics>
 </head>
 
 <body>
@@ -178,9 +165,7 @@
             src="{{ $article->cover ? $article->cover->getUrl('big') : '' }}"
             width="500" height="350"
             alt="{{ $article->title }} - {{ config('app.name') }}"
-            layout="responsive"
-            lightbox="i-amphtml-auto-lightbox-0"
-            on="tap:amp-lightbox-gallery.activate">
+            layout="responsive">
         </amp-img>
         <h1>{{ $article->title }}</h1>
         <h3 class="mt-2 text-capitalize">
@@ -223,9 +208,7 @@
                     src="{{ $latest->cover ? $latest->cover->getUrl('medium') : '' }}"
                     width="500" height="500"
                     alt="{{ $latest->title }} - {{ config('app.name') }}"
-                    layout="responsive"
-                    lightbox="i-amphtml-auto-lightbox-0"
-                    on="tap:amp-lightbox-gallery.activate">
+                    layout="responsive">
                 </amp-img>
                 <a href='{{ route('viewAmpArticle',$latest->slug) }}' style='text-decoration: none;'>
                     <h3 style='margin-top: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px; text-align: center; text-transform: uppercase;'>
@@ -235,5 +218,17 @@
             </div>
         @endforeach
     </div>
+    <amp-analytics type="gtag" data-credentials="include">
+        <script type="application/json">
+            {
+                "vars" : {
+                    "gtag_id": "G-HS0XEPQE5K",
+                    "config" : {
+                        "G-HS0XEPQE5K": { "groups": "default" }
+                    }
+                }
+            }
+        </script>
+    </amp-analytics>
 </body>
 </html>
