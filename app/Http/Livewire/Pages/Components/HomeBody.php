@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class HomeBody extends Component
 {
-    public $newss,$articles,$releases,$songs;
+    public $newss,$articles,$releases,$songs,$internationals;
     public function render()
     {
         $this->newss = Cache::rememberForever('latest_four_news', function () {
@@ -25,6 +25,11 @@ class HomeBody extends Component
         $this->releases = Cache::rememberForever('latest_four_releases', function () {
             return Article::with('media')->orderBy('created_at','DESC')->where(function($query) {
                 $query->where('category_id',2)->where('status','active');
+            })->take(4)->get();
+        });
+        $this->internationals = Cache::rememberForever('latest_four_international', function () {
+            return Article::with('media')->orderBy('created_at','DESC')->where(function($query) {
+                $query->where('category_id',4)->where('status','active');
             })->take(4)->get();
         });
         $this->songs = Cache::rememberForever('latest_four_songs', function () {

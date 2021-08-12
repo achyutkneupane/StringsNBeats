@@ -77,6 +77,31 @@
             <div class="col-lg-12">
                 <div class="d-flex flex-column">
                     <h3 class="py-1 mt-4 text-center text-white col-12 font-weight-bold text-uppercase bg-danger">
+                        International
+                    </h3>
+                    <div class="flex-wrap d-flex justify-content-center row">
+                        @if($internationals->count() > 0)
+                        @foreach($internationals as $international)
+                        <div class="col-lg-3">
+                            @livewire('pages.components.home.post-component', ['article' => $international])
+                        </div>
+                        @endforeach
+                        <div class='col-12 text-center py-2'>
+                            <a class='btn btn-danger' href='{{ route('viewCategory','international') }}'>View All</a>
+                        </div>
+                        @else
+                        <div class="py-2 text-center border col-lg-6 h5">
+                            Nothing Here
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex flex-column">
+                    <h3 class="py-1 mt-4 text-center text-white col-12 font-weight-bold text-uppercase bg-danger">
                         Songs
                     </h3>
                     <div class="flex-wrap d-flex justify-content-center row">

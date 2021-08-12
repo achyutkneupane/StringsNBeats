@@ -107,4 +107,8 @@ class Article extends Model implements HasMedia, Feedable
     {
         return Article::with('category')->where('category_id',3)->where('status','active')->get();
     }
+    public static function getFeedInternational()
+    {
+        return Article::with('category')->where('category_id',4)->where('status','active')->get();
+    }
 }
