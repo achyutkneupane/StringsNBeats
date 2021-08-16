@@ -171,9 +171,6 @@
         <h3 class="mt-2 text-capitalize">
             Category: <a href='{{ route('viewCategory',$article->category->slug) }}' target='_blank'><strong>{{ $article->category->title }}</strong></a>
         </h3>
-        <h4>
-            Posted <b>{{ $article->created_at->diffForHumans() }}</b>
-        </h4>
         <div>
             <amp-social-share class="rounded" aria-label="Share by email " type="email" width="40" height="40">
             </amp-social-share>
