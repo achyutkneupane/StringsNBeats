@@ -111,7 +111,7 @@
                             <div class='col-lg-5'>
                                 <div class='py-2 d-flex flex-column'>
                                     <h3>
-                                        Lyrics
+                                        Lyrics of {{ $song->title }} by {{ $song->artists->first()->name }}
                                     </h3>
                                     {{-- <div class='flex-row d-flex justify-content-center'>
                                         @if($song->lyrics_en)<a href='' class='btn btn-danger'>Romanized</a>@endif
@@ -119,7 +119,9 @@
                                         @if($song->lyrics_np)<a href='' class='btn btn-danger'>नेपाली</a>@endif
                                     </div> --}}
                                     <div>
-                                        {!! $song->lyrics_en !!}
+                                        <strong>
+                                            {!! $song->lyrics_en !!}
+                                        </strong>
                                     </div>
                                 </div>
                             </div>
