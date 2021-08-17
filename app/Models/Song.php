@@ -5,12 +5,14 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
 
-class Song extends Model implements HasMedia
+class Song extends Model implements HasMedia, Feedable
 {
     use HasFactory,Sluggable,HasMediaTrait;
     protected $guarded = [];
@@ -58,5 +60,20 @@ class Song extends Model implements HasMedia
              ->width(800)
              ->height(500)
              ->nonQueued();
+    }
+    public function toFeedItem(): FeedItem
+    {
+        return FeedItem::create()
+            ->id($this->slug)
+            ->title($this->title)
+            ->summary($this->description ? $this->description : $this->title)
+            ->updated($this->created_at)
+            ->link(route('viewSong',$this->slug))
+            ->author('Strings N\' Beats')
+            ->category('lyrics');
+    }
+    public static function getFeedSongs()
+    {
+        return Song::where('published_at','!=',NULL)->get();
     }
 }

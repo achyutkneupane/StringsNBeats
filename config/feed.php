@@ -122,5 +122,35 @@ return [
              */
             'type' => 'application/atom+xml',
         ],
+        'songs' => [
+            /*
+             * Here you can specify which class and method will return
+             * the items that should appear in the feed. For example:
+             * 'App\Model@getAllFeedItems'
+             *
+             * You can also pass an argument to that method:
+             * ['App\Model@getAllFeedItems', 'argument']
+             */
+            'items' => 'App\Models\Song@getFeedSongs',
+
+            /*
+             * The feed will be available on this url.
+             */
+            'url' => '/feed/songs',
+
+            'title' => 'Strings N\' Beats Songs Feed',
+            'description' => 'RSS Feed for songs lyrics in  Strings N\' Beats.',
+            'language' => 'en-US',
+
+            /*
+             * The view that will render the feed.
+             */
+            'view' => 'feed::atom',
+
+            /*
+             * The type to be used in the <link> tag
+             */
+            'type' => 'application/atom+xml',
+        ],
     ],
 ];
