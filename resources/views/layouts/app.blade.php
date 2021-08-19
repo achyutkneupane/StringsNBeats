@@ -69,6 +69,5 @@
 <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
 @stack('scripts')
-<script type="text/javascript" src="https://s.skimresources.com/js/197401X1675341.skimlinks.js"></script>
 </body>
 </html>
