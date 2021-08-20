@@ -240,17 +240,5 @@
             }
         </script>
     </amp-analytics>
-    <amp-analytics type="gtag" data-credentials="include">
-        <script type="application/json">
-            {
-                "vars" : {
-                    "gtag_id": "G-R4S36RJSZ2",
-                    "config" : {
-                        "G-R4S36RJSZ2": { "groups": "default" }
-                    }
-                }
-            }
-        </script>
-    </amp-analytics>
 </body>
 </html>
