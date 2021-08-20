@@ -35,15 +35,6 @@
 @livewireStyles
 @stack('styles')
     @if(Request()->route()->getPrefix() != '/panel')
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS0XEPQE5K"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-HS0XEPQE5K');
-    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4S36RJSZ2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];

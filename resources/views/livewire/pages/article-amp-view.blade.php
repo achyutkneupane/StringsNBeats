@@ -220,18 +220,6 @@
         <script type="application/json">
             {
                 "vars" : {
-                    "gtag_id": "G-HS0XEPQE5K",
-                    "config" : {
-                        "G-HS0XEPQE5K": { "groups": "default" }
-                    }
-                }
-            }
-        </script>
-    </amp-analytics>
-    <amp-analytics type="gtag" data-credentials="include">
-        <script type="application/json">
-            {
-                "vars" : {
                     "gtag_id": "UA-176442345-2",
                     "config" : {
                         "UA-176442345-2": { "groups": "default" }
