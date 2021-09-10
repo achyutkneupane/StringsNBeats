@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="g8kQzHJudE0myLYnBHSKkZbNQzmQrGtndQGZ6GkLZDI" />
+    <meta property="fb:pages" content="108590381445890" />
     <meta name="author" content="Strings N' Beats">
     @include('feed::links')
     <!-- CSRF Token -->

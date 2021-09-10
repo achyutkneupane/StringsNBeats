@@ -120,7 +120,7 @@
                                     </div> --}}
                                     <div>
                                         <strong>
-                                            {!! $song->lyrics_en !!}
+                                            {!! $song->lyrics_np ? $song->lyrics_np : $song->lyrics_en !!}
                                         </strong>
                                     </div>
                                 </div>

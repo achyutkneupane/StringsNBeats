@@ -33,15 +33,12 @@ class ArticleView extends Component
             redirect()->route('viewArticle',$this->slug);
         }
         $this->keywords = 'StringsNBeats,stringsnbeats.net,strings n beats Nepal,Nepal,Nepali Music,Nepali Artists,Nepali song';
-    }
-    public function render()
-    {
         $this->article = Cache::rememberForever('article-'.$this->slug, function () {
             return Article::with('category','writer','tags','artists','media','comments')->where('slug',$this->slug)->first();
         });
-        $this->coverImage = $this->article->cover->getUrl();
         // dd($this->article);
         if($this->article) {
+            $this->coverImage = $this->article->cover->getUrl();
             $this->latests = Cache::rememberForever('latest_five_without_'.$this->article->id, function () {
                 return Article::with('media')->orderBy('created_at','DESC')->where('status','active')->where('id','!=',$this->article->id)->take(5)->get();
             });
@@ -91,7 +88,10 @@ class ArticleView extends Component
             $schemaScripts = $schemas->toScript();
         }
         else
-        redirect()->route('homepage');
+        return redirect()->route('homepage');
+    }
+    public function render()
+    {
         return view('livewire.pages.article-view',compact('schemaScripts'));
     }
 }

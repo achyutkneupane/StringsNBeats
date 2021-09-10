@@ -8,6 +8,7 @@ use App\Http\Livewire\Admin\Articles\EditArticle;
 use App\Http\Livewire\Admin\Artist\AddArtist;
 use App\Http\Livewire\Admin\Artist\ListArtists;
 use App\Http\Livewire\Admin\Dashboard;
+use App\Http\Livewire\Admin\ShortUrl;
 use App\Http\Livewire\Admin\Song\EditSong;
 use App\Http\Livewire\Admin\Song\ListSongs;
 use App\Http\Livewire\Pages\AboutUs;
@@ -18,6 +19,7 @@ use App\Http\Livewire\Pages\ContactUs;
 use App\Http\Livewire\Pages\LandingPage;
 use App\Http\Livewire\Pages\ListSongs as PagesListSongs;
 use App\Http\Livewire\Pages\Login;
+use App\Http\Livewire\Pages\RedirectShort;
 use App\Http\Livewire\Pages\SongView;
 use App\Models\Article;
 use App\Models\Category;
@@ -209,6 +211,7 @@ Route::get('robots.txt', function(Robots $robots) {
 Route::prefix('/panel')->middleware('auth')->group(function() {
     Route::get('/',Dashboard::class)->name('adminDashboard');
     Route::get('/youtube', AddYoutube::class)->middleware('auth');
+    Route::get('/short', ShortUrl::class)->middleware('auth');
     
     Route::get('/articles',ListArticles::class)->name('adminArticles');
     Route::get('/articles/add',AddArticle::class)->name('adminAddArticles');
@@ -221,7 +224,8 @@ Route::prefix('/panel')->middleware('auth')->group(function() {
     Route::get('/songs', ListSongs::class)->name('adminSongs');
     Route::get('/songs/edit/{songId}', EditSong::class)->name('adminEditSong');
 });
-
+Route::get('/to',RedirectShort::class)->name('redirect');
+Route::get('/to/{tag}',RedirectShort::class)->name('redirect');
 Route::get('/login',Login::class)->name('login');
 Route::get('/about-us',AboutUs::class)->name('aboutUs');
 Route::get('/contact-us',ContactUs::class)->name('contactUs');
@@ -231,6 +235,7 @@ Route::get('/songs',PagesListSongs::class)->name('listSongs');
 Route::get('/songs/{all}',PagesListSongs::class)->name('listAllSongs');
 Route::get('/amp/{slug}',[AmpController::class,'render'])->name('viewAmpArticle');
 Route::get('/{slug}',ArticleView::class)->name('viewArticle');
+
 
 // Auth::routes();
 
