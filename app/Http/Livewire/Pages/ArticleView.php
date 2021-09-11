@@ -73,25 +73,25 @@ class ArticleView extends Component
                 $this->article->views++;
                 $this->article->save();
             }
-            $schemas = Schema::article()
-                            ->url(route('viewArticle',$this->article->slug))
-                            ->headline($this->article->title)
-                            ->description($this->description)
-                            ->image($this->article->cover->getUrl())
-                            ->datePublished($this->article->created_at)
-                            ->dateModified($this->article->updated_at)
-                            ->commentCount($this->article->comments->count())
-                            ->publisher(Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
-                            ->author($this->article->writer_flag ? Schema::person()->name($this->article->writer->name) : Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
-                            ->sameAs(array('https://www.facebook.com/StringsNBeatsNepal/','https://www.instagram.com/stringsnbeats/','https://www.twitter.com/strings_beats'));
-
-            $schemaScripts = $schemas->toScript();
         }
         else
         return redirect()->route('homepage');
     }
     public function render()
     {
+        $schemas = Schema::article()
+                        ->url(route('viewArticle',$this->article->slug))
+                        ->headline($this->article->title)
+                        ->description($this->description)
+                        ->image($this->article->cover->getUrl())
+                        ->datePublished($this->article->created_at)
+                        ->dateModified($this->article->updated_at)
+                        ->commentCount($this->article->comments->count())
+                        ->publisher(Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
+                        ->author($this->article->writer_flag ? Schema::person()->name($this->article->writer->name) : Schema::organization()->name('Strings N\' Beats')->email('info@stringsnbeats.net')->logo(Schema::imageObject()->url(asset('statics/logo-small.png'))))
+                        ->sameAs(array('https://www.facebook.com/StringsNBeatsNepal/','https://www.instagram.com/stringsnbeats/','https://www.twitter.com/strings_beats'));
+
+        $schemaScripts = $schemas->toScript();
         return view('livewire.pages.article-view',compact('schemaScripts'));
     }
 }

@@ -210,8 +210,8 @@ Route::get('robots.txt', function(Robots $robots) {
 });
 Route::prefix('/panel')->middleware('auth')->group(function() {
     Route::get('/',Dashboard::class)->name('adminDashboard');
-    Route::get('/youtube', AddYoutube::class)->middleware('auth');
-    Route::get('/short', ShortUrl::class)->middleware('auth');
+    Route::get('/youtube', AddYoutube::class)->middleware('auth')->name('youtube');
+    Route::get('/short', ShortUrl::class)->middleware('auth')->name('shortlink');
     
     Route::get('/articles',ListArticles::class)->name('adminArticles');
     Route::get('/articles/add',AddArticle::class)->name('adminAddArticles');

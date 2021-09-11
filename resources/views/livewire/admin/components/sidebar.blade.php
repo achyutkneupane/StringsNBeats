@@ -41,6 +41,22 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('shortlink') }}" class="nav-link {{ (request()->routeIs('shortlink')) ? "active" : '' }}">
+              <i class="nav-icon fas fa-cut"></i>
+              <p>
+                Shortlink
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('youtube') }}" class="nav-link {{ (request()->routeIs('youtube')) ? "active" : '' }}">
+              <i class="nav-icon fab fa-youtube"></i>
+              <p>
+                YouTube
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       

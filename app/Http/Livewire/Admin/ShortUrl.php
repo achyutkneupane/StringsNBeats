@@ -4,10 +4,14 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\ShortLink;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ShortUrl extends Component
 {
     public $short,$long,$description;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    public $searchTerm;
     public function shorten()
     {
         $this->validate([
@@ -36,6 +40,8 @@ class ShortUrl extends Component
     }
     public function render()
     {
-        return view('livewire.admin.short-url');
+        $search_term = '%'.$this->searchTerm.'%';
+        $links = ShortLink::where('long','like',$search_term)->orWhere('tag','like',$search_term)->orWhere('description','like',$search_term)->paginate(10);
+        return view('livewire.admin.short-url',compact('links'));
     }
 }

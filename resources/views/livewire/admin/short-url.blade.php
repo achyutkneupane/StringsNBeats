@@ -37,6 +37,48 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <div class="d-flex justify-content-center">
+                            <div class="card col-lg-10">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <div class="container">
+                                            <div class='form-group'>
+                                                <input type="text" class='form-control' placeholder="Search Term" wire:model="searchTerm" />
+                                            </div>
+                                            <table class="table">
+                                                <thead class="thead-dark">
+                                                  <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Long</th>
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Short</th>
+                                                    <th scope="col">Clicks</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($links as $link)
+                                                    <tr>
+                                                      <th scope="row">{{ $loop->iteration }}</th>
+                                                      <td>{{ $link->long }}</td>
+                                                      <td>{{ $link->description }}</td>
+                                                      <td>{{ $link->tag }}</td>
+                                                      <td>{{ $link->count }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                              </table>
+                                        </div>
+                                    </p>
+                                </div>
+                                @if ($links->hasPages())
+                                <div class="card-footer text-muted">
+                                    {{ $links->links() }}
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
