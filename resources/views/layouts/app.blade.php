@@ -36,7 +36,6 @@
     @endif
 @livewireStyles
 @stack('styles')
-    @if(Request()->route()->getPrefix() != '/panel')
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176442345-2"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -55,7 +54,6 @@
         gtag('config', 'G-HS0XEPQE5K');
     </script>
     <script data-ad-client="ca-pub-2094944997068259" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    @endif
 </head>
 @if(Request()->route()->getPrefix() != '/panel')
 <body>
