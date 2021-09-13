@@ -175,7 +175,7 @@
         <div>
             <amp-social-share class="rounded" aria-label="Share by email " type="email" width="40" height="40">
             </amp-social-share>
-            <amp-social-share class="rounded" aria-label="Share on Facebook" type="facebook" width="40" height="40">
+            <amp-social-share class="rounded" aria-label="Share on Facebook" type="facebook" width="40" height="40" data-param-app_id="935868386814250">
             </amp-social-share>
             <amp-social-share class="rounded" aria-label="Share on LinkedIn" type="linkedin" width="40" height="40">
             </amp-social-share>
@@ -188,7 +188,7 @@
         <div>
             <amp-social-share class="rounded" aria-label="Share by email " type="email" width="40" height="40">
             </amp-social-share>
-            <amp-social-share class="rounded" aria-label="Share on Facebook" type="facebook" width="40" height="40">
+            <amp-social-share class="rounded" aria-label="Share on Facebook" type="facebook" width="40" height="40" data-param-app_id="935868386814250">
             </amp-social-share>
             <amp-social-share class="rounded" aria-label="Share on LinkedIn" type="linkedin" width="40" height="40">
             </amp-social-share>
