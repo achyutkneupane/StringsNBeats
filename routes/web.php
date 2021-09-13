@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AmpController;
+use App\Http\Controllers\InstantArticleController;
 use App\Http\Livewire\Admin\Articles\Add as AddArticle;
 use App\Http\Livewire\Admin\AddYoutube;
 use App\Http\Livewire\Admin\Articles\ListArticles;
@@ -11,6 +12,7 @@ use App\Http\Livewire\Admin\Dashboard;
 use App\Http\Livewire\Admin\ShortUrl;
 use App\Http\Livewire\Admin\Song\EditSong;
 use App\Http\Livewire\Admin\Song\ListSongs;
+use App\Http\Livewire\InstantArticle;
 use App\Http\Livewire\Pages\AboutUs;
 use App\Http\Livewire\Pages\ArticleAmpView;
 use App\Http\Livewire\Pages\ArticleView;
@@ -51,6 +53,7 @@ Route::feeds();
 //     });
 
 Route::get('/',LandingPage::class)->name('homepage');
+Route::get('/ia/feed/',[InstantArticleController::class,'rss'])->name('instantArticles');
 
 Route::prefix('/sitemap')->group(function() {
     Route::get('/',function() {
