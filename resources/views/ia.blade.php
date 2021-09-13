@@ -13,7 +13,7 @@
           <link>{{ route('viewArticle',$article->slug) }}</link>
           <guid>{{ $article->guid }}</guid>
           <pubDate>{{ date('c', strtotime($article->created_at)) }}</pubDate>
-          <author>Author Name</author>
+          <author>Strings N Beats</author>
           <description><![CDATA[{{ $article->description }}]]></description>
           <content:encoded>
             <![CDATA[
