@@ -19,10 +19,8 @@ class InstantArticleController extends Controller
                 $each->guid = Str::uuid();
             }
         });
+        $title = 'Strings N Beats';
 
-        return view('ia', [
-            'articles' => $articles,
-            'title' => 'Strings N\' Beats',
-        ]);
+        return response()->view('ia', compact('articles','title'))->header('Content-Type', 'application/xml');
     }
 }
