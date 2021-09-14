@@ -23,37 +23,37 @@
                 <address><a href='{{ route('homepage') }}'>Strings N Beats</a></address>
                 <h3 class="op-kicker">{{ $article->category->title }}</h3>
                 <figure class="op-ad"><iframe src="https://www.facebook.com/adnw_request?placement=935868386814250_935868403480915&adtype=banner300x250" width="300" height="250"></iframe></figure>
+                <figure class="op-tracker">
+                    <iframe>
+                        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176442345-2"></script>
+                        <script>
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+
+                        gtag('set', 'page_title', 'FBIA: '+ia_document.title);
+                        gtag('set', 'campaignSource', 'Facebook');
+                        gtag('set', 'campaignMedium', 'Social Instant Article');
+
+                        gtag('config', 'UA-176442345-2');
+                        </script>
+                        <!-- Global site tag (gtag.js) - Google Analytics -->
+                        <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS0XEPQE5K"></script>
+                        <script>
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+
+                            gtag('set', 'page_title', 'FBIA: '+ia_document.title);
+                            gtag('set', 'campaignSource', 'Facebook');
+                            gtag('set', 'campaignMedium', 'Social Instant Article');
+
+                            gtag('config', 'G-HS0XEPQE5K');
+                        </script>
+                    </iframe>
+                </figure>
             </header>
-            {!! $article->content !!}
+            {{  $article->content  }}
         </article>
     </body>
-    <figure class="op-tracker">
-        <iframe>
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176442345-2"></script>
-            <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('set', 'page_title', 'FBIA: '+ia_document.title);
-            gtag('set', 'campaignSource', 'Facebook');
-            gtag('set', 'campaignMedium', 'Social Instant Article');
-
-            gtag('config', 'UA-176442345-2');
-            </script>
-            <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS0XEPQE5K"></script>
-            <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-
-                gtag('set', 'page_title', 'FBIA: '+ia_document.title);
-                gtag('set', 'campaignSource', 'Facebook');
-                gtag('set', 'campaignMedium', 'Social Instant Article');
-
-                gtag('config', 'G-HS0XEPQE5K');
-            </script>
-        </iframe>
-    </figure>
 </html>
