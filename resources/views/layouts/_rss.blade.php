@@ -53,7 +53,7 @@
                     </iframe>
                 </figure>
             </header>
-            {!!  $article->content  !!}
+            {!! $article->content !!}
         </article>
     </body>
 </html>
