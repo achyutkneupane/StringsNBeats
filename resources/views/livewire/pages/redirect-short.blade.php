@@ -5,6 +5,8 @@
     <meta name="keywords" content="Strings N' Beats,StringsNBeats,stringsnbeats,stringsnbeats.net,stringsnbeats.com,stringsnbeatsnepal,music,Nepal,Nepali,Nepalese Music,Lyrics,Cover">
     <meta property='article:published_time' content='{{ Carbon\Carbon::create('2021', '6', '6') }}' />
     <meta property='article:section' content='website' />
+    <meta property="fb:app_id" content="935868386814250">
+    <meta property="fb:pages" content="108590381445890">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
