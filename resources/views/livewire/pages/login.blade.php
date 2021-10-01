@@ -11,7 +11,7 @@
 <meta name="title" content="Login - {{ config('app.name', 'Laravel') }}">
 <meta name="description" content="Strings N’ Beats is the primary destination for music related matter and stories surrounding it all. We keep you updated on worldwide exclusive news, videos, events and more.">
 <meta property="og:type" content="website">
-<meta property="fb:app_id" content="935868386814250">
+<meta property="fb:app_id" content="931301841077172">
 <meta property="fb:pages" content="108590381445890">
 <meta property="og:url" content="{{ url()->current() }}">
 <meta property="og:title" content="Login - {{ config('app.name', 'Laravel') }}">

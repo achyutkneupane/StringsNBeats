@@ -5,7 +5,7 @@
                 <div class="carousel-inner">
                     @foreach($featured as $article)
                     <a class="carousel-item{{ $loop->first ? ' active' : '' }}" href="{{ route('viewArticle',$article->slug) }}">
-                        <img class="d-block w-100" src="{{ $article->cover->getUrl('big') }}" style="opacity: 0.3" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}"  loading='lazy' width='800' height='500'>
+                        <img class="d-block w-100" src="{{ $article->cover->getUrl('big') }}" style="opacity: 0.3" alt="{{ $article->title }} - {{ config('app.name') }}" title="{{ $article->title }} - {{ config('app.name') }}"  loading='lazy' width='800'>
                         <div class="carousel-caption">
                             <div class="text-dark text-uppercase h2" style='z-index: 30;'>{{ $article->title }}</div>
                         </div>

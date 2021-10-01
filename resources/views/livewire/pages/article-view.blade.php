@@ -88,7 +88,7 @@
     <meta property='article:section' content='article' />
     <meta property='article:author' content='https://www.facebook.com/StringsNBeatsNepal' />
     <meta property='article:publisher' content='https://www.facebook.com/StringsNBeatsNepal' />
-    <meta property="fb:app_id" content="935868386814250">
+    <meta property="fb:app_id" content="931301841077172">
     <meta property="fb:pages" content="108590381445890">
 
     <meta property="og:type" content="article">

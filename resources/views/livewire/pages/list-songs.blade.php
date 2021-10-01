@@ -11,7 +11,7 @@
 <meta name="title" content="@yield('title') - {{ config('app.name', 'Laravel') }}">
 <meta name="description" content="Strings N’ Beats is the primary destination for Nepali Music related matter and stories surrounding it all. Click here to see{{ $all ? ' all' : '' }} the songs listed in Strings N' Beats.">
 <meta name="keywords" content="Strings N' Beats,StringsNBeats,stringsnbeats,stringsnbeats.net,stringsnbeats.com,stringsnbeatsnepal,music,Nepal,Nepali,Nepalese Music,Lyrics,Cover">
-<meta property="fb:app_id" content="935868386814250">
+<meta property="fb:app_id" content="931301841077172">
 <meta property="fb:pages" content="108590381445890">
 
 <meta property="og:type" content="website">
