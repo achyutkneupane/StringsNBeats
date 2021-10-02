@@ -22,7 +22,7 @@
     <meta name="twitter:image" content="{{ asset('statics/ogimage.jpg') }}">
     <meta name="twitter:site" content="@strings_beats">
     <link rel="icon" type="image/png" href="{{ asset('statics/snb-favicon.png') }}"/>
-    <meta http-equiv="refresh" content="0.5; url={{ $this->long->long }}">
+    <meta http-equiv="refresh" content="500; url={{ $this->long->long }}">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176442345-2"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -40,7 +40,10 @@
 
         gtag('config', 'G-HS0XEPQE5K');
     </script>
-    <div class='d-flex flex-column justify-content-center align-items-center vw-100 vh-100'>
-        Redirecting to {{ $this->long->long }}......
+    <div class='d-flex flex-column justify-content-center text-center align-items-center vw-100 vh-100 px-5'>
+        Redirecting to
+        <br>
+        <span class='font-weight-bold text-uppercase'>{{ $this->long->description }}</span>
+        {{ $this->long->long }}
     </div>
 </div>

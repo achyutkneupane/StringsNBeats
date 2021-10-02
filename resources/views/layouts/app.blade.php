@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="g8kQzHJudE0myLYnBHSKkZbNQzmQrGtndQGZ6GkLZDI" />
-    <meta property="fb:pages" content="108590381445890" />
     <meta name="author" content="Strings N' Beats">
     @include('feed::links')
     <!-- CSRF Token -->
@@ -53,7 +52,7 @@
 
         gtag('config', 'G-HS0XEPQE5K');
     </script>
-    <script data-ad-client="ca-pub-2094944997068259" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    {{-- <script data-ad-client="ca-pub-2094944997068259" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> --}}
 </head>
 @if(Request()->route()->getPrefix() != '/panel')
 <body>
